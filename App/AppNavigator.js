@@ -22,6 +22,7 @@ import * as C from './Styles/Colors';
 import * as D from './Styles/Dimensions';
 import Status from './Component/Status/Status';
 import Scrap from './Component/Scrap/Scrap';
+import SNSShare from './Component/SNSShare/SNSShare';
 
 export default StackNavigator({
     Home: {
@@ -67,10 +68,10 @@ export default StackNavigator({
                           <Scrap
                             navigation={navigation}
                           />
-                          <TouchableOpacity >
-                            <Text> 공유하기 </Text>
-                          </TouchableOpacity>
-                      </View>}
+                          <SNSShare
+                            navigation={navigation}
+                            />
+                        </View>}
                     />,
 
         }),
@@ -90,10 +91,10 @@ export default StackNavigator({
                       right={
                         <View style={{flexDirection:'row', marginRight:D.Width(5)}}>
                           <TouchableOpacity onPress={navigation.state.params? navigation.state.params.save : null} >
-                            <Text> 임시저장 </Text>
+                            <Text> { screenProps.translate('CreateIssueSave')} </Text>
                           </TouchableOpacity>
                           <TouchableOpacity onPress={navigation.state.params? navigation.state.params.submit : null}>
-                            <Text> 요청하기 </Text>
+                            <Text> { screenProps.translate('CreateIssueSubmit')} </Text>
                           </TouchableOpacity>
                       </View>}
                     />,
@@ -113,9 +114,24 @@ export default StackNavigator({
                       center= { null }
                       right={
                         <View style={{flexDirection:'row', marginRight:D.Width(5)}}>
-                          <TouchableOpacity >
-                            <Text> 편집 </Text>
-                          </TouchableOpacity>
+                          {
+                            navigation.state.params ?
+                            navigation.state.params.isEditing ?
+                              <View style={{flexDirection:'row'}}>
+                                <TouchableOpacity onPress={navigation.state.params.editCancel} >
+                                  <Text> { screenProps.translate('AlertEditCancelTitle')} </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={navigation.state.params.editSubmit} >
+                                  <Text> { screenProps.translate('AlertEditTitle')} </Text>
+                                </TouchableOpacity>
+                              </View>
+                              :
+                              <TouchableOpacity onPress={navigation.state.params.edit} >
+                                <Text> { screenProps.translate('PrfileEdit')}  </Text>
+                              </TouchableOpacity>
+                            : null
+                          }
+
                       </View>}
                     />,
         }),

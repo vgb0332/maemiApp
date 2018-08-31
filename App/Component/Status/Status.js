@@ -7,6 +7,7 @@ import {
   View,
 } from 'react-native';
 import { connect } from 'react-redux';
+import Icon from 'react-native-vector-icons/Feather';
 
 class Status extends Component<Props> {
   constructor(props){
@@ -20,7 +21,7 @@ class Status extends Component<Props> {
     const { isAuthenticated, user } = this.props.user;
     if(isAuthenticated) {
       return (
-        <Text> {user.name} </Text>
+        <Text style={{color:'black'}}> {user.name} </Text>
       );
     }
     else {

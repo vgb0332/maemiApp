@@ -31,7 +31,8 @@ export default StyleSheet.create({
     color: '#000',
   },
   Title : {
-    padding: D.Width(5)
+    padding: D.Width(5),
+    paddingTop: 0,
   },
   TitleText : {
     color: '#000',
@@ -47,8 +48,8 @@ export default StyleSheet.create({
   TagsTag : {
     backgroundColor:C.header,
     padding:5,
-    marginRight:10,
-    marginBottom: 10
+    marginRight:5,
+    marginBottom: 5
   },
   MainImage: {
     flexDirection: 'row'
@@ -58,11 +59,13 @@ export default StyleSheet.create({
     height: D.Width(40),
   },
   MainContent : {
-    flex:1, paddingVertical: 10, justifyContent: 'center', alignItems: 'center'
+    flex:1, paddingVertical: 10, justifyContent: 'center', alignItems: 'center',
+
   },
   MainContentContent : {
     textAlign: 'left',
-    paddingLeft:10
+    paddingLeft:10,
+    color:'black',
   },
   Replies : {
      flex: 1,flexDirection:'row', paddingVertical: 10
@@ -79,12 +82,12 @@ export default StyleSheet.create({
     flex:0.5, borderColor: C.header, borderRightWidth:1, borderLeftWidth: 1, paddingVertical: 10
   },
   BottomShareWrapperShare : {
-    textAlign: 'center', fontSize:D.FontSize(2)
+    textAlign: 'center', fontSize:D.FontSize(2), color:'black',
   },
   BottomShareAddNewsWrapper : {
     flex:0.5, paddingVertical: 10, borderColor: C.header, borderRightWidth:1,
   },
   BottomShareAddNewsWrapperAddNews : {
-    textAlign: 'center', fontSize:D.FontSize(2)
+    textAlign: 'center', fontSize:D.FontSize(2), color:'black',
   }
 });

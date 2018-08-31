@@ -12,6 +12,7 @@ import {
   Button,
   Modal,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
@@ -21,40 +22,157 @@ import isNullOrWhiteSpace from '../../Util/isNullOrWhiteSpace';
 import * as authActions from '../../Modules/Auth';
 import { createReplyBlock } from '../../Lib/BlockManager/CreateReplyBlock';
 import { getDetailBlock } from '../../Lib/BlockManager/GetDetailBlock';
+import { voteUp, voteDown, voteCheck, voteUpCancel, voteDownCancel } from '../../Lib/BlockManager/Vote';
 import * as D from '../../Styles/Dimensions';
-import *  as C from '../../Styles/Colors';
+import * as C from '../../Styles/Colors';
 import styles from './Styles';
 import Lightbox from 'react-native-lightbox';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { AsyncStorage } from 'react-native';
+import { withLocalize } from 'react-localize-redux';
 
 class ReplyBlockDetail extends Component<Props> {
   constructor(props){
     super(props);
     this.state = {
-      REPLIES : [],
-
       replyInput: '',
-      replyInit : false
+      replyInit : false,
+
+      isDown: false,
+      isUp: false,
+
+      loading: false,
+      processing :false,
     }
 
   }
 
-  componentDidMount() {
-    const { PID, PPID } = this.props.block;
+  load = () => {
+    const { PID, PPID } = this.props.block.ParentBlocks;
+    const { isAuthenticated } = this.props.user;
+    const { uid } = this.props.user.user;
+
     getDetailBlock({PID: PID})
     .then( res => {
-      console.log(res);
       this.setState({
-        REPLIES: res.data[0]
+        BLOCK: res.data[0].ParentBlocks,
+        REPLIES: res.data[0].ChildBlocks,
       })
     })
     .catch( err => {
       console.log(err);
     })
+
+    if(isAuthenticated){
+      AsyncStorage.getItem('token').then( token => {
+        voteCheck({FLAG: 'DOWN', PID: PID, UID: uid, TOKEN : token })
+        .then( res => {
+          this.setState( { isDown : res.message !== '투표 가능한 블럭'})
+        })
+
+        voteCheck({FLAG: 'UP',PID: PID, UID: uid,TOKEN : token })
+        .then( res => {
+          this.setState( { isUp : res.message !== '투표 가능한 블럭'})
+        })
+      })
+    }
+
+  }
+
+  componentDidMount() {
+    this.load();
+  }
+
+  UpClick = () => {
+    const { PID, PPID } = this.props.block.ParentBlocks;
+    const { isAuthenticated } = this.props.user;
+    const { uid } = this.props.user.user;
+    const { isUp } = this.state;
+
+    this.setState({ processing: true, });
+    if(!isAuthenticated){
+      Alert.alert('' ,this.props.translate('AlertLogin'));
+      return false;
+    }
+
+    AsyncStorage.getItem('token').then( token => {
+      if(isUp){
+        voteUpCancel({FLAG: 'UP', PID: PID, UID: uid, TOKEN : token })
+        .then( res => {
+          res.success ?
+          this.setState({
+            BLOCK : {
+              ...this.state.BLOCK,
+              VOTE_UP : Number(this.state.BLOCK.VOTE_UP) - 1,
+            },
+            isUp: false,
+            processing: false,
+          }) : null;
+        })
+      }
+      else{
+        voteUp({FLAG: 'UP', PID: PID, UID: uid, TOKEN : token })
+        .then( res => {
+          res.success ?
+          this.setState({
+            BLOCK : {
+              ...this.state.BLOCK,
+              VOTE_UP : Number(this.state.BLOCK.VOTE_UP) + 1,
+            },
+            isUp: true,
+            processing: false,
+          }) : null;
+        })
+      }
+    })
+
+  }
+
+  DownClick = () => {
+    const { PID, PPID } = this.props.block.ParentBlocks;
+    const { isAuthenticated } = this.props.user;
+    const { uid } = this.props.user.user;
+    const { isDown } = this.state;
+
+    this.setState({ processing: true, });
+    if(!isAuthenticated){
+      Alert.alert('' ,this.props.translate('AlertLogin'));
+      return false;
+    }
+
+    AsyncStorage.getItem('token').then( token => {
+      if(isDown){
+        voteDownCancel({FLAG: 'DOWN', PID: PID, UID: uid, TOKEN : token })
+        .then( res => {
+          res.success ?
+          this.setState({
+            BLOCK : {
+              ...this.state.BLOCK,
+              VOTE_DOWN : Number(this.state.BLOCK.VOTE_DOWN) - 1,
+            },
+            isDown: false,
+            processing: false,
+          }) : null;
+        })
+      }
+      else{
+        voteDown({FLAG: 'DOWN', PID: PID, UID: uid, TOKEN : token })
+        .then( res => {
+          res.success ?
+          this.setState({
+            BLOCK : {
+              ...this.state.BLOCK,
+              VOTE_DOWN : Number(this.state.BLOCK.VOTE_DOWN) + 1,
+            },
+            isDown: true,
+            processing: false,
+          }) : null;
+        })
+      }
+    })
   }
 
   renderReplies = ( {item, index} ) => {
-    console.log( item, index );
     return (
       <View style={styles.ReplyWrapper}>
         <View style={styles.ReplyUser}>
@@ -85,7 +203,70 @@ class ReplyBlockDetail extends Component<Props> {
   }
 
   onReplyInputChange = (reply) => {
-    this.setState({replyInput : reply})
+    const lastTyped = reply.charAt(reply.length - 1);
+    const parseWhen = ['\n'];
+    if (parseWhen.indexOf(lastTyped) > -1) {
+      this.askSubmission(reply);
+      return false;
+    }
+    else{
+      this.setState({replyInput : reply})
+    }
+
+  }
+
+  askSubmission = (reply) => {
+    console.log(reply);
+    Alert.alert(
+      this.props.translate('AlertAddReplyTitle'),
+      this.props.translate('AlertAddReplyContent'),
+      [
+        {text: this.props.translate('yes'), onPress: () => this.submit(reply)},
+        {text: this.props.translate('no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+    )
+  }
+
+  submit(reply) {
+    const { PID, PPID } = this.props.block.ParentBlocks;
+    const { isAuthenticated } = this.props.user;
+    const { uid } = this.props.user.user;
+    this.setState({loading: true})
+    AsyncStorage.getItem('token').then( token => {
+      let data = {
+        FLAG : 'reply',
+        TOKEN : token,
+        PPID : PID,
+        BLOCK_ISSUE_THEME : reply,
+        BLOCK_ISSUE_HASHTAG : null,
+        BLOCK_ISSUE_CONTENT : reply,
+        BLOCK_ISSUE_IMAGE : null,
+        BLOCK_ISSUE_VIDEO : null,
+        BLOCK_ISSUE_LOCATION : null,
+      }
+
+      createReplyBlock(data)
+      .then( (res) => {
+        console.log(res);
+        this.setState({
+          replyInput: '',
+          replyInit : false,
+          loading:false
+        })
+        if(res.success){
+          Alert.alert('', this.props.translate('AlertSubmitSuccess'));
+          this.load();
+        }
+      })
+      .catch((err) => {
+        this.setState({loading:false})
+        console.log(err);
+      })
+    })
+    .catch(err=>{
+      this.setState({loading:false})
+    })
+
   }
 
   onReplyInputFocus = () => {
@@ -93,15 +274,13 @@ class ReplyBlockDetail extends Component<Props> {
   }
 
   onReplyInputBlur = () => {
-    if(this.state.replyInput === ''){ this.setState({replyInput: '댓글 작성하기',replyInit:false,})}
+    if(this.state.replyInput === ''){ this.setState({replyInput: this.props.translate('AddReply'),replyInit:false,})}
   }
 
   render(){
     const { state, props } = this;
-    console.log( state, props);
-    const BLOCK = props.block;
-    const REPLIES = state.REPLIES;
-    console.log(BLOCK, REPLIES);
+    const { BLOCK, REPLIES, isUp, isDown } = state;
+    const { translate } = props;
     const regex = /(<([^>]+)>)|&nbsp;/ig;
     const nbsp = '&nbsp;';
     const gt = '&gt;';
@@ -116,65 +295,77 @@ class ReplyBlockDetail extends Component<Props> {
           onRequestClose={()=>props.toggleReplyBlock(null)}>
 
               <View style={styles.ReplyBlockDetailContainer}>
-
+                {state.loading ?
+                  <View style={styles.activityIndicator}>
+                    <ActivityIndicator size="large" color="#000000" animating={state.loading}/>
+                  </View> : null
+                }
                 <View style={styles.ReplyBlockDetailWrapper}>
                   <ScrollView>
-                  <View style={styles.ReplyBlockDetailHeader}>
-                    <Text> {BLOCK.CREATE_DATE.split(' ')[0]} </Text>
-                    <Text> {BLOCK.BLOCK_ISSUE_LOCATION} </Text>
+                    <View style={styles.ReplyBlockDetailHeader}>
+                      <Text> {BLOCK ? BLOCK.CREATE_DATE.split(' ')[0] : ''}</Text>
+                      <Text> {BLOCK ? BLOCK.BLOCK_ISSUE_LOCATION : ''} </Text>
 
-                    <Text style={{alignSelf: 'flex-end'}}> X </Text>
-                  </View>
-
-                  <View style={styles.ReplyBlockDetailTag}>
-                    {
-                      BLOCK.BLOCK_ISSUE_HASHTAG ?
-                      BLOCK.BLOCK_ISSUE_HASHTAG.split(',').map( ( tag, index) =>
-                        <Text key={index} style={styles.Tag}> { tag }</Text>
-                    ) : null}
-                  </View>
-
-                  <View style={styles.ReplyBlockDetailImage}>
-                    <Lightbox activeProps={{width:'100%', height:'100%'}} springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={false}>
-                        <Image source={{uri:BLOCK.BLOCK_ISSUE_IMAGE}}
-                              resizeMode={"contain"}
-                              style={styles.MainImage}
-                        />
-                    </Lightbox>
-                  </View>
-
-                  <View style={styles.ReplyBlockDetailContent}>
-                    <Text numberOfLines ={6} style={styles.MainContent}>
-                      {BLOCK.BLOCK_ISSUE_CONTENT.replace(regex, '').replace( gt , '>').replace( lt , '<')}
-                    </Text>
-                  </View>
-
-                  <View style={styles.ReplyBlockDetailStaus}>
-                    <View style={styles.StatusElement}>
-                      <Text style={{fontWeight:'bold'}}> 댓글 </Text>
-                      <Text> { REPLIES.ChildBlockCount } </Text>
+                      <Text style={{alignSelf: 'flex-end'}}> X </Text>
                     </View>
 
-                    <View style={styles.StatusElement}>
-                      <Text style={{fontWeight:'bold'}}> 추천 </Text>
-                      <Text> { BLOCK.VOTE_UP } </Text>
+                    <View style={styles.ReplyBlockDetailTag}>
+                      {
+                        BLOCK && BLOCK.BLOCK_ISSUE_HASHTAG ?
+                        BLOCK.BLOCK_ISSUE_HASHTAG.split(',').map( ( tag, index) =>
+                          <Text key={index} style={styles.Tag}> { tag }</Text>
+                      ) : null}
                     </View>
 
-                    <View style={styles.StatusElement}>
-                      <Text style={{fontWeight:'bold'}}> 반대 </Text>
-                      <Text> { BLOCK.VOTE_DOWN } </Text>
+                    <View style={styles.ReplyBlockDetailImage}>
+                      <Lightbox activeProps={{width:'100%', height:'100%'}} springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={false}>
+                          <Image source={{uri:BLOCK ? BLOCK.BLOCK_ISSUE_IMAGE : ''}}
+                                resizeMode={"contain"}
+                                style={styles.MainImage}
+                          />
+                      </Lightbox>
                     </View>
-                  </View>
+
+                    <View style={styles.ReplyBlockDetailContent}>
+                      <Text numberOfLines ={6} style={styles.MainContent}>
+                        {BLOCK ? BLOCK.BLOCK_ISSUE_CONTENT.replace(regex, '').replace( gt , '>').replace( lt , '<') : ''}
+                      </Text>
+                    </View>
+
+                    <View style={styles.ReplyBlockDetailStaus}>
+                      <View style={styles.StatusElement}>
+                        <Text style={{fontWeight:'bold'}}> { translate('ReplyComments')} </Text>
+                        <Text> { REPLIES ? REPLIES.length : 0 } </Text>
+                      </View>
+
+                      <View style={styles.StatusElement}>
+                        <TouchableOpacity onPress={this.UpClick} disabled={this.state.processing}>
+                          <Text style={styles.StatusText}>
+                            <Text style={ isUp ? {'fontWeight': 'bold'} : {} }>{ translate('ReplyUp') } </Text>
+                            <Text style={ isUp ? {'fontWeight': 'bold'} : {} }> { BLOCK ? BLOCK.VOTE_UP : 0 } </Text>
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+
+                      <View style={styles.StatusElement}>
+                        <TouchableOpacity onPress={this.DownClick} disabled={this.state.processing}>
+                          <Text style={styles.StatusText}>
+                            <Text style={ isDown ? {'fontWeight': 'bold'} : {} }> { translate('ReplyDown') } </Text>
+                            <Text style={ isDown ? {'fontWeight': 'bold'} : {} }> { BLOCK ? BLOCK.VOTE_DOWN : 0 } </Text>
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
 
 
-                  <ScrollView>
-                    <FlatList
-                      data={REPLIES.ChildBlocks}
-                      removeClippedSubviews={true}
-                      keyExtractor = {(item,index)=> item.PID}
-                      renderItem={this.renderReplies}
-                    />
-                  </ScrollView>
+                    <ScrollView>
+                      <FlatList
+                        data={REPLIES ? REPLIES : []}
+                        removeClippedSubviews={true}
+                        keyExtractor = {(item,index)=> item.PID}
+                        renderItem={this.renderReplies}
+                      />
+                    </ScrollView>
                   </ScrollView>
                   <View style={styles.ReplyInput}>
                     <TextInput
@@ -185,7 +376,7 @@ class ReplyBlockDetail extends Component<Props> {
                       // onFocus={this.onReplyInputFocus}
                       // onBlur={this.onReplyInputBlur}
                       value={state.replyInput}
-                      placeholder='댓글 작성하기'
+                      placeholder={translate('AddReply')}
                     />
                   </View>
 
@@ -197,20 +388,20 @@ class ReplyBlockDetail extends Component<Props> {
     )
   }
 }
-//
-// let mapStateToProps = (state) => {
-//     return {
-//         user: state.user,
-//       };
-// }
-//
-//
-// let mapDispatchToProps = (dispatch) => {
-//     return {
-//       AuthActions: bindActionCreators(authActions, dispatch),
-//       signup
-//     }
-// }
-export default ReplyBlockDetail;
+
+let mapStateToProps = (state) => {
+    return {
+        user: state.data.Auth,
+      };
+}
+
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+      AuthActions: bindActionCreators(authActions, dispatch),
+      signup
+    }
+}
+export default withLocalize(connect(mapStateToProps, null)(ReplyBlockDetail));
 
 // export default connect(mapStateToProps, mapDispatchToProps)(ReplyBlockDetail);

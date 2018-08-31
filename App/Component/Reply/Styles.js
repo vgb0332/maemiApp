@@ -11,6 +11,15 @@ export default StyleSheet.create({
     backgroundColor: C.header,
   },
 
+  activityIndicator : {
+    position: 'absolute',
+    width: D.Width(100),
+    height: D.Height(100) - 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 20,
+  },
+
   ReplyWrapper : {
     flex: 0.9,
     margin: 20,

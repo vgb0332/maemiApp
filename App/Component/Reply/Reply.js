@@ -11,6 +11,7 @@ import {
   Button,
   Modal,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -29,29 +30,35 @@ import {RichTextEditor, RichTextToolbar} from 'react-native-zss-rich-text-editor
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
 import RNFS from 'react-native-fs';
+import { AsyncStorage } from 'react-native';
+import { uploadByUri } from '../../Lib/UploadManager/UploadManage';
+import { createReplyBlock } from '../../Lib/BlockManager/CreateReplyBlock';
+import { saveBlock } from '../../Lib/BlockManager/SaveBlock';
+import { withLocalize } from 'react-localize-redux';
 
-const tagProps = {
-  keyboardType: 'default',
-  // returnKeyType: 'search',
-  placeholder: '#입력(최대 10개)',
-  style: {
-    fontSize: 14,
-    marginVertical: Platform.OS == 'ios' ? 10 : -2,
-    color: C.black,
-    width: '100%',
-  },
-}
+// const tagProps = {
+//   keyboardType: 'default',
+//   // returnKeyType: 'search',
+//   placeholder: this.props.translate('AddNewsTagInsert'),
+//   style: {
+//     fontSize: 14,
+//     marginVertical: Platform.OS == 'ios' ? 10 : -2,
+//     color: C.black,
+//     width: '100%',
+//   },
+// }
 
-const imagePickerOptions = {
-  title: "사진을 선택하세요",
-  cancelButtonTitle : '취소',
-  takePhotoButtonTitle : '사진 찍기',
-  chooseFromLibraryButtonTitle : '갤러리에서 선택',
-  storageOptions: {
-    skipBackup: true,
-    path: 'images'
-  }
-}
+// const imagePickerOptions = {
+//   title: "사진을 선택하세요",
+//   cancelButtonTitle : '취소',
+//   takePhotoButtonTitle : '사진 찍기',
+//   chooseFromLibraryButtonTitle : '갤러리에서 선택',
+//   storageOptions: {
+//     skipBackup: true,
+//     path: 'images'
+//   }
+// }
+
 
 class Reply extends Component<Props> {
   constructor(props){
@@ -60,6 +67,9 @@ class Reply extends Component<Props> {
       tags: [],
       text: '',
 
+      image: '',
+
+      time: Number(new Date().getFullYear())+'-'+Number(new Date().getMonth()+1)+'-'+Number(new Date().getDate())+" "+Number(new Date().getHours())+":"+Number(new Date().getMinutes()),
       height: this.props.height || 300,
       width: this.props.width || 300,
       format: this.props.format || 'JPEG',
@@ -67,8 +77,10 @@ class Reply extends Component<Props> {
       buttonDisabled: false,
 
       isEditorReady: false,
-
+      hasImage : false,
       location : '',
+
+      loading: false,
     }
 
     this.richtext=null;
@@ -83,7 +95,7 @@ class Reply extends Component<Props> {
   }
 
   onLocationBlur = () => {
-    if(this.state.location === ''){ this.setState({location: '입력',locationInit:false,})}
+    if(this.state.location === ''){ this.setState({location: this.props.translate('AddNewsLocationInsert'),locationInit:false,})}
   }
 
   labelExtractor = ( text ) => ( "#"+text );
@@ -93,7 +105,6 @@ class Reply extends Component<Props> {
     if(this.state.tags.length > 10) return false;
     const lastTyped = text.charAt(text.length - 1);
     const parseWhen = [',', ' ', ';', '\n'];
-    console.log(lastTyped);
     if (parseWhen.indexOf(lastTyped) > -1) {
       this.setState({
         tags: [...this.state.tags, this.state.text],
@@ -104,7 +115,16 @@ class Reply extends Component<Props> {
 
   onPressAddImage = () => {
     // get image from image picker
-    ImagePicker.showImagePicker(imagePickerOptions, async response => {
+    ImagePicker.showImagePicker({
+      title: translate('pictureSelectTitle'),
+      cancelButtonTitle : translate('pictureCancelTitle'),
+      takePhotoButtonTitle : translate('pictureTakePhotoTitle'),
+      chooseFromLibraryButtonTitle : translate('pictureChooseTitle'),
+      storageOptions: {
+        skipBackup: true,
+        path: 'images'
+      }
+    }, async response => {
       this.setState({buttonDisabled: false})
       console.log('Response = ', response)
       let rotation = 0
@@ -130,27 +150,270 @@ class Reply extends Component<Props> {
       const width = D.Width(100) * ratio;
       const height = D.Width(100) * (1 - ratio);
       this.richtext.insertImage({ src: response.uri, width:width, height:height});
+      if(!this.state.hasImage){
+        this.setState({
+          image : response,
+          hasImage: true,
+        })
+      }
+
     })
   }
 
+  save = () => {
+    console.log('save');
+    Alert.alert(
+      this.props.translate('AlertSaveTitle'),
+      this.props.translate('AlertSaveContent'),
+      [
+        {text: this.props.translate('yes'), onPress: () => this.submit('save')},
+        {text: this.props.translate('no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+    )
+  }
+
+  add = () => {
+    Alert.alert(
+      this.props.translate('AlertAddNewsTitle'),
+      this.props.translate('AlertAddNewsContent'),
+      [
+        {text: this.props.translate('yes'), onPress: () => this.submit('add')},
+        {text: this.props.translate('no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+    )
+  }
+
+  submit = ( type ) => {
+    this.setState({loading: true})
+    const PPID = this.props.targetBlock.ParentBlockPID;
+
+    if(type === 'save'){
+      const { image, time, tags, location } = this.state;
+      this.richtext.getContentHtml().then(content =>{
+        AsyncStorage.getItem('token').then(token => {
+          if(image){
+            uploadByUri(image.uri, 'image/jpeg', new Date().getTime() + '.jpg')
+              .then((url) => {
+                  let block = {
+                    FLAG : 'reply',
+                    TOKEN : token,
+                    PPID : PPID,
+                    BLOCK_ISSUE_THEME : content,
+                    BLOCK_ISSUE_HASHTAG : tags.join(),
+                    BLOCK_ISSUE_CONTENT : content,
+                    BLOCK_ISSUE_IMAGE : [url.replace(/\s/g, '')],
+                    BLOCK_ISSUE_VIDEO : 'video_url',
+                    BLOCK_ISSUE_LOCATION : location,
+                    BLOCK_ISSUE_WRITE_TIME: time,
+                  }
+
+                  saveBlock(block).then( (res) => {
+                    this.setState({loading:false})
+                    if(res.success){
+                      Alert.alert('', this.props.translate('AlertSaveSuccess'),
+                      [
+                        {text: this.props.translate('confirm'), onPress: () => {
+                          this.props.toggleReply();
+                          this.props.navigation.navigate("Main", {
+                            block: this.props.targetBlock,
+                            needRefresh: true,
+                          })
+                        }},
+                      ]);
+                    }
+                    else {
+                      Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
+
+              })
+              .catch((err) => {
+                console.log(err);
+                Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
+              })
+          }
+
+          else{
+            let block = {
+              FLAG : 'reply',
+              TOKEN : token,
+              PPID : PPID,
+              BLOCK_ISSUE_THEME : content,
+              BLOCK_ISSUE_HASHTAG : tags.join(),
+              BLOCK_ISSUE_CONTENT : content,
+              BLOCK_ISSUE_IMAGE : '',
+              BLOCK_ISSUE_VIDEO : 'video_url',
+              BLOCK_ISSUE_LOCATION : location,
+              BLOCK_ISSUE_WRITE_TIME: time,
+            }
+
+            saveBlock(block).then( (res) => {
+              this.setState({loading:false})
+              if(res.success){
+                Alert.alert('', this.props.translate('AlertSaveSuccess'),
+                [
+                  {text: this.props.translate('confirm'), onPress: () => {
+                    this.props.toggleReply();
+
+                    this.props.navigation.navigate("Main", {
+                      block: this.props.targetBlock,
+                      needRefresh: true,
+                    })
+                  }},
+                ]);
+              }
+              else {
+                Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+          }
+        })
+      })
+      .catch(err=>{this.setState({loading:false}); console.log(err)});
+    }
+
+
+    else if(type === 'add'){
+      const { image, time, tags, location } = this.state;
+      this.richtext.getContentHtml().then(content =>{
+        console.log(image, time, tags, location);
+        AsyncStorage.getItem('token').then(token => {
+          if(image){
+            uploadByUri(image.uri, 'image/jpeg', new Date().getTime() + '.jpg')
+              .then((url) => {
+                  let block = {
+                    FLAG : 'reply',
+                    TOKEN : token,
+                    PPID : PPID,
+                    BLOCK_ISSUE_THEME : content,
+                    BLOCK_ISSUE_HASHTAG : tags.join(),
+                    BLOCK_ISSUE_CONTENT : content,
+                    BLOCK_ISSUE_IMAGE : [url.replace(/\s/g, '')],
+                    BLOCK_ISSUE_VIDEO : 'video_url',
+                    BLOCK_ISSUE_LOCATION : location,
+                    BLOCK_ISSUE_WRITE_TIME: time,
+                  }
+
+                  createReplyBlock(block).then( (res) => {
+                    this.setState({loading:false})
+                    if(res.success){
+                      Alert.alert('', this.props.translate('AlertSubmitSuccess'),
+                      [
+                        {text: this.props.translate('confirm'), onPress: () => {
+                          this.props.toggleReply();
+                          this.props.navigation.navigate("Main", {
+                            block: this.props.targetBlock,
+                            needRefresh: true,
+                          })
+                        }},
+                      ]);
+                    }
+                    else {
+                      Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
+                    }
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  })
+
+              })
+              .catch((err) => {
+                console.log(err);
+                Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
+              })
+          }
+
+          else{
+            let block = {
+              FLAG : 'reply',
+              TOKEN : token,
+              PPID : PPID,
+              BLOCK_ISSUE_THEME : content,
+              BLOCK_ISSUE_HASHTAG : tags.join(),
+              BLOCK_ISSUE_CONTENT : content,
+              BLOCK_ISSUE_IMAGE : '',
+              BLOCK_ISSUE_VIDEO : 'video_url',
+              BLOCK_ISSUE_LOCATION : location,
+              BLOCK_ISSUE_WRITE_TIME: time,
+            }
+
+            createReplyBlock(block).then( (res) => {
+              this.setState({loading:false})
+              if(res.success){
+                Alert.alert('',  this.props.translate('AlertSubmitSuccess'),
+                [
+                  {text: this.props.translate('confirm'), onPress: () => {
+                    this.props.toggleReply();
+                    console.log('ever get here?');
+                    this.props.navigation.navigate("Main", {
+                      block: this.props.targetBlock,
+                      needRefresh: true,
+                    })
+                  }},
+                ]);
+              }
+              else {
+                Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+          }
+        })
+      })
+      .catch(err=>{this.setState({loading:false}); console.log(err)});
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.fromMyPage){
+      const { targetBlock } = nextProps;
+      this.setState({
+        tags: targetBlock.BLOCK_ISSUE_HASHTAG.split(","),
+        location: targetBlock.BLOCK_ISSUE_LOCATION,
+      })
+
+
+    }
+  }
+
+  componentDidUpdate() {
+    const { fromMyPage } = this.props;
+    if(fromMyPage){
+        const { targetBlock } = this.props;
+        this.richtext.setContentHTML(targetBlock.BLOCK_ISSUE_CONTENT);
+    }
+
+  }
   render(){
     const { state, props } = this;
-    // console.log(state, props);
-    console.log(state.isEditorReady);
+    const  { translate } = props;
     return (
           <Modal
           animationType="slide"
           transparent={true}
           hardwareAccelerated={true}
           visible={props.replyToggle}
-          onRequestClose={props.toggleReply}>
+          onRequestClose={()=>props.toggleReply()}>
 
               <View style={styles.ReplyContainer}>
+                {state.loading ?
+                  <View style={styles.activityIndicator}>
+                    <ActivityIndicator size="large" color="#000000" animating={state.loading}/>
+                  </View> : null
+                }
                 <View style={styles.ReplyWrapper}>
 
                   <View style={styles.ReplyHeader}>
                     <Text style={styles.tagsTitle} >
-                      태그
+                      { translate('AddNewsTag') }
                     </Text>
                     <TagInput
                       value={state.tags}
@@ -158,7 +421,17 @@ class Reply extends Component<Props> {
                       labelExtractor={ this.labelExtractor }
                       text={state.text}
                       onChangeText={ this.onTagChange }
-                      inputProps={tagProps}
+                      inputProps={{
+                        keyboardType: 'default',
+                        // returnKeyType: 'search',
+                        placeholder: translate('AddNewsTagInsert'),
+                        style: {
+                          fontSize: 14,
+                          marginVertical: Platform.OS == 'ios' ? 10 : -2,
+                          color: C.black,
+                          width: '100%',
+                        },
+                      }}
                       tagTextStyle={ styles.tagText }
                       tagContainerStyle={styles.tagsInputContainer}
                       inputDefaultWidth={D.Width(100)}
@@ -168,13 +441,11 @@ class Reply extends Component<Props> {
                   <View style={styles.ReplyBody}>
                     <RichTextEditor
                       ref={(r) => this.richtext = r}
-                      // initialContentHTML={'Hello <b>World</b> <p>this is a new paragraph</p> <p>this is another new paragraph</p>'}
-                      hiddenTitle
+                      hiddenTitle={true}
                       editorInitializedCallback={() => {
-                        this.richtext.blurContentEditor();
                         this.setState({isEditorReady: true})
                       }}
-                      contentPlaceholder={"더하고 싶은 이야기를 자유롭게 적어주세요"}
+                      contentPlaceholder={translate('AddNewsContentPlaceholder')}
                     />
                     <RichTextToolbar
                       getEditor={() => this.richtext}
@@ -184,11 +455,11 @@ class Reply extends Component<Props> {
 
                   <View style={styles.ReplyBottom}>
                     <View style={styles.issueTime}>
-                      <Text style={{fontWeight:'bold'}}> 시간 </Text>
+                      <Text style={{fontWeight:'bold'}}> {translate('AddNewsTime')} </Text>
                       <Text> {new Date().getHours() + ':' + (new Date().getMinutes() < 10 ? "0" + new Date().getMinutes() : new Date().getMinutes())} </Text>
                     </View>
                     <View style={styles.issueLocation}>
-                      <Text style={{fontWeight:'bold'}}> 장소 </Text>
+                      <Text style={{fontWeight:'bold'}}> {translate('AddNewsLocation')} </Text>
                       <TextInput
                         underlineColorAndroid= 'transparent'
                         onChangeText={(location) => this.onLocationChange(location)}
@@ -205,19 +476,19 @@ class Reply extends Component<Props> {
                 <View style={styles.ReplyButtonContainer}>
                   <View style={styles.ReplyButtonWrapper}>
                     <View style={styles.ReplyButton}>
-                      <TouchableOpacity onPress={()=>console.log('save')}>
-                        <Text style={styles.ReplyButtonText}> 임시저장 </Text>
+                      <TouchableOpacity onPress={this.save}>
+                        <Text style={styles.ReplyButtonText}> {translate('AddNewsSave')}</Text>
                       </TouchableOpacity>
                     </View>
 
                     <View style={styles.ReplyButton}>
-                      <TouchableOpacity onPress={()=>console.log('add')}>
-                        <Text style={styles.ReplyButtonText}> 더하기 </Text>
+                      <TouchableOpacity onPress={this.add}>
+                        <Text style={styles.ReplyButtonText}> {translate('AddNewsSubmit')}</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
                 </View>
-                
+
               </View>
 
           </Modal>
@@ -227,7 +498,7 @@ class Reply extends Component<Props> {
 
 let mapStateToProps = (state) => {
     return {
-        user: state.user,
+        user: state.data.Auth,
       };
 }
 
@@ -240,4 +511,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Reply);
+export default withLocalize(connect(mapStateToProps, null)(Reply));

@@ -17,19 +17,14 @@ import { InfiniteScroll } from 'react-native-infinite';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import * as dataActions from '../../Modules/Data';
-import * as GetIssueBlock from '../../Lib/BlockManager/GetIssueBlocks';
+import {getIssueBlock} from '../../Lib/BlockManager/GetIssueBlocks';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './Styles';
 import { AsyncStorage } from 'react-native';
 import *  as util from '../../Util/util';
 import Reply from '../../Component/Reply/Reply';
 import IssueBlock from '../../Component/IssueBlock/IssueBlock';
-
-// import { purge } from 'redux-persist'
-
-type Props = {
-
-};
+import SplashScreen from 'react-native-splash-screen'
 
 const loadAmount = 5;
 
@@ -43,25 +38,42 @@ class Home extends Component<Props> {
 			type: 'ready',
       index: 0,
 
+      searchText: '',
       replyToggle: false,
+      targetBlock: null,
 		};
   }
 
   componentDidMount() {
     this.isMount = true;
     // if(!this.props.blocks.data.length){
-      GetIssueBlock.getIssueblock({})
+      getIssueBlock({})
       .then( (res) => {
-  			console.log('Initialized with initial data blocks', res);
+  			// console.log('Initialized with initial data blocks', res);
         this.props.DataActions.setCurrentData(res.data);
         this.setState({
           items: res.data,
         })
+
+        SplashScreen.hide();
       })
       .catch((err) => {
         console.log(err);
+        SplashScreen.hide();
       })
     // }
+  }
+
+  componentWillReceiveProps(nextProps){
+    //Refresh on reload
+    if(nextProps.navigation.state.params && nextProps.navigation.state.params.needRefresh){
+      this.load('refresh');
+      nextProps.navigation.setParams({
+        needRefresh : false,
+      })
+    }
+
+    this.setState({searchText: nextProps.screenProps.searchText})
   }
 
   componentWillUnmount() {
@@ -73,6 +85,7 @@ class Home extends Component<Props> {
 
 		switch(type) {
 			case 'more':
+        return;
 				await this.setState({ type: 'loading' });
 				await util.sleep(500);
 				if (!this.isMount) return;
@@ -90,9 +103,9 @@ class Home extends Component<Props> {
 				await this.setState({ type: 'refresh' });
 				await util.sleep(1000);
 				if (!this.isMount) return;
-        GetIssueBlock.getIssueblock({})
+        getIssueBlock({})
         .then( (res) => {
-    			console.log('Initialized with initial data blocks', res);
+    			// console.log('Initialized with initial data blocks', res);
           this.props.DataActions.setCurrentData(res.data);
           this.setState({
   					type: state.type === 'end' ? 'end' : 'ready',
@@ -110,15 +123,21 @@ class Home extends Component<Props> {
   //   return nextProps.blocks !== this.props.blocks;
   // }
 
-  goToPage(flag){
-      // console.log(flag)
-      this.props.navigation.navigate(flag);
-  }
+  toggleReply = (block) => {
+    console.log('blk', block);
 
-  toggleReply = () => {
-    this.setState({
-      replyToggle: !this.state.replyToggle,
-    })
+    if(block){
+      this.setState({
+        replyToggle: !this.state.replyToggle,
+        targetBlock : block
+      })
+    }
+    else {
+      this.setState({
+        replyToggle: !this.state.replyToggle,
+      })
+    }
+
   }
 
   renderRow({ item, index, size }) {
@@ -141,11 +160,14 @@ class Home extends Component<Props> {
 
   render() {
     const { props, state } = this;
-    const data = this.props.blocks.data;
-    console.log( props, state);
+    const { data } = this.props.blocks;
+    // console.log( props, state);
+    // const filter = data ? data.filter( (item, index) => index < 5 ) : null;
 
-    const filter = data.filter( (item, index) => index < 5 );
-
+    const filter = data ? data.filter( (item, index ) => {
+      return (item.ParentBlocks.BLOCK_ISSUE_THEME ? item.ParentBlocks.BLOCK_ISSUE_THEME.toUpperCase().indexOf(state.searchText.toUpperCase()) > -1 : null);
+    }) : null;
+    // console.log('filtered data', state.searchText,  filter);
     return (
         <View style={styles.container}>
           <InfiniteScroll
@@ -164,6 +186,8 @@ class Home extends Component<Props> {
           <Reply
             replyToggle={state.replyToggle}
             toggleReply={this.toggleReply}
+            targetBlock={state.targetBlock}
+            navigation={props.navigation}
           />
         </View>
     );

@@ -10,9 +10,6 @@ import {
 
 import { InfiniteScroll } from 'react-native-infinite';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as dataActions from '../../Modules/Data';
-import * as GetIssueBlock from '../../Lib/BlockManager/GetIssueBlocks';
 // import FontAwesome, { Icons } from 'react-native-fontawesome';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import styles from './Styles';
@@ -30,21 +27,44 @@ class Main extends Component<Props> {
       replyToggle: false,
       replyBlockToggle: false,
       replyBlockData : null,
+      targetBlock: null,
+      needRefresh: true,
     }
   }
 
-  toggleReply = () => {
-    this.setState({
-      replyToggle: !this.state.replyToggle,
-    })
+  toggleReply = (block) => {
+    if(block){
+      this.setState({
+        replyToggle: !this.state.replyToggle,
+        targetBlock : block
+      })
+    }
+    else {
+      this.setState({
+        replyToggle: !this.state.replyToggle,
+      })
+    }
+
   }
 
   toggleReplyBlock = ( block ) => {
-    console.log( block );
     this.setState({
       replyBlockToggle: !this.state.replyBlockToggle,
-      replyBlockData : block,
+      replyBlockData: block,
     })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.navigation.state.params.needRefresh){
+      this.setState({
+        needRefresh: true,
+      })
+    }
+  }
+
+  componentDidMount() {
+    // console.log(this.props.navigation);
+    // console.log(this.props.navigation.state.params.index);
   }
 
   render() {
@@ -55,9 +75,10 @@ class Main extends Component<Props> {
       <View style={styles.container}>
         <DetailBlock
           block={ block }
-
+          needRefresh = {state.needRefresh}
           replyBlockToggle={state.replyBlockToggle}
           toggleReplyBlock={this.toggleReplyBlock}
+          scrollIndex={navigation.state.params && navigation.state.params.index ? navigation.state.params.index : null}
         />
         <Add
           replyToggle={state.replyToggle}
@@ -66,6 +87,8 @@ class Main extends Component<Props> {
         <Reply
           replyToggle={state.replyToggle}
           toggleReply={this.toggleReply}
+          targetBlock={ block }
+          navigation={props.navigation}
         />
 
         {state.replyBlockData ?

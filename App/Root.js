@@ -21,12 +21,16 @@ import { NavigationActions } from 'react-navigation';
 import AppNavigator from './AppNavigator';
 import { AsyncStorage } from 'react-native';
 import * as C  from './Styles/Colors';
+import { withLocalize } from 'react-localize-redux';
+import { languageConfigure as translation, languages } from './Lib/Locale';
+// import { languages } from './Lib/Locale';
 
 const drawerStyles = {
   drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3},
   mainOverlay: {backgroundColor: '#000000', opacity: 0},
   // main: { opacity: 1},
 };
+
 
 class Root extends Component<Props, State> {
   constructor(props) {
@@ -35,16 +39,26 @@ class Root extends Component<Props, State> {
     this.state = {
       loginToggle: false,
       signupToggle: false,
+
+      searchText : '',
     }
+
+    this.props.initialize({
+        languages: languages,
+        translation:translation,
+        options: {
+          defaultLanguage: this.props.language.language ? this.props.language.language : 'kr',
+          renderToStaticMarkup: false }
+      });
 
     // 뒤로가기 버튼
     BackHandler.addEventListener('hardwareBackPress', () => {
       Alert.alert(
-        '종료',
-        '앱을 종료하시겠습니까?',
+        this.props.translate('AlertAppExitTitle'),
+        this.props.translate('AlertAppExitContent'),
         [
-          { text: '예', onPress: () => { BackHandler.exitApp(); } },
-          { text: '아니오', onPress: () => {} },
+          { text: this.props.translate('yes'), onPress: () => { BackHandler.exitApp(); } },
+          { text: this.props.translate('no'), onPress: () => {} },
 
         ],
       );
@@ -71,7 +85,7 @@ class Root extends Component<Props, State> {
   link2CreateIssue = () => {
     const { isAuthenticated, user } = this.props.user;
     if(!isAuthenticated){
-      Alert.alert('로그인 해주세요!');
+      Alert.alert('',this.props.translate('AlertLogin'));
       return false;
     }
     this.navigator && this.navigator.dispatch(
@@ -83,7 +97,7 @@ class Root extends Component<Props, State> {
   link2MyPage = () => {
     const { isAuthenticated, user } = this.props.user;
     if(!isAuthenticated){
-      Alert.alert('로그인 해주세요!');
+      Alert.alert('',this.props.translate('AlertLogin'));
       return false;
     }
     this.navigator && this.navigator.dispatch(
@@ -98,6 +112,17 @@ class Root extends Component<Props, State> {
   closeControlPanel = () => {
      this._drawer.close()
   };
+
+  searchText = ( text ) => {
+    console.log('from root', text);
+    this.setState({searchText : text})
+    this._drawer.close();
+  }
+
+  resetSearchText = () => {
+    console.log('reseting');
+    this.setState({searchText : ''})
+  }
 
   toggleLogin = () => {
     this.setState({loginToggle: !this.state.loginToggle})
@@ -118,6 +143,7 @@ class Root extends Component<Props, State> {
         ref={(ref) => this._drawer = ref}
         content={<DrawerContent
                     link2CreateIssue = {this.link2CreateIssue}
+                    searchText = {this.searchText}
                   />}
         tapToClose={true}
         openDrawerOffset={0.2} // 20% gap on the right side of drawer
@@ -136,10 +162,13 @@ class Root extends Component<Props, State> {
                   openControlPanel : this.openControlPanel,
                   closeControlPanel: this.closeControlPanel,
                   toggleLogin: this.toggleLogin,
+                  searchText: this.state.searchText,
+                  translate: this.props.translate,
                 }}
                 onNavigationStateChange={(prevState, currentState) => {
                     const currentScreen = this.getCurrentRouteName(currentState);
                     const prevScreen = this.getCurrentRouteName(prevState);
+                    this.resetSearchText();
                     console.log(currentScreen, prevScreen);
                     console.log(currentScreen === prevScreen)
                 }}
@@ -164,7 +193,8 @@ class Root extends Component<Props, State> {
 function mapStateToProps(state) {
   return {
       user: state.data.Auth,
+      language: state.data.Language,
     };
 }
 
-export default connect(mapStateToProps, null)(Root);
+export default withLocalize(connect(mapStateToProps, null)(Root));

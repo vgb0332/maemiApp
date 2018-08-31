@@ -2,7 +2,7 @@
 // API
 import * as HttpApi from '../Api/index';
 
-export const getIssueblock = ( someobject ) => {
+export const getIssueBlock = ( someobject ) => {
   console.log(someobject);
     return HttpApi.get('GET_BLOCK_ISSUE', someobject).then((response) => {
         return Promise.resolve(response.data);

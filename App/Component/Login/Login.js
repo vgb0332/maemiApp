@@ -23,26 +23,33 @@ import * as authActions from '../../Modules/Auth';
 import * as D from '../../Styles/Dimensions';
 import *  as C from '../../Styles/Colors';
 import styles from './Styles';
+import { withLocalize } from 'react-localize-redux';
 
 class Login extends Component<Props> {
   constructor(props){
     super(props);
     this.state = {
-      id: '이메일',
-      password: '비밀번호',
+      id: '',
+      password: '',
       idInit: false,
       passInit: false,
       isLoggedIn: false,
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      id: nextProps.translate('LoginDropdownEmail'),
+      password: nextProps.translate('LoginDropdownPassword'),
+    })
+  }
   onIdChange = (id) => {this.setState({id:id})}
   onIdFocus = () => {this.state.idInit ? null : this.setState({id: '', idInit: true})}
-  onIdBlur = () => {!this.state.id ? this.setState({id:'이메일', idInit: false}) : null}
+  onIdBlur = () => {!this.state.id ? this.setState({id:this.props.translate('LoginDropdownEmail'), idInit: false}) : null}
 
   onPassChange = (password) => {this.setState({password:password})}
   onPassFocus = () => {this.state.passInit ? null : this.setState({password: '', passInit: true})}
-  onPassBlur = () => {!this.state.password ? this.setState({password:'비밀번호', passInit: false}) : null}
+  onPassBlur = () => {!this.state.password ? this.setState({password:this.props.translate('LoginDropdownPassword'), passInit: false}) : null}
 
   onSubmit = () => {
     console.log('submit button clicked');
@@ -59,20 +66,18 @@ class Login extends Component<Props> {
     // }
 
     this.props.login( { EMAIL : id, PASSWORD: password} ).then((result)=>{
-      console.log('login callback');
-      console.log(result);
       if(result.success){
-        Alert.alert('로그인 되었습니다');
+        Alert.alert('', this.props.translate('LoginSuccessAlert'));
         this.props.AuthActions.setCurrentUser(result);
         this.props.toggleLogin();
       }
       if(result === 'NO ACCOUNT'){
-        Alert.alert(translate('LoginNoAccountAlert'));
+        Alert.alert(this.props.translate('LoginNoAccountAlert'));
         return false;
       }
 
       if(result === 'NO PASSMATCH'){
-        Alert.alert(translate('LoginNoPassMatchAlert'));
+        Alert.alert(this.props.translate('LoginNoPassMatchAlert'));
         return false;
       }
 
@@ -88,7 +93,7 @@ class Login extends Component<Props> {
   logOut = () => {
     if(this.props.logout()){
       this.props.AuthActions.setCurrentUser(null);
-      Alert.alert('로그아웃 되었습니다');
+      Alert.alert('', this.props.translate('LogoutAlert'));
       this.props.toggleLogin();
     }
 
@@ -98,7 +103,7 @@ class Login extends Component<Props> {
     const { state, props } = this;
     const {loginToggle} = props;
     const { isAuthenticated } = props.user;
-
+    const { translate } = props;
     if(loginToggle && !isAuthenticated){
       return (
         <TouchableOpacity activeOpacity={1} style={ { position: 'absolute', width: D.Width(100), height: D.Height(100), backgroundColor: 'transparent' , zIndex:5,} }
@@ -125,22 +130,22 @@ class Login extends Component<Props> {
 
             <View style={styles.buttonContainer}>
               <View style={styles.text}>
-                <TouchableHighlight >
-                  <Text> 비밀번호 찾기 </Text>
+                <TouchableHighlight onPress={()=>Alert.alert('', '준비중입니다')} >
+                  <Text> {translate('FindPassword')} </Text>
                 </TouchableHighlight>
               </View>
               <View style={styles.buttonWrapper}>
                 <TouchableOpacity onPress={props.toggleSignup}>
                   <View style={styles.button}>
 
-                      <Text> 회원가입 </Text>
+                      <Text>{ translate('SignUpHeader')} </Text>
 
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.onSubmit}>
                   <View style={styles.button}>
 
-                      <Text> 로그인 </Text>
+                      <Text> { translate('LoginDropdownLogin')} </Text>
 
                   </View>
                 </TouchableOpacity>
@@ -160,14 +165,14 @@ class Login extends Component<Props> {
                 <TouchableOpacity onPress={this.link2Profile}>
                   <View style={styles.UserButton}>
 
-                      <Text> 프로필 </Text>
+                      <Text> {translate('UserDropdownProfile')} </Text>
 
                   </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.logOut}>
                   <View style={styles.UserButton}>
 
-                      <Text> 로그아웃 </Text>
+                      <Text> {translate('UserDropdownLogout')} </Text>
 
                   </View>
                 </TouchableOpacity>
@@ -198,4 +203,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 // Login = connect(mapStateToProps, mapDispatchToProps)(Login);
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withLocalize(connect(mapStateToProps, mapDispatchToProps)(Login));

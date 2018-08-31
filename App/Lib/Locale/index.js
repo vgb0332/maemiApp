@@ -1,6 +1,20 @@
-export const languages = ['kr', 'en'];
+export const languages = [
+  { name: 'Korean', code: 'kr' },
+  { name: 'English', code: 'en' }
+];
 
 export const languageConfigure = {
+  AlertAppExitTitle : ['종료', 'Exit'],
+  AlertAppExitContent: ['앱을 종료하시겠습니까?', 'Would you like to exit?'],
+
+  AlertAppBackTitle: ['돌아가기', 'Return'],
+  AlertCancel: ['작성을 취소하시겠습니까?(작성하신 내용은 저장되지 않습니다)', 'Would you like to cancel?(whatever written will not be saved)'],
+
+  yes: ['예', 'yes'],
+  no: ['아니오', 'no'],
+  confirm: ['확인', 'Confirm'],
+  error: ['에러! 잠시 후 다시 시도해주세요', 'Error! Please try again later'],
+
   languageSelect : ['언어 선택', 'Language'],
 
   search: ['주제, 장소 등 검색', 'Search'],
@@ -20,13 +34,15 @@ export const languageConfigure = {
   LoginNoPassAlert: ['비밀번호를 입력하세요', 'Please Fill Password'],
   LoginNoAccountAlert: ['없는 계정입니다', 'No Account Found'],
   LoginNoPassMatchAlert: ['비밀번호가 틀렸습니다', 'Password is incorrect'],
+  FindPassword : ['비밀번호 찾기', 'Forgot Password?'],
+  LoginSuccessAlert: ['로그인 되었습니다', 'Succesfully loggged in'],
 
-  LogoutAlert: ['로그아웃 되었습니다', 'Succesfully Logged out'],
+  LogoutAlert: ['로그아웃 되었습니다', 'Succesfully logged out'],
 
   SignUpHeader: ['회원가입', 'Sign Up'],
   SignUpEmail: ['이메일', 'E-Mail'],
   SignUpPassword: ['비밀번호', 'Password'],
-  SignUpUserName: ['이름', 'Real Name'],
+  SignUpUserName: ['이름', 'Name'],
   SignUpNickName: ['닉네임', 'Nick Name'],
   SignUpSignUp: ['가입', 'Sign Up'],
   SignUpCancel: ['닫기', 'Cancel'],
@@ -37,8 +53,8 @@ export const languageConfigure = {
   SignUpNameEmptyAlert: ['이름을 입력해주세요', 'Please Fill Name'],
   SignUpNickEmptyAlert: ['닉네임을 입력해주세요', 'Please Fill Nickname'],
   SignUpPassNotMatchAlert: ['비밀번호가 일치하지 않습니다', 'Passwords do not match!'],
-
-
+  SingUpInputAlert: ['를 입력해주세요', 'is required'],
+  SignUpSuccessAlert : ['가입이 완료되었습니다', 'Signed up Succesfully!'],
   UserDropdownProfile: ['프로필', 'Profile'],
   UserDropdownLogout: ['로그아웃', 'Logout'],
 
@@ -67,8 +83,13 @@ export const languageConfigure = {
   PrfileEdit: ['편집', 'Edit'],
 
   Scrap: ['스크랩', 'Scrap'],
+  AlertScrapSuccess: ['스크랩되었습니다!', 'Scrapped Succesfully'],
+  AlertScrapFail: ['스크랩에 실패했습니다. 다시 시도해주세요','Scrapped Failed. Try Again'],
+  AlertDuplicateScrap: ['이미 스크랩된 기사입니다!', 'It has already been scrapped'],
 
   TagDupAlert: ['중복된 태그입니다', 'Duplicate Tag Name'],
+
+  AlertError: ['오류', 'Error'],
 
   CreateIssueSubmit: ['요청하기', 'Request'],
   CreateIssueSave: ['임시저장', 'Temporary Save'],
@@ -80,10 +101,34 @@ export const languageConfigure = {
   CreateIssueLocation: ['위치', 'Location'],
   CreateIssueLocationInsert: ['입력', 'Insert'],
   CreateIssueNoImageAlert: ['이미지를 등록해주세요', 'Please Register an Image'],
-  CreateIssueNoTagsAlert: ['태그를 작성해주세요', 'Please fill at least one tag'],
+  CreateIssueNoTagsAlert: ['태그(최소 1개)를 작성해주세요', 'Please fill at least one tag'],
   CreateIssueNoTitleAlert: ['제목을 작성해주세요', 'Please fill Title'],
   CreateIssueNoLocationAlert: ['위치를 작성해주세요', 'Please fill Location'],
   CreateIssueNoContentAlert: ['본문을 작성해주세요', 'Please Content'],
+
+  AlertCreateIssueTitle : ['요청하기', 'Request'],
+  AlertCreateIssueContent: ['요청하시겠습니까?', 'Would you like to submit a request?'],
+
+  AlertSaveTitle : ['저장하기' ,'Save'],
+  AlertSaveContent : ['저장하시겠습니까?', 'Would you like to save?'],
+
+  AlertSubmitSuccess: ['등록되었습니다!', 'Succesfully submitted!'],
+  AlertSubmitFail: ['등록에 실패했습니다. 다시 시도해주세요', 'Submission failed. Please try again'],
+  AlertSaveSuccess: ['저장되었습니다!', 'Succesfully saved!'],
+  AlertSaveFail: ['저장에 실패했습니다. 다시 시도해주세요', 'Save failed. Please try again'],
+
+  AlertEditTitle : ['편집 완료', 'Edit'],
+  AlertEditContent: ['편집하시겠습니까?' ,'Would you like to make changes?'],
+
+  AlertEditCancelTitle : ['편집 취소', 'Cancel'],
+  AlertEditCancelContent: ['취소하시겠습니까?' ,'Would you like to cancel changes?'],
+
+  AlertAddNewsTitle : ['더하기', 'Add'],
+  AlertAddNewsContent: ['더하시겠습니까?', 'Would you like to add the news?'],
+
+  AlertAddReplyTitle : ['댓글 등록', 'Add Comment'],
+  AlertAddReplyContent: ['등록하시겠습니까?', 'Would you like to add a comment?'],
+  AddReply: ['댓글 작성하기', 'Add a comment'],
 
   AddNewsSubmit: ['더하기', 'Add'],
   AddNewsSave: ['임시저장', 'Temporary Save'],
@@ -93,5 +138,10 @@ export const languageConfigure = {
   AddNewsTime: ['시간', 'Time'],
   AddNewsLocation: ['위치', 'Location'],
   AddNewsLocationInsert: ['입력', 'Insert'],
+
+  pictureSelectTitle: ['사진을 선택하세요', 'select picture'],
+  pictureCancelTitle: ['취소', 'Cancel'],
+  pictureTakePhotoTitle : ['사진 찍기', 'Take a photo'],
+  pictureChooseTitle: ['갤러리에서 선택', 'Choose from gallery'],
 
 };

@@ -10,6 +10,7 @@ import {
 import { AsyncStorage } from 'react-native';
 import { scrapCheck, scrapBlock } from '../../Lib/UserManager/scrapBlock';
 import { connect } from 'react-redux';
+import { withLocalize } from 'react-localize-redux';
 
 class Scrap extends Component<Props> {
   constructor(props){
@@ -23,7 +24,7 @@ class Scrap extends Component<Props> {
   scrap = ( ) => {
     const { isAuthenticated, user } = this.props.user;
     if(!isAuthenticated){
-      Alert.alert('로그인이 필요합니다!');
+      Alert.alert('' ,this.props.translate('AlertLogin'));
       return false;
     }
 
@@ -42,17 +43,17 @@ class Scrap extends Component<Props> {
             })
             .then((res)=>{
               if(res.success){
-                Alert.alert('스크랩되었습니다!');
+                Alert.alert('', this.props.translate('AlertDuplicateScrap'));
               }
               else{
-                Alert.alert('스크랩에 실패했습니다. 다시 시도해주세요');
+                Alert.alert('' , this.props.translate('AlertScrapFail'));
               }
             })
             .catch(err=>console.log(err));
         }
 
         else {
-          Alert.alert('이미 스크랩된 기사입니다');
+          Alert.alert('', this.props.translate('AlertDuplicateScrap'));
         }
       })
       .catch(err=>console.log(err))
@@ -65,9 +66,11 @@ class Scrap extends Component<Props> {
 
   render() {
     const { isAuthenticated, user } = this.props.user;
+    const { translate } = this.props;
+
     return (
       <TouchableOpacity onPress={ this.scrap }>
-        <Text> 스크랩 </Text>
+        <Text> { translate('Scrap')} </Text>
       </TouchableOpacity>
     );
   }
@@ -79,4 +82,4 @@ let mapStateToProps = (state) => {
       };
 }
 
-export default connect( mapStateToProps, null )(Scrap);
+export default withLocalize(connect( mapStateToProps, null )(Scrap));

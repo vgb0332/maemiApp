@@ -10,6 +10,15 @@ export default StyleSheet.create({
     backgroundColor: C.header,
   },
 
+  activityIndicator : {
+    position: 'absolute',
+    width: D.Width(100),
+    height: D.Height(100) - 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 20,
+  },
+  
   ReplyBlockDetailWrapper :  {
     flex: 1,
     margin: 20,
@@ -71,6 +80,11 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+
+  StatusText: {
+    textAlign : 'center',
+    color: 'black',
   },
 
   ReplyBlockDetailReplies : {

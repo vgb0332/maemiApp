@@ -3,7 +3,7 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { persistStore, persistReducer, persistCombineReducers } from 'redux-persist';
 import storage from 'redux-persist/es/storage';
-
+import { LocalizeProvider, localizeReducer } from "react-localize-redux";
 // Reducer
 import { reducer as dataReducer } from './Modules/index';
 
@@ -14,7 +14,8 @@ const config = {
 };
 
 const rootReducer = combineReducers({
-    data: persistReducer(config, dataReducer)
+    data: persistReducer(config, dataReducer),
+    localize: localizeReducer,
 });
 
 function configureStore() {

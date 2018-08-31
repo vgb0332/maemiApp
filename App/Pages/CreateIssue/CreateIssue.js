@@ -33,18 +33,8 @@ import { uploadByUri } from '../../Lib/UploadManager/UploadManage';
 import { createIssueBlock } from '../../Lib/BlockManager/CreateIssueBlock';
 import { saveBlock } from '../../Lib/BlockManager/SaveBlock';
 import isNullOrWhiteSpace from '../../Util/isNullOrWhiteSpace';
+import { withLocalize } from 'react-localize-redux';
 
-const tagProps = {
-  keyboardType: 'default',
-  // returnKeyType: 'search',
-  placeholder: '#입력(최대 10개)',
-  style: {
-    fontSize: 14,
-    marginVertical: Platform.OS == 'ios' ? 10 : -2,
-    color: C.black,
-    width: '100%',
-  },
-}
 
 class CreateIssue extends Component<Props> {
   constructor(props) {
@@ -53,13 +43,13 @@ class CreateIssue extends Component<Props> {
       tags: [],
       text: '',
 
-      title: '제목을 입력해주세요',
+      title: this.props.translate('CreateIssueTitle'),
       titleInit: false,
 
-      content: '요청하고 싶은 뉴스에 대해 설명해주세요',
+      content: this.props.translate('CreateIssueContentPlaceholder'),
       contentInit: false,
 
-      location: '입력',
+      location: this.props.translate('CreateIssueLocationInsert'),
       locationInit: false,
 
       image: '',
@@ -77,7 +67,7 @@ class CreateIssue extends Component<Props> {
     if(this.state.tags.length > 10) return false;
     const lastTyped = text.charAt(text.length - 1);
     const parseWhen = [',', ' ', ';', '\n'];
-    console.log(lastTyped);
+
     if (parseWhen.indexOf(lastTyped) > -1) {
       this.setState({
         tags: [...this.state.tags, this.state.text],
@@ -108,7 +98,7 @@ class CreateIssue extends Component<Props> {
 
   onTitleBlur = () => {
     if(this.state.title === ''){
-      this.setState({title: '제목을 입력해주세요', titleInit:false,})
+      this.setState({title: this.props.translate('CreateIssueNoTitleAlert'), titleInit:false,})
     }
   }
 
@@ -121,7 +111,7 @@ class CreateIssue extends Component<Props> {
   }
 
   onContentBlur = () => {
-    if(this.state.content === ''){ this.setState({content: '요청하고 싶은 뉴스에 대해 설명해주세요', contentInit:false,})}
+    if(this.state.content === ''){ this.setState({content: this.props.translate('CreateIssueContentPlaceholder'), contentInit:false,})}
   }
 
   onLocationChange = (location) => {
@@ -133,49 +123,66 @@ class CreateIssue extends Component<Props> {
   }
 
   onLocationBlur = () => {
-    if(this.state.location === ''){ this.setState({location: '입력',locationInit:false,})}
+    if(this.state.location === ''){ this.setState({location: this.props.translate('CreateIssueLocationInsert'),locationInit:false,})}
   }
 
   onSubmit = () => {
-    console.log(this.state);
     Alert.alert(
-      '요청하기',
-      '요청하시겠습니까?',
+      this.props.translate('AlertCreateIssueTitle'),
+      this.props.translate('AlertCreateIssueContent'),
       [
-        {text: '예', onPress: () => this.verifyProcess('submit')},
-        {text: '아니오', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+        {text: this.props.translate('yes'), onPress: () => this.verifyProcess('submit')},
+        {text: this.props.translate('no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+    )
+  }
+
+
+  onSave = () => {
+    Alert.alert(
+      this.props.translate('AlertSaveTitle'),
+      this.props.translate('AlertSaveContent'),
+      [
+        {text: this.props.translate('yes'), onPress: () => this.verifyProcess('save')},
+        {text: this.props.translate('no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
       ],
     )
   }
 
   verifyProcess = (type) => {
     if(type === 'submit'){
-      console.log('submit process');
       const { tags, title, content, location, image, time } = this.state;
       const { titleInit, contentInit, locationInit } = this.state;
       const { user } = this.props.user;
       if(isNullOrWhiteSpace(tags)){
-        Alert.alert('오류', '태그(최소 1개)를 입력해주세요!');
+        Alert.alert(
+          this.props.translate('AlertError'),
+          this.props.translate('CreateIssueNoTagsAlert'));
         return false;
       }
 
       if(isNullOrWhiteSpace(image)){
-        Alert.alert('오류', '이미지를 등록해주세요!');
+        Alert.alert(
+          this.props.translate('AlertError'),
+          this.props.translate('CreateIssueNoImageAlert'));
         return false;
       }
 
       if(!titleInit){
-        Alert.alert('오류', '제목을 입력해주세요!');
+        Alert.alert(this.props.translate('AlertError'),
+                    this.props.translate('CreateIssueNoTitleAlert'),);
         return false;
       }
 
       if(!contentInit){
-        Alert.alert('오류', '내용을 입력해주세요!');
+        Alert.alert(this.props.translate('AlertError'),
+                    this.props.translate('CreateIssueNoContentAlert'));
         return false;
       }
 
       if(!locationInit){
-        Alert.alert('오류', '위치를 입력해주세요!');
+        Alert.alert(this.props.translate('AlertError'),
+                    this.props.translate('CreateIssueNoLocationAlert'));
         return false;
       }
 
@@ -200,13 +207,13 @@ class CreateIssue extends Component<Props> {
               createIssueBlock(block).then( (res) => {
                 this.setState({loading:false})
                 if(res.success){
-                  Alert.alert('', '등록되었습니다!',
+                  Alert.alert('', this.props.translate('AlertSubmitSuccess'),
                   [
-                    {text: '확인', onPress: () => this.props.navigation.goBack()},
+                    {text: '확인', onPress: () => this.props.navigation.navigate('Home', { needRefresh: true })},
                   ]);
                 }
                 else {
-                  Alert.alert('오류', '등록에 실패했습니다. 다시 시도해주세요');
+                  Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
                 }
               })
               .catch((err) => {
@@ -216,22 +223,95 @@ class CreateIssue extends Component<Props> {
           })
           .catch((err) => {
             console.log(err);
-            Alert.alert('오류', '등록에 실패했습니다. 다시 시도해주세요');
+            Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
           })
       })
 
     }
 
     else if(type === 'save'){
+      const { tags, title, content, location, image, time } = this.state;
+      const { titleInit, contentInit, locationInit } = this.state;
+      const { user } = this.props.user;
 
+      if(image){
+        this.setState({ loading: true });
+        AsyncStorage.getItem('token').then( token => {
+          uploadByUri(image.uri, 'image/jpeg', new Date().getTime() + '.jpg')
+            .then((url) => {
+                let block = {
+                  FLAG : 'issue',
+                  TOKEN : token,
+                  UID: user.uid,
+                  PPID : 'root',
+                  BLOCK_ISSUE_THEME : title,
+                  BLOCK_ISSUE_HASHTAG : tags.join(),
+                  BLOCK_ISSUE_CONTENT : content,
+                  BLOCK_ISSUE_IMAGE : [url.replace(/\s/g, '')],
+                  BLOCK_ISSUE_VIDEO : 'video_url',
+                  BLOCK_ISSUE_LOCATION : location,
+                  BLOCK_ISSUE_WRITE_TIME: time,
+                }
+
+                createIssueBlock(block).then( (res) => {
+                  this.setState({loading:false})
+                  if(res.success){
+                    Alert.alert('', this.props.translate('AlertSaveSuccess'),
+                    [
+                      {text: '확인', onPress: () => this.props.navigation.navigate('Home', { needRefresh: true })},
+                    ]);
+                  }
+                  else {
+                    Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSaveFail'));
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                })
+
+            })
+            .catch((err) => {
+              console.log(err);
+              Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSaveFail'));
+            })
+        })
+      }
+      else {
+        this.setState({ loading: true });
+        let block = {
+          FLAG : 'issue',
+          TOKEN : token,
+          UID: user.uid,
+          PPID : 'root',
+          BLOCK_ISSUE_THEME : title,
+          BLOCK_ISSUE_HASHTAG : tags.join(),
+          BLOCK_ISSUE_CONTENT : content,
+          BLOCK_ISSUE_IMAGE : [url.replace(/\s/g, '')],
+          BLOCK_ISSUE_VIDEO : 'video_url',
+          BLOCK_ISSUE_LOCATION : location,
+          BLOCK_ISSUE_WRITE_TIME: time,
+        }
+
+        createIssueBlock(block).then( (res) => {
+          this.setState({loading:false})
+          if(res.success){
+            Alert.alert('', this.props.translate('AlertSaveSuccess'),
+            [
+              {text: this.props.translate('confirm'), onPress: () => this.props.navigation.navigate('Home', { needRefresh: true })},
+            ]);
+          }
+          else {
+            Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSaveFail'));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      }
 
     }
-
   }
 
-  onSave = () => {
-    console.log('onSave');
-  }
 
   componentDidMount() {
     this.props.navigation.setParams({
@@ -242,17 +322,35 @@ class CreateIssue extends Component<Props> {
     BackHandler.addEventListener('hardwareBackPress', this.onBackPress);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.navigation.state && nextProps.navigation.state.params.fromMyPage){
+      console.log(nextProps);
+      const { block } = nextProps.navigation.state.params;
+
+      this.setState({
+        tags : block.BLOCK_ISSUE_HASHTAG.split(','),
+        title: block.BLOCK_ISSUE_THEME,
+        titleInit: true,
+        content: block.BLOCK_ISSUE_CONTENT,
+        contentInit: true,
+        location: block.BLOCK_ISSUE_LOCATION,
+        locationInit: true,
+        image: block.BLOCK_ISSUE_IMAGE,
+      })
+    }
+  }
+
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.onBackPress);
   }
 
   onBackPress = () => {
     Alert.alert(
-      '돌아가기',
-      '작성을 취소하시겠습니까?(작성 중이신 내용은 저장되지 않습니다)',
+      this.props.translate('AlertAppBackTitle'),
+      this.props.translate('AlertCancel'),
       [
-        { text: '예', onPress: () => { this.props.navigation.goBack(null) } },
-        { text: '아니오', onPress: () => {},  style: 'cancel' },
+        { text: this.props.translate('yes'), onPress: () => { this.props.navigation.goBack(null) } },
+        { text: this.props.translate('no'), onPress: () => {},  style: 'cancel' },
 
       ],
     );
@@ -262,18 +360,19 @@ class CreateIssue extends Component<Props> {
   render() {
     const { props, state } = this;
     console.log(state, props);
+    const { translate } = props;
 
     return (
       <KeyboardAwareScrollView>
         <View style={styles.container}>
           {state.loading ?
             <View style={styles.activityIndicator}>
-              <ActivityIndicator size="large" color="#0000ff" animating={state.loading}/>
+              <ActivityIndicator size="large" color="#000000" animating={state.loading}/>
             </View> : null
           }
           <View style={styles.tags}>
             <Text style={styles.tagsTitle} >
-              태그
+              { translate('CreateIssueTag') }
             </Text>
             <TagInput
               value={state.tags}
@@ -281,7 +380,16 @@ class CreateIssue extends Component<Props> {
               labelExtractor={ this.labelExtractor }
               text={state.text}
               onChangeText={ this.onTagChange }
-              inputProps={tagProps}
+              inputProps={{
+                keyboardType: 'default',
+                returnKeyType: 'search',
+                placeholder: this.props.translate('CreateIssueTagInsert'),
+                style: {
+                  fontSize: 14,
+                  marginVertical: Platform.OS == 'ios' ? 10 : -2,
+                  color: C.black,
+                  width: '100%',
+                }}}
               tagTextStyle={ styles.tagText }
               tagContainerStyle={styles.tagsInputContainer}
               inputDefaultWidth={D.Width(100)}
@@ -295,6 +403,7 @@ class CreateIssue extends Component<Props> {
               onFocus={this.onTitleFocus}
               onBlur={this.onTitleBlur}
               value={state.title}
+
               underlineColorAndroid= 'transparent'
             />
           </View>
@@ -305,12 +414,12 @@ class CreateIssue extends Component<Props> {
 
               onStart={ ()=> this.setState({loading: true}) }
               onCancel= { () => this.setState({loading: false}) }
-              onError={ () => Alert.alert('에러! 잠시 후 다시 시도해주세요')}
+              onError={ () => Alert.alert(translate('error'))}
               promptOptions = {{
-                title: "사진을 선택하세요",
-                cancelButtonTitle : '취소',
-                takePhotoButtonTitle : '사진 찍기',
-                chooseFromLibraryButtonTitle : '갤러리에서 선택'
+                title: translate('pictureSelectTitle'),
+                cancelButtonTitle : translate('pictureCancelTitle'),
+                takePhotoButtonTitle : translate('pictureTakePhotoTitle'),
+                chooseFromLibraryButtonTitle : translate('pictureChooseTitle')
               }}
               containerStyle= {{
                 backgroundColor: C.header,
@@ -321,7 +430,7 @@ class CreateIssue extends Component<Props> {
                    height: D.Width(80),
                  }}
                  resizeMode='cover'
-                 source={require('../../Public/Images/gallery.png')}
+                 source={state.image ? {uri:state.image} : require('../../Public/Images/gallery.png')}
                />
             </PhotoUpload>
           </View>
@@ -333,6 +442,7 @@ class CreateIssue extends Component<Props> {
               onFocus={this.onContentFocus}
               onBlur={this.onContentBlur}
               value={state.content}
+              multiline={true}
               underlineColorAndroid= 'transparent'
               maxLength = {200}
             />
@@ -340,11 +450,11 @@ class CreateIssue extends Component<Props> {
 
           <View style={styles.issueExtra}>
             <View style={styles.issueTime}>
-              <Text> 시간 </Text>
+              <Text> {translate('CreateIssueTime')} </Text>
               <Text> {new Date().getHours() + ':' + (new Date().getMinutes() < 10 ? "0" + new Date().getMinutes() : new Date().getMinutes())} </Text>
             </View>
             <View style={styles.issueLocation}>
-              <Text> 장소 </Text>
+              <Text> {translate('CreateIssueLocation')} </Text>
               <TextInput
                 underlineColorAndroid= 'transparent'
                 onChangeText={(location) => this.onLocationChange(location)}
@@ -375,4 +485,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, null)(CreateIssue);
+export default withLocalize(connect(mapStateToProps, null)(CreateIssue));

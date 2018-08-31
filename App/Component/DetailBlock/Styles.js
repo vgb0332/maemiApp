@@ -46,8 +46,8 @@ const styles = {
     tag: {
       backgroundColor:C.header,
       padding:5,
-      marginRight:10,
-      marginBottom: 10
+      marginRight:5,
+      marginBottom: 5
     }
   },
 
@@ -55,9 +55,9 @@ const styles = {
     wrap : { flexDirection: 'column' },
 
     image : {
-      width: D.Width(100),
+      width: '100%',
       height: D.Width(80),
-      marginHorizontal: 10,
+      // marginHorizontal: 10,
     },
   },
 
@@ -66,6 +66,7 @@ const styles = {
 
     content : {
       textAlign: 'center',
+      color: 'black',
       // paddingLeft:10
     },
   },

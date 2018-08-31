@@ -3,12 +3,15 @@ import {
     Image,
     TouchableHighlight,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
 
 import styles from './Styles';
 import * as D from '../../Styles/Dimensions';
 import *  as C from '../../Styles/Colors';
 import *  as util from '../../Util/util';
+import { connect } from 'react-redux';
+import { withLocalize } from 'react-localize-redux';
 
 class Add extends Component<Props> {
   constructor(props) {
@@ -20,8 +23,12 @@ class Add extends Component<Props> {
 
   render() {
     const { props, state } = this;
+    const { isAuthenticated } = props.user;
+
     return (
-      <TouchableOpacity style={styles.AddWrapper} onPress={props.toggleReply}>
+      <TouchableOpacity style={styles.AddWrapper} onPress={
+          isAuthenticated ? props.toggleReply : ()=>Alert.alert('', this.props.translate('LoginAlert'))
+        }>
         <Image
         style={styles.AddImage}
         source={require('../../Public/Images/plus.png')} />
@@ -30,4 +37,11 @@ class Add extends Component<Props> {
   }
 }
 
-export default Add;
+let mapStateToProps = (state) => {
+    return {
+        user: state.data.Auth,
+      };
+}
+
+
+export default withLocalize(connect(mapStateToProps, null)(Add));

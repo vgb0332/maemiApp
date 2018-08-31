@@ -2,7 +2,7 @@
 // API
 import * as HttpApi from '../Api/index';
 
-export const createReplyblock = ( someobject ) => {
+export const createReplyBlock = ( someobject ) => {
   console.log(someobject);
     return HttpApi.post('POST_BLOCK_REPLY', someobject).then((response) => {
         return Promise.resolve(response.data);

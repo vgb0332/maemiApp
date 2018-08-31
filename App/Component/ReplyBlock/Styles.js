@@ -91,6 +91,7 @@ const styles = {
     },
     text: {
       textAlign: 'center',
+      color: 'black',
     }
   },
 

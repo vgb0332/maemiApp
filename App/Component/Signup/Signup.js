@@ -25,12 +25,13 @@ import * as D from '../../Styles/Dimensions';
 import *  as C from '../../Styles/Colors';
 import styles from './Styles';
 import { signup } from '../../Lib/AuthManager/Auth';
+import { withLocalize } from 'react-localize-redux';
 
 class Signup extends Component<Props> {
   constructor(props){
     super(props);
     this.state = {
-      name: '이름',
+      name: '',
       id: '이메일',
       password: '비밀번호',
       passcheck: '비밀번호 확인',
@@ -50,6 +51,26 @@ class Signup extends Component<Props> {
       password: '비밀번호',
       passcheck: '비밀번호 확인',
       nickname: '닉네임',
+    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.translate){
+      this.setState({
+        name: nextProps.translate('SignUpUserName'),
+        id:nextProps.translate('SignUpEmail'),
+        password: nextProps.translate('SignUpPassword'),
+        passcheck: nextProps.translate('SignUpCheckPassword'),
+        nickname: nextProps.translate('SignUpNickName'),
+      })
+
+      this.labels = {
+        name: nextProps.translate('SignUpUserName'),
+        id:nextProps.translate('SignUpEmail'),
+        password: nextProps.translate('SignUpPassword'),
+        passcheck: nextProps.translate('SignUpCheckPassword'),
+        nickname: nextProps.translate('SignUpNickName'),
+      }
     }
   }
 
@@ -79,7 +100,6 @@ class Signup extends Component<Props> {
   }
 
   onSubmit = async () => {
-    console.log('on submit');
     const {
       name, id, password, passcheck, nickname
     } = this.state;
@@ -89,7 +109,7 @@ class Signup extends Component<Props> {
     //check for emptiness
     for (const key of Object.keys(this.labels)) {
       if(!this.state[key+'Init']){
-        Alert.alert(this.labels[key] + '를 입력해주세요^^');
+        Alert.alert('',this.labels[key] + ' ' + this.props.translate('SingUpInputAlert'));
         isValid = false;
         return false;
       }
@@ -97,7 +117,7 @@ class Signup extends Component<Props> {
 
     //check if the passwrods match
     if(password !== passcheck){
-      Alert.alert('비밀번호가 일치하지 않습니다!');
+      Alert.alert('', this.props.translate('SignUpPassNotMatchAlert'));
       isValie = true;
       return false;
     }
@@ -114,16 +134,14 @@ class Signup extends Component<Props> {
     };
 
     this.props.signup(data).then( result => {
-      console.log("[SIGNUP CALLBACK]")
-      console.log(result);
       if(result.success){
-        Alert.alert('가입이 완료되었습니다!');
+        Alert.alert(''. this.props.translate('SignUpSuccessAlert'));
         this.props.AuthActions.setCurrentUser(result);
         this.props.toggleSignup();
         this.props.toggleLogin();
       }
       else{
-        Alert.alert('뭔가 문제가  생김. 나중에 다시해주길');
+        Alert.alert(this.props.translate('AlertError'), this.props.translate('error'));
       }
     })
 
@@ -132,7 +150,7 @@ class Signup extends Component<Props> {
 
   render(){
     const { state, props } = this;
-    // console.log(state, props);
+    const { translate } = props;
 
     return (
           <Modal
@@ -145,7 +163,7 @@ class Signup extends Component<Props> {
             <View style={styles.SignupContainer}>
               <View style={styles.SignupWrapper}>
                 <View style={styles.SignupHeader}>
-                  <Text style={styles.SignupHeaderText}>회원가입</Text>
+                  <Text style={styles.SignupHeaderText}> { translate('SignUpHeader') } </Text>
                   <TouchableHighlight onPress={props.toggleSignup}>
                     <Icon style={{alignSelf:'flex-end'}} name="x" size={30} color="#ffffff" />
                   </TouchableHighlight>
@@ -153,7 +171,7 @@ class Signup extends Component<Props> {
 
                 <View style={styles.SignupBody}>
                   <View style={styles.SignupBodyInputWrapper}>
-                    <Text style={styles.SignupLabel}> 이름 </Text>
+                    <Text style={styles.SignupLabel}> { translate('SignUpUserName') } </Text>
                     <TextInput
                       style={[styles.SignupInput, state.nameInit ? styles.SignUpInputActive : null]}
                       onChangeText={(name) => this.onInputChange('name', name)}
@@ -165,7 +183,7 @@ class Signup extends Component<Props> {
                   </View>
 
                   <View style={styles.SignupBodyInputWrapper}>
-                      <Text style={styles.SignupLabel}> 이메일 </Text>
+                      <Text style={styles.SignupLabel}> { translate('SignUpEmail') } </Text>
                       <TextInput
                         style={[styles.SignupInput, state.idInit ? styles.SignUpInputActive : null]}
                         onChangeText={(id) => this.onInputChange('id', id)}
@@ -177,7 +195,7 @@ class Signup extends Component<Props> {
                   </View>
 
                   <View style={styles.SignupBodyInputWrapper}>
-                      <Text style={styles.SignupLabel}> 비밀번호 </Text>
+                      <Text style={styles.SignupLabel}> { translate('SignUpPassword') } </Text>
                       <TextInput
                         secureTextEntry={ state.passwordInit }
                         style={[styles.SignupInput, state.passwordInit ? styles.SignUpInputActive : null]}
@@ -190,7 +208,7 @@ class Signup extends Component<Props> {
                   </View>
 
                   <View style={styles.SignupBodyInputWrapper}>
-                      <Text style={styles.SignupLabel}> 비밀번호 확인 </Text>
+                      <Text style={styles.SignupLabel}> { translate('SignUpCheckPassword') } </Text>
                       <TextInput
                         secureTextEntry={ state.passcheckInit }
                         style={[styles.SignupInput, state.passcheckInit ? styles.SignUpInputActive : null]}
@@ -203,7 +221,7 @@ class Signup extends Component<Props> {
                   </View>
 
                   <View style={styles.SignupBodyInputWrapper}>
-                      <Text style={styles.SignupLabel}> 닉네임 </Text>
+                      <Text style={styles.SignupLabel}> { translate('SignUpNickName') } </Text>
                       <TextInput
                         style={[styles.SignupInput, state.nicknameInit ? styles.SignUpInputActive : null]}
                         onChangeText={(nickname) => this.onInputChange('nickname', nickname)}
@@ -218,7 +236,7 @@ class Signup extends Component<Props> {
                 <View style={styles.SignupFooter}>
                   <TouchableOpacity onPress={this.onSubmit}>
                     <View style={styles.SignupButton}>
-                      <Text style={styles.SingupButtonText}> 가입 </Text>
+                      <Text style={styles.SingupButtonText}> { translate('SignUpSignUp') } </Text>
                     </View>
                   </TouchableOpacity>
                 </View>
@@ -245,4 +263,4 @@ let mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Signup);
+export default withLocalize(connect(mapStateToProps, mapDispatchToProps)(Signup));

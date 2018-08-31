@@ -9,6 +9,15 @@ export default StyleSheet.create({
 
     },
 
+    activityIndicator : {
+      position: 'absolute',
+      width: D.Width(100),
+      height: D.Height(100) - 60,
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 20,
+    },
+
     Wrapper: {
 
     },
@@ -31,7 +40,7 @@ export default StyleSheet.create({
     },
 
     mainImage: {
-      backgroundColor: C.white,
+      // backgroundColor: 'transparent',
       width: '100%',
       height: D.Width(30),
       // height: '100%',
@@ -63,6 +72,12 @@ export default StyleSheet.create({
     description : {
       color: C.white,
       textAlign : 'center',
+    },
+
+    descriptionOnEdit : {
+      backgroundColor: C.white,
+      color : 'black',
+      textAlign: 'center',
     },
 
     Tab : {
