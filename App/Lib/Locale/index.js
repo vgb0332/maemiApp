@@ -23,6 +23,9 @@ export const languageConfigure = {
 
   LoginButton: ['로그인', 'LOGIN'],
 
+  korean: ['한국어', 'Korean'],
+  english: ['영어', 'English'],
+
   AlertLogin: ['로그인 하세요', 'You need to login in first'],
 
   LoginDropdownEmail: ['이메일', 'Email'],

@@ -144,6 +144,7 @@ class Root extends Component<Props, State> {
         content={<DrawerContent
                     link2CreateIssue = {this.link2CreateIssue}
                     searchText = {this.searchText}
+                    setActiveLanguage={this.props.setActiveLanguage}
                   />}
         tapToClose={true}
         openDrawerOffset={0.2} // 20% gap on the right side of drawer

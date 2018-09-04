@@ -165,8 +165,8 @@ class Home extends Component<Props> {
     // const filter = data ? data.filter( (item, index) => index < 5 ) : null;
 
     const filter = data ? data.filter( (item, index ) => {
-      return (item.ParentBlocks.BLOCK_ISSUE_THEME ? item.ParentBlocks.BLOCK_ISSUE_THEME.toUpperCase().indexOf(state.searchText.toUpperCase()) > -1 : null);
-    }) : null;
+      return (item.ParentBlocks.BLOCK_ISSUE_THEME ? item.ParentBlocks.BLOCK_ISSUE_THEME.toUpperCase().indexOf(state.searchText.toUpperCase()) > -1 : []);
+    }) : [];
     // console.log('filtered data', state.searchText,  filter);
     return (
         <View style={styles.container}>
