@@ -21,6 +21,7 @@ import * as util from '../../Util/util';
 import { AsyncStorage } from 'react-native';
 import { connect } from 'react-redux';
 import { withLocalize } from 'react-localize-redux';
+import { withNavigation } from 'react-navigation';
 
 class ReplyBlock extends Component<Props> {
   constructor(props) {
@@ -32,6 +33,15 @@ class ReplyBlock extends Component<Props> {
 
       processing: false,
     }
+  }
+
+  link2UserPage = () => {
+    console.log('lets git it');
+    const { BLOCK } = this.state;
+    console.log(BLOCK);
+    this.props.navigation.navigate('MyPage', {
+      uid: BLOCK.UID,
+    })
   }
 
   toggleReplyBlock = () => {
@@ -169,13 +179,13 @@ class ReplyBlock extends Component<Props> {
   }
 
   componentDidMount() {
+    console.log('reply did mount');
     const BLOCK = this.props.data;
     const { isAuthenticated } = this.props.user;
 
     const { PID, PPID } = BLOCK;
     getDetailBlock({PID: PID})
     .then( res => {
-      console.log(res);
       this.setState({
         data : res.data[0],
         BLOCK : res.data[0].ParentBlocks,
@@ -203,6 +213,11 @@ class ReplyBlock extends Component<Props> {
 
   }
 
+  // componentDidUpdate(prevProps, prevState){
+  //   if(this.state.data) {
+  //     this.props.scrollToIndex();
+  //   }
+  // }
   render() {
     const {BLOCK, REPLIES, isUp, isDown } = this.state;
     const { translate } = this.props;
@@ -214,10 +229,15 @@ class ReplyBlock extends Component<Props> {
       return (
         <View style={styles.Container}>
           <View style={styles.Status.wrap}>
-            <View style={{backgroundColor:C.gray, width:30, height:30}}></View>
-            <Text style={styles.Status.id}>
-              {BLOCK.USER_NICK}
-            </Text>
+            <TouchableOpacity onPress={this.link2UserPage}>
+              <View style={{backgroundColor:C.gray, width:30, height:30}}></View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={this.link2UserPage}>
+              <Text style={styles.Status.id}>
+                {BLOCK.USER_NICK}
+              </Text>
+            </TouchableOpacity>
             <Text style={styles.Status.date}>
               {BLOCK.CREATE_DATE.split(' ')[0]}
             </Text>
@@ -251,24 +271,26 @@ class ReplyBlock extends Component<Props> {
           </View>
           <View style={styles.Footer.wrap}>
             <View style={styles.Footer.content}>
-              <Text style={styles.Footer.text}>
-                <Text style={{'fontWeight': 'bold'}}> { translate('ReplyComments') } </Text>
-                <Text> {Number(REPLIES.length)} </Text>
-              </Text>
+              <TouchableOpacity onPress={this.toggleReplyBlock} disabled={this.state.processing}>
+                <Text style={styles.Footer.text}>
+                  <Text style={ REPLIES.length ? {'fontWeight': 'bold', color: 'black'} : { color:'#808080' } }> { translate('ReplyComments') } </Text>
+                  <Text style={ REPLIES.length ? {'fontWeight': 'bold', color: 'black'} : { color:'#808080' } } > {Number(REPLIES.length)} </Text>
+                </Text>
+              </TouchableOpacity>
             </View>
             <View style={styles.Footer.content}>
               <TouchableOpacity onPress={this.UpClick} disabled={this.state.processing}>
                 <Text style={styles.Footer.text}>
-                  <Text style={ isUp ? {'fontWeight': 'bold'} : {} } > { translate('ReplyUp') } </Text>
-                  <Text style={ isUp ? {'fontWeight': 'bold'} : {} } > {BLOCK.VOTE_UP} </Text>
+                  <Text style={ isUp ? {'fontWeight': 'bold'} : { color:'#808080' } } > { translate('ReplyUp') } </Text>
+                  <Text style={ isUp ? {'fontWeight': 'bold'} : { color:'#808080' } } > {BLOCK.VOTE_UP} </Text>
                 </Text>
               </TouchableOpacity>
             </View>
             <View style={styles.Footer.content}>
               <TouchableOpacity onPress={this.DownClick} disabled={this.state.processing}>
                 <Text style={styles.Footer.text}>
-                  <Text style={ isDown ? {'fontWeight': 'bold'} : {} }> { translate('ReplyDown') } </Text>
-                  <Text style={ isDown ? {'fontWeight': 'bold'} : {} }> {BLOCK.VOTE_DOWN} </Text>
+                  <Text style={ isDown ? {'fontWeight': 'bold'} : { color:'#808080' } }> { translate('ReplyDown') } </Text>
+                  <Text style={ isDown ? {'fontWeight': 'bold'} : { color:'#808080' } }> {BLOCK.VOTE_DOWN} </Text>
                 </Text>
               </TouchableOpacity>
             </View>
@@ -289,4 +311,4 @@ let mapStateToProps = (state) => {
         user: state.data.Auth,
       };
 }
-export default withLocalize(connect(mapStateToProps, null)(ReplyBlock));
+export default withNavigation(withLocalize(connect(mapStateToProps, null)(ReplyBlock)));

@@ -8,7 +8,7 @@ const styles = {
     marginBottom: D.Height(2)
   },
   Status : {
-    wrap: {flexDirection: 'row'},
+    wrap: {flexDirection: 'row', marginLeft:D.Width(5)},
 
     id: {
       fontWeight: 'bold',
@@ -16,7 +16,10 @@ const styles = {
       padding: 10,
     },
     date: {
-      padding: 10,
+      // padding: 10,
+      paddingLeft: 0,
+      paddingRight: 10,
+      paddingVertical: 10,
       color: '#000',
     },
     location : {
@@ -26,12 +29,13 @@ const styles = {
   },
 
   Title : {
-    wrap : {padding: D.Width(5)},
+    wrap : {paddingVertical: 10,},
 
     text: {
       color: '#000',
       fontWeight: 'bold',
-      fontSize: D.FontSize(3),
+      textAlign: 'center',
+      fontSize: D.FontSize(4),
     }
   },
 
@@ -44,10 +48,11 @@ const styles = {
     },
 
     tag: {
-      backgroundColor:C.header,
-      padding:5,
+      padding:2,
       marginRight:5,
-      marginBottom: 5
+      marginBottom: 5,
+      fontSize: D.FontSize(1.5),
+      color: '#C0C0C0',
     }
   },
 
@@ -57,16 +62,18 @@ const styles = {
     image : {
       width: '100%',
       height: D.Width(80),
+
       // marginHorizontal: 10,
     },
   },
 
   MainContent : {
-    wrap: { marginVertical: 10, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
+    wrap: { marginTop: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
 
     content : {
       textAlign: 'center',
       color: 'black',
+      lineHeight: 20,
       // paddingLeft:10
     },
   },

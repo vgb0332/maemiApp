@@ -60,19 +60,37 @@ class IssueBlock extends Component<Props> {
     this.props.toggleReply(block);
   }
 
+  link2UserPage = () => {
+    const { block } = this.props;
+    const BLOCK = block.ParentBlocks;
+    console.log(BLOCK);
+    this.props.navigation.navigate('MyPage', {
+      uid: BLOCK.UID,
+    })
+  }
+
   render(){
     const { block, translate } = this.props;
     const BLOCK = block.ParentBlocks;
     const CHILDREN = block.ChildBlocks;
+    const regex = /(<([^>]+)>)|&nbsp;/ig;
+    const nbsp = '&nbsp;';
+    const gt = '&gt;';
+    const lt = '&lt;';
 
     return (
       <View style={styles.Container}>
         <View style={styles.ContainerWrapper}>
           <View style={styles.Status}>
-            <View style={{backgroundColor:C.gray, width:30, height:30}}></View>
-            <Text style={styles.StatusId}>
-              {BLOCK.USER_NICK}
-            </Text>
+            <TouchableOpacity onPress={this.link2UserPage}>
+              <View style={{backgroundColor:C.gray, width:30, height:30}}></View>
+            </TouchableOpacity>
+
+            <TouchableOpacity onPress={this.link2UserPage}>
+              <Text style={styles.StatusId}>
+                {BLOCK.USER_NICK}
+              </Text>
+            </TouchableOpacity>
             <Text style={styles.StatusDate}>
               {BLOCK.CREATE_DATE.split(' ')[0]}
             </Text>
@@ -82,9 +100,11 @@ class IssueBlock extends Component<Props> {
           </View>
 
           <View style={styles.Title}>
-            <Text numberOfLines ={2} style={styles.TitleText}>
-              {BLOCK.BLOCK_ISSUE_THEME}
-            </Text>
+            <TouchableOpacity onPress={this.onMainImagePress}>
+              <Text numberOfLines ={2} style={styles.TitleText}>
+                {BLOCK.BLOCK_ISSUE_THEME}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.Tags}>
@@ -92,28 +112,25 @@ class IssueBlock extends Component<Props> {
                 <Text key={index} style={styles.TagsTag}> { tag }</Text>
             )}
           </View>
-
-          <View style={styles.MainImage}>
-            <View>
-              <TouchableOpacity onPress={this.onMainImagePress}>
-                { BLOCK.BLOCK_ISSUE_IMAGE ?
-                  <Image source={{uri:BLOCK.BLOCK_ISSUE_IMAGE.replace('maemi-image', 'maemi-image-resize').replace('original', '200x200')}}
-                        resizeMode="stretch"
-                        resizeMethod='resize'
-                        style={styles.MainImageImage}
-                  />
-                  :null
-                }
-
-              </TouchableOpacity>
+          <TouchableOpacity onPress={this.onMainImagePress}>
+            <View style={styles.MainImage}>
+                <View>
+                    { BLOCK.BLOCK_ISSUE_IMAGE ?
+                      <Image source={{uri:BLOCK.BLOCK_ISSUE_IMAGE.replace('maemi-image', 'maemi-image-resize').replace('original', '200x200')}}
+                            resizeMode="stretch"
+                            resizeMethod='resize'
+                            style={styles.MainImageImage}
+                      />
+                      :null
+                    }
+                </View>
+              <View style={styles.MainContent}>
+                <Text numberOfLines ={6} style={styles.MainContentContent}>
+                  {BLOCK.BLOCK_ISSUE_CONTENT}
+                </Text>
+              </View>
             </View>
-            <View style={styles.MainContent}>
-              <Text numberOfLines ={6} style={styles.MainContentContent}>
-                {BLOCK.BLOCK_ISSUE_CONTENT}
-              </Text>
-            </View>
-          </View>
-
+          </TouchableOpacity>
           <View style={styles.Replies}>
           <FlatList
             horizontal={true}
@@ -123,13 +140,18 @@ class IssueBlock extends Component<Props> {
             renderItem={({ item, index }) =>{
               if(item.BLOCK_ISSUE_IMAGE){
                 return (
-                    <TouchableOpacity onPress={()=>this.onReplyImagePress(index)}>
+                    <TouchableOpacity style={{marginRight: 5}} onPress={()=>this.onReplyImagePress(index)}>
                         <Image
                               source={{uri:item.BLOCK_ISSUE_IMAGE.replace('maemi-image', 'maemi-image-resize').replace('original', '200x200')}}
                               resizeMode="stretch"
                               resizeMethod='resize'
                               style={styles.RepliesReply}
                         />
+                      <View style={{position:'absolute', padding: 5,  backgroundColor: 'rgba(0, 0, 0, 0.4)',height: '40%', bottom: 0, left: 0, width: '100%'}}>
+                          <Text numberOfLines={2} style={{color: 'white', fontSize: D.FontSize(1.3)}}>
+                            {item.BLOCK_ISSUE_CONTENT.replace(regex, '').replace( gt , '>').replace( lt , '<')}
+                          </Text>
+                        </View>
                     </TouchableOpacity>
                 );
               }

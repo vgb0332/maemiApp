@@ -101,7 +101,7 @@ class Root extends Component<Props, State> {
       return false;
     }
     this.navigator && this.navigator.dispatch(
-      NavigationActions.navigate({ routeName: 'MyPage' })
+      NavigationActions.navigate({ routeName: 'MyPage', params: {uid: user.uid }})
     );
   }
 
@@ -155,7 +155,7 @@ class Root extends Component<Props, State> {
           mainOverlay: { opacity: ratio * 0.8 },
         })}
       >
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: C.header }}>
           <StatusBar barStyle="light-content" />
             <AppNavigator
                 ref={nav => { this.navigator = nav; }}

@@ -11,6 +11,8 @@ import { AsyncStorage } from 'react-native';
 import { scrapCheck, scrapBlock } from '../../Lib/UserManager/scrapBlock';
 import { connect } from 'react-redux';
 import { withLocalize } from 'react-localize-redux';
+import * as D from '../../Styles/Dimensions';
+import * as C from '../../Styles/Colors';
 
 class Scrap extends Component<Props> {
   constructor(props){
@@ -69,7 +71,7 @@ class Scrap extends Component<Props> {
     const { translate } = this.props;
 
     return (
-      <TouchableOpacity onPress={ this.scrap }>
+      <TouchableOpacity style={{marginRight:D.Width(3)}} onPress={ this.scrap }>
         <Text> { translate('Scrap')} </Text>
       </TouchableOpacity>
     );

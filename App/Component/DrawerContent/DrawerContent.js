@@ -92,13 +92,13 @@ class DrawerContent extends Component<Props> {
           />
         </View>
 
-        <View style={{margin: 10, padding: 10, borderWidth: 1, borderColor: '#000000'}}>
-          <Text onPress={this.props.link2CreateIssue} style={{fontWeight:'900', fontSize:D.FontSize(3), textAlign: 'center'}}>
+        <View style={{marginVertical: 10, marginHorizontal: 20, padding: 10, borderWidth: 1, borderColor: C.header}}>
+          <Text onPress={this.props.link2CreateIssue} style={{color: 'black', fontWeight:'900', fontSize:D.FontSize(3), textAlign: 'center'}}>
             { translate('newGroup') }
           </Text>
         </View>
 
-        <View style={{margin: 10, backgroundColor:C.header}}>
+        <View style={{marginVertical: 10, marginHorizontal: 20,  backgroundColor:C.header}}>
           <TextInput
             underlineColorAndroid='transparent'
             onChangeText={(text) => this.onSearchTextChange(text)}
@@ -110,7 +110,7 @@ class DrawerContent extends Component<Props> {
           />
         </View>
 
-        <View style={{position:'relative', margin: 10, backgroundColor:C.header, }}>
+        <View style={{position:'relative', marginVertical: 10, marginHorizontal: 20,  backgroundColor:C.header, }}>
           <View style={{justifyContent: 'center',
           alignItems: 'center',position:'absolute', height: '100%', width:'100%', left: 0}}>
             <Text style={{textAlign:'center', color:'black'}}>{ translate('languageSelect') }</Text>
@@ -120,6 +120,7 @@ class DrawerContent extends Component<Props> {
             style={{backgroundColor:'rgba(255, 255, 255, 0)', color:C.header}}
             selectedValue = {this.props.language.language}
             // mode={'dropdown'}
+            itemStyle={{margin: 200}}
             prompt = {this.props.translate('languageSelect')}
             onValueChange = {(value, index)=>this.changeLanguage(value, index)}>
              <Picker.Item label = {translate('korean')} value = "kr" />

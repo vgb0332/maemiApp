@@ -102,7 +102,7 @@ export const languageConfigure = {
   CreateIssueContentPlaceholder: ['요청하고 싶은 뉴스 정보에 대해 설명해주세요', 'Describe the news you want to request for'],
   CreateIssueTime: ['시간', 'Time'],
   CreateIssueLocation: ['위치', 'Location'],
-  CreateIssueLocationInsert: ['입력', 'Insert'],
+  CreateIssueLocationInsert: ['', ''],
   CreateIssueNoImageAlert: ['이미지를 등록해주세요', 'Please Register an Image'],
   CreateIssueNoTagsAlert: ['태그(최소 1개)를 작성해주세요', 'Please fill at least one tag'],
   CreateIssueNoTitleAlert: ['제목을 작성해주세요', 'Please fill Title'],
@@ -120,7 +120,7 @@ export const languageConfigure = {
   AlertSaveSuccess: ['저장되었습니다!', 'Succesfully saved!'],
   AlertSaveFail: ['저장에 실패했습니다. 다시 시도해주세요', 'Save failed. Please try again'],
 
-  AlertEditTitle : ['편집 완료', 'Edit'],
+  AlertEditTitle : ['완료', 'Edit'],
   AlertEditContent: ['편집하시겠습니까?' ,'Would you like to make changes?'],
 
   AlertEditCancelTitle : ['편집 취소', 'Cancel'],
@@ -140,7 +140,7 @@ export const languageConfigure = {
   AddNewsContentPlaceholder: ['더하고 싶은 이야기를 자유롭게 적어주세요', 'Feel Free to share more stories'],
   AddNewsTime: ['시간', 'Time'],
   AddNewsLocation: ['위치', 'Location'],
-  AddNewsLocationInsert: ['입력', 'Insert'],
+  AddNewsLocationInsert: ['', ''],
 
   pictureSelectTitle: ['사진을 선택하세요', 'select picture'],
   pictureCancelTitle: ['취소', 'Cancel'],

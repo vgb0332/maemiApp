@@ -63,7 +63,7 @@ class Main extends Component<Props> {
   }
 
   componentDidMount() {
-    // console.log(this.props.navigation);
+    // console.log('from main', this.props.navigation);
     // console.log(this.props.navigation.state.params.index);
   }
 
@@ -78,7 +78,7 @@ class Main extends Component<Props> {
           needRefresh = {state.needRefresh}
           replyBlockToggle={state.replyBlockToggle}
           toggleReplyBlock={this.toggleReplyBlock}
-          scrollIndex={navigation.state.params && navigation.state.params.index ? navigation.state.params.index : null}
+          scrollIndex={navigation.state.params ? navigation.state.params.index : null}
         />
         <Add
           replyToggle={state.replyToggle}

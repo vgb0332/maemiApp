@@ -28,13 +28,16 @@ export default StyleSheet.create({
       borderBottomWidth: 1,
       justifyContent: 'center',
       alignItems: 'center',
-
     },
 
     tagsTitle : {
       fontWeight: 'bold',
       flex: 0.2,
-      textAlign: 'center',
+      // textAlign: 'center',
+      marginLeft:D.Width(7),
+    },
+
+    tagText : {
 
     },
 
@@ -61,12 +64,13 @@ export default StyleSheet.create({
       marginHorizontal:10,
       // borderWidth: 1,
       // borderColor: 'black',
+      height: D.Height(25),
 
     },
 
     contentInput : {
       textAlign: 'center',
-      height: D.Height(30),
+      // height: D.Height(30),
     },
 
     issueExtra : {
@@ -76,6 +80,7 @@ export default StyleSheet.create({
       // height: D.Height(5),
       flexDirection: 'row',
       paddingHorizontal: 10,
+      marginLeft: D.Width(5),
       // borderWidth: 1,
       // borderColor: 'blue',
       // justifyContent: 'center',

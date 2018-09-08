@@ -52,9 +52,10 @@ export default StyleSheet.create({
     },
 
     id : {
-      fontSize: D.FontSize(2),
+      fontSize: D.FontSize(2.5),
       fontWeight : 'bold',
       color: C.white,
+      paddingBottom: 5,
     },
 
     UserInfoFollow: {
@@ -71,20 +72,23 @@ export default StyleSheet.create({
 
     description : {
       color: C.white,
-      textAlign : 'center',
+      // textAlign : 'center',
     },
 
     descriptionOnEdit : {
-      backgroundColor: C.white,
-      color : 'black',
-      textAlign: 'center',
+      // backgroundColor: C.white,
+      color : 'white',
+      // textAlign: 'center',
+      // borderBottomWidth: 1,
+      // borderColor: 'white'
     },
 
     Tab : {
       backgroundColor: C.header,
       justifyContent: 'center',
-      padding: 10,
+      paddingVertical: 10,
       flex: 1,
+      paddingLeft: D.Width(7),
     },
 
     TabContainer : {
@@ -101,6 +105,7 @@ export default StyleSheet.create({
       backgroundColor : 'white',
       marginBottom: 5,
       padding: 20,
+      paddingLeft: D.Width(7),
     },
 
     ContentAddLeft : {
@@ -114,6 +119,7 @@ export default StyleSheet.create({
     titleAdd : {
       fontSize: D.FontSize(2),
       fontWeight: 'bold',
+      color: 'black'
     },
 
     ContentAddInfo : {
@@ -121,8 +127,9 @@ export default StyleSheet.create({
     },
 
     infoAdd : {
-      color: C.header,
-      fontSize: D.FontSize(1.3)
+      color: '#C0C0C0',
+      fontSize: D.FontSize(1.3),
+      paddingRight: 2,
     },
 
     ContentAddContent : {
@@ -131,7 +138,8 @@ export default StyleSheet.create({
 
     contentAdd : {
       fontSize: D.FontSize(1.7),
-      fontWeight : 'bold',
+      // fontWeight : 'bold',
+      color: 'black',
     },
 
     ContentAddRight : {
@@ -143,6 +151,8 @@ export default StyleSheet.create({
     contentAddImage : {
       width: D.Width(20),
       height: D.Width(20),
+      borderWidth: 1,
+      borderColor: C.header,
     },
 
     ContentIssueWrapper : {

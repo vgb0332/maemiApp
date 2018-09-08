@@ -9,6 +9,7 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     // padding: 10,
     marginBottom: D.Height(2),
+    marginTop: 0,
     // marginHorizontal: 10,
   },
   ContainerWrapper : {
@@ -16,6 +17,8 @@ export default StyleSheet.create({
   },
   Status : {
     flexDirection : 'row',
+    // justifyContent: 'center',
+    alignItems: 'center',
   },
   StatusId : {
     fontWeight: 'bold',
@@ -31,8 +34,9 @@ export default StyleSheet.create({
     color: '#000',
   },
   Title : {
-    padding: D.Width(5),
-    paddingTop: 0,
+    paddingHorizontal: D.Width(5),
+    paddingVertical: 5,
+    // paddingBottom: 0,
   },
   TitleText : {
     color: '#000',
@@ -46,17 +50,22 @@ export default StyleSheet.create({
     paddingRight:D.Width(5),
   },
   TagsTag : {
-    backgroundColor:C.header,
-    padding:5,
+    // backgroundColor:C.header,
+    padding:2,
     marginRight:5,
-    marginBottom: 5
+    marginBottom: 5,
+    fontSize: D.FontSize(1.5),
+    color: '#C0C0C0',
   },
   MainImage: {
+    paddingTop: 5,
     flexDirection: 'row'
   },
   MainImageImage : {
     width: D.Width(55),
     height: D.Width(40),
+    borderWidth: 1,
+    borderColor: C.header,
   },
   MainContent : {
     flex:1, paddingVertical: 10, justifyContent: 'center', alignItems: 'center',
@@ -71,9 +80,10 @@ export default StyleSheet.create({
      flex: 1,flexDirection:'row', paddingVertical: 10
   },
   RepliesReply : {
-    marginRight:5,
-    width:D.Width(40),
-    height:D.Width(40)
+    borderWidth: 1,
+    borderColor: C.header,
+    width:D.Width(30),
+    height:D.Width(25)
   },
   Bottom : {
     flexDirection:'row', borderColor: C.header, borderTopWidth: 1, borderBottomWidth: 0,

@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import { AsyncStorage } from 'react-native';
 // import PhotoUpload from 'react-native-photo-upload';
-import TagInput from 'react-native-tag-input';
+import TagInput from '../../Component/TagInput/TagInput';
 import { InfiniteScroll } from 'react-native-infinite';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { connect } from 'react-redux';
@@ -59,6 +59,11 @@ class CreateIssue extends Component<Props> {
 
       loading: false,
 		};
+  }
+
+  onTagInputChange = ( tags ) => {
+    console.log('tag change', tags);
+    this.setState({ tags })
   }
 
   onTagChange = ( text ) => {
@@ -376,7 +381,7 @@ class CreateIssue extends Component<Props> {
             </Text>
             <TagInput
               value={state.tags}
-              onChange={(tags) => this.setState({ tags })}
+              onChange={this.onTagInputChange}
               labelExtractor={ this.labelExtractor }
               text={state.text}
               onChangeText={ this.onTagChange }
@@ -421,17 +426,29 @@ class CreateIssue extends Component<Props> {
                 takePhotoButtonTitle : translate('pictureTakePhotoTitle'),
                 chooseFromLibraryButtonTitle : translate('pictureChooseTitle')
               }}
-              containerStyle= {{
-                backgroundColor: C.header,
+              containerStyle= {state.image ? {
+                backgroundColor : C.header,
+                width: '100%',
+                height: '100%',
+              }:{
+                backgroundColor: '#C0C0C0',
+                width: '100%',
+                height: '100%',
               }} >
-               <Image
-                 style={{
-                   width: D.Width(90),
-                   height: D.Width(80),
-                 }}
-                 resizeMode='cover'
-                 source={state.image ? {uri:state.image} : require('../../Public/Images/gallery.png')}
-               />
+
+                <Image
+                  style={state.image ? {
+                    width: D.Width(100),
+                    height: D.Width(80),
+                  } : {
+                    width: D.Width(12),
+                    height: D.Width(12),
+                  }}
+                  resizeMode='contain'
+                  source={state.image ? {uri:state.image} : require('../../Public/Images/gallery.png')}
+                />
+
+
             </PhotoUpload>
           </View>
 
@@ -456,7 +473,7 @@ class CreateIssue extends Component<Props> {
             <View style={styles.issueLocation}>
               <Text> {translate('CreateIssueLocation')} </Text>
               <TextInput
-                underlineColorAndroid= 'transparent'
+                // underlineColorAndroid= 'transparent'
                 onChangeText={(location) => this.onLocationChange(location)}
                 onFocus={this.onLocationFocus}
                 onBlur={this.onLocationBlur}

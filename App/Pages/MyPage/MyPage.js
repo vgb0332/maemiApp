@@ -52,6 +52,7 @@ class MyPage extends Component<Props> {
       data: null,
       activeTab: 'issue',
       edit: false,
+      isMine: false,
 
       description : '',
       fromMyPage: false,
@@ -61,41 +62,35 @@ class MyPage extends Component<Props> {
 
   componentDidMount() {
     const { isAuthenticated, user } = this.props.user;
-    console.log(isAuthenticated, user);
-    AsyncStorage.getItem('token').then( token => {
-      if(!token) {
-        Alert.alert('how did you get here?');
-        return false;
-      }
+    const { uid } = this.props.navigation.state.params;
+    getUserProfile({
+      UID: uid ? uid: '',
+      // TOKEN : token,
+    })
+    .then((res)=>{
+      console.log(res);
+      this.setState( {
+        data : res.data,
+        blocks : res.data.blocks,
+        follows : res.data.follows,
+        info : res.data.info[0],
+        saves : res.data.saves,
+        scraps : res.data.scraps,
 
-      getUserProfile({
-      	UID: user.uid ? user.uid: '',
-        TOKEN : token,
+        loading: false,
+        isMine: user.uid === uid,
+        description: res.data.info[0].USER_DESCRIPTION,
       })
-      .then((res)=>{
-      	console.log(res);
-        this.setState( {
-          data : res.data,
-          blocks : res.data.blocks,
-          follows : res.data.follows,
-          info : res.data.info[0],
-          saves : res.data.saves,
-          scraps : res.data.scraps,
-
-          loading: false,
-          description: res.data.info[0].USER_DESCRIPTION,
-        })
-      })
-      .catch(err=>console.log(err));
-
-    });
-
+    })
+    .catch(err=>console.log(err));
     this.props.navigation.setParams({
-        edit: this.onEdit,
-        editCancel: this.onEditCancel,
-        editSubmit: this.onEditSubmit,
+        edit: user.uid === uid ? this.onEdit : null,
+        editCancel: user.uid === uid ? this.onEditCancel : null,
+        editSubmit: user.uid === uid ? this.onEditSubmit : null,
         isEditing: false,
+        isMine: user.uid === uid,
     });
+
   }
 
   onEdit = () => {
@@ -176,14 +171,17 @@ class MyPage extends Component<Props> {
       if (response.didCancel) {
         console.log('User cancelled image picker')
         if (this.props.onCancel) this.props.onCancel('User cancelled image picker')
+        this.setState({loading: false});
         return
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error)
         if (this.props.onError) this.props.onError(response.error)
+        this.setState({loading: false});
         return
       } else if (response.customButton) {
         console.log('User tapped custom button: ', response.customButton)
         if (this.props.onTapCustomButton) this.props.onTapCustomButton(response.customButton)
+        this.setState({loading: false});
         return
       }
 
@@ -254,8 +252,8 @@ class MyPage extends Component<Props> {
             <View style={styles.ContentAddInfo}>
               <Text style={styles.infoAdd}>{item.CREATE_DATE.split(' ')[0]}</Text>
               <Text style={styles.infoAdd}>{item.BLOCK_ISSUE_LOCATION}</Text>
-              <Text style={styles.infoAdd}>{item.VOTE_UP} UP</Text>
-              <Text style={styles.infoAdd}>{item.VOTE_DOWN} DOWN</Text>
+              <Text style={styles.infoAdd}>{item.VOTE_UP ? item.VOTE_UP : 0} UP</Text>
+              <Text style={styles.infoAdd}>{item.VOTE_DOWN ? item.VOTE_DOWN : 0} DOWN</Text>
             </View>
             <View style={styles.ContentAddContent}>
               <Text style={styles.contentAdd} numberOfLines={5}>
@@ -264,11 +262,13 @@ class MyPage extends Component<Props> {
             </View>
           </View>
           <View style={styles.ContentAddRight}>
-            <Image source={{uri:item.BLOCK_ISSUE_IMAGE}}
-              resizeMode="stretch"
-              resizeMethod='resize'
-              style={styles.contentAddImage}
-            />
+            <TouchableOpacity onPress={()=>this.props.navigation.navigate('Main', { block: { PID : item.PPID, PPID : null}})}>
+              <Image source={{uri:item.BLOCK_ISSUE_IMAGE}}
+                resizeMode="stretch"
+                resizeMethod='resize'
+                style={styles.contentAddImage}
+              />
+            </TouchableOpacity>
           </View>
         </View>
       );
@@ -287,8 +287,8 @@ class MyPage extends Component<Props> {
             <View style={styles.ContentAddInfo}>
               <Text style={styles.infoAdd}>{item.CREATE_DATE.split(' ')[0]}</Text>
               <Text style={styles.infoAdd}>{item.BLOCK_ISSUE_LOCATION}</Text>
-              <Text style={styles.infoAdd}>{item.VOTE_UP} UP</Text>
-              <Text style={styles.infoAdd}>{item.VOTE_DOWN} DOWN</Text>
+              <Text style={styles.infoAdd}>{item.VOTE_UP ? item.VOTE_UP : 0} UP</Text>
+              <Text style={styles.infoAdd}>{item.VOTE_DOWN ? item.VOTE_DOWN : 0} DOWN</Text>
             </View>
             <View style={styles.ContentAddContent}>
               <Text style={styles.contentAdd} numberOfLines={5}>
@@ -297,11 +297,13 @@ class MyPage extends Component<Props> {
             </View>
           </View>
           <View style={styles.ContentAddRight}>
-            <Image source={{uri:item.BLOCK_ISSUE_IMAGE}}
-              resizeMode="stretch"
-              resizeMethod='resize'
-              style={styles.contentAddImage}
-            />
+            <TouchableOpacity onPress={()=>this.props.navigation.navigate('Main', { block: item})}>
+                <Image source={{uri:item.BLOCK_ISSUE_IMAGE}}
+                  resizeMode="stretch"
+                  resizeMethod='resize'
+                  style={styles.contentAddImage}
+                />
+            </TouchableOpacity>
           </View>
         </View>
       );
@@ -320,8 +322,8 @@ class MyPage extends Component<Props> {
             <View style={styles.ContentAddInfo}>
               <Text style={styles.infoAdd}>{item.CREATE_DATE.split(' ')[0]}</Text>
               <Text style={styles.infoAdd}>{item.BLOCK_ISSUE_LOCATION}</Text>
-              <Text style={styles.infoAdd}>{item.VOTE_UP} UP</Text>
-              <Text style={styles.infoAdd}>{item.VOTE_DOWN} DOWN</Text>
+              <Text style={styles.infoAdd}>{item.VOTE_UP ? item.VOTE_UP : 0} UP</Text>
+              <Text style={styles.infoAdd}>{item.VOTE_DOWN ? item.VOTE_DOWN : 0} DOWN</Text>
             </View>
             <View style={styles.ContentAddContent}>
               <Text style={styles.contentAdd} numberOfLines={5}>
@@ -359,8 +361,8 @@ class MyPage extends Component<Props> {
             <View style={styles.ContentAddInfo}>
               <Text style={styles.infoAdd}>{item.CREATE_DATE.split(' ')[0]}</Text>
               <Text style={styles.infoAdd}>{item.BLOCK_ISSUE_LOCATION}</Text>
-              <Text style={styles.infoAdd}>{item.VOTE_UP} UP</Text>
-              <Text style={styles.infoAdd}>{item.VOTE_DOWN} DOWN</Text>
+              <Text style={styles.infoAdd}>{item.VOTE_UP ? item.VOTE_UP : 0} UP</Text>
+              <Text style={styles.infoAdd}>{item.VOTE_DOWN ? item.VOTE_DOWN: 0} DOWN</Text>
             </View>
             <View style={styles.ContentAddContent}>
 
@@ -393,6 +395,7 @@ class MyPage extends Component<Props> {
     if(state.data){
       const { blocks, follows, info, saves, scraps } = state;
       const { translate } = props;
+      const { isMine } = state;
       let issue_blocks = [];
       let add_blocks = [];
 
@@ -422,7 +425,7 @@ class MyPage extends Component<Props> {
                   <View style={styles.UserInfo}>
                     <View style={styles.UserInfoImage}>
                       <TouchableOpacity style={styles.mainImage} onPress={ state.edit ? this.onImagePress : null }>
-                        <Image source={{uri:info.USER_IMAGE ? info.USER_IMAGE : 'https://via.placeholder.com/350x150'}}
+                        <Image source={{uri:!info.USER_IMAGE || state.edit ? 'https://via.placeholder.com/350x150' :info.USER_IMAGE}}
                           resizeMode="stretch"
                           resizeMethod='resize'
                           style={styles.mainImage}
@@ -444,6 +447,7 @@ class MyPage extends Component<Props> {
                     {
                       state.edit ?
                       <TextInput
+                        autoFocus={true}
                         style={styles.descriptionOnEdit}
                         underlineColorAndroid= 'transparent'
                         onChangeText={(text) => this.onDescriptionChange(text)}
@@ -459,6 +463,7 @@ class MyPage extends Component<Props> {
 
                 <View style={styles.Tab}>
                   <View style={styles.TabContainer}>
+                    {isMine ?
                     <Picker
                       selectedValue = {state.activeTab}
                       // mode={'dropdown'}
@@ -468,6 +473,15 @@ class MyPage extends Component<Props> {
                        <Picker.Item label = {translate('ProfileScrapNews') + " (" + scraps.length + ")"} value = "scrap" />
                        <Picker.Item label = {translate('ProfileSavedNews') + " (" + saves.length + ")"} value = "save" />
                     </Picker>
+                    :
+                    <Picker
+                      selectedValue = {state.activeTab}
+                      // mode={'dropdown'}
+                      onValueChange = {(value)=>this.setState({activeTab: value})}>
+                       <Picker.Item label = {translate('ProfileRequestedNews') + " (" + issue_blocks.length + ")"} value = "issue" />
+                       <Picker.Item label = {translate('ProfileAddedNews') + " (" + add_blocks.length + ")"} value = "add" />
+                    </Picker>
+                  }
                   </View>
                 </View>
               </View>

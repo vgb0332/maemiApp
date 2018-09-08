@@ -11,7 +11,8 @@ import {
   Button,
   Modal,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
@@ -25,7 +26,7 @@ import * as D from '../../Styles/Dimensions';
 import *  as C from '../../Styles/Colors';
 import styles from './Styles';
 import { signup } from '../../Lib/AuthManager/Auth';
-import TagInput from 'react-native-tag-input';
+import TagInput from '../../Component/TagInput/TagInput';
 import {RichTextEditor, RichTextToolbar} from 'react-native-zss-rich-text-editor';
 import ImagePicker from 'react-native-image-picker';
 import ImageResizer from 'react-native-image-resizer';
@@ -83,6 +84,8 @@ class Reply extends Component<Props> {
       loading: false,
     }
 
+    this.keyboardDidShowListener = null;
+    this.keyboardDidHideListener = null;
     this.richtext=null;
   }
 
@@ -91,6 +94,10 @@ class Reply extends Component<Props> {
   }
 
   onLocationFocus = () => {
+    if(this.richtext){
+      console.log(this.richtext);
+      this.richtext.blurContentEditor();
+    }
     this.state.locationInit ? null : this.setState({location:'',locationInit:true})
   }
 
@@ -114,6 +121,7 @@ class Reply extends Component<Props> {
   }
 
   onPressAddImage = () => {
+    const { translate } = this.props;
     // get image from image picker
     ImagePicker.showImagePicker({
       title: translate('pictureSelectTitle'),
@@ -384,6 +392,11 @@ class Reply extends Component<Props> {
     }
   }
 
+  componentWillUnmount () {
+    if(this.keyboardDidShowListener) this.keyboardDidShowListener.remove();
+    if(this.keyboardDidHideListener) this.keyboardDidHideListener.remove();
+  }
+
   componentDidUpdate() {
     const { fromMyPage } = this.props;
     if(fromMyPage){
@@ -391,7 +404,31 @@ class Reply extends Component<Props> {
         this.richtext.setContentHTML(targetBlock.BLOCK_ISSUE_CONTENT);
     }
 
+
   }
+  onEditorReady = () => {
+    // console.log(something);
+    this.setState({isEditorReady: true});
+    this.richtext.focusContent();
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+
+  _keyboardDidHide() {
+    console.log('keyboard hide')
+    if(this.richtext){
+      console.log(this.richtext);
+      this.richtext.blurContentEditor();
+    }
+  }
+
+  _keyboardDidShow() {
+    console.log('keyboard show')
+    if(this.richtext){
+      this.richtext.blurContentEditor();
+    }
+  }
+
   render(){
     const { state, props } = this;
     const  { translate } = props;
@@ -439,18 +476,23 @@ class Reply extends Component<Props> {
                   </View>
 
                   <View style={styles.ReplyBody}>
-                    <RichTextEditor
-                      ref={(r) => this.richtext = r}
-                      hiddenTitle={true}
-                      editorInitializedCallback={() => {
-                        this.setState({isEditorReady: true})
-                      }}
-                      contentPlaceholder={translate('AddNewsContentPlaceholder')}
-                    />
-                    <RichTextToolbar
-                      getEditor={() => this.richtext}
-                      onPressAddImage={this.onPressAddImage}
-                    />
+                      <TouchableOpacity style={{flex:0.9}} onPress={()=>{
+                          console.log('please');
+                          this.richtext.focusContent()}}>
+                        <RichTextEditor
+                          ref={(r) => this.richtext = r}
+                          hiddenTitle={true}
+                          editorInitializedCallback={this.onEditorReady}
+                          contentPlaceholder={translate('AddNewsContentPlaceholder')}
+                        />
+                    </TouchableOpacity>
+                    <View style={{marginHorizontal: 10}}>
+                      <RichTextToolbar
+                        getEditor={() => this.richtext}
+                        onPressAddImage={this.onPressAddImage}
+                      />
+                    </View>
+
                   </View>
 
                   <View style={styles.ReplyBottom}>
@@ -461,7 +503,7 @@ class Reply extends Component<Props> {
                     <View style={styles.issueLocation}>
                       <Text style={{fontWeight:'bold'}}> {translate('AddNewsLocation')} </Text>
                       <TextInput
-                        underlineColorAndroid= 'transparent'
+                        // underlineColorAndroid= 'transparent'
                         onChangeText={(location) => this.onLocationChange(location)}
                         onFocus={this.onLocationFocus}
                         onBlur={this.onLocationBlur}
@@ -483,7 +525,7 @@ class Reply extends Component<Props> {
 
                     <View style={styles.ReplyButton}>
                       <TouchableOpacity onPress={this.add}>
-                        <Text style={styles.ReplyButtonText}> {translate('AddNewsSubmit')}</Text>
+                        <Text style={styles.ReplyButtonTextAdd}> {translate('AddNewsSubmit')}</Text>
                       </TouchableOpacity>
                     </View>
                   </View>

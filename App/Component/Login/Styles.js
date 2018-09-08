@@ -63,6 +63,7 @@ export default StyleSheet.create({
     backgroundColor: C.white,
     borderWidth: 1,
     borderColor: '#ced4da',
+    borderBottomWidth: 0,
     // padding: 10,
   },
 

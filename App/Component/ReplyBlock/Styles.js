@@ -6,25 +6,26 @@ const styles = {
     backgroundColor: '#fff',
     marginVertical: 10,
     marginHorizontal: 20,
-    marginBottom: D.Height(2),
-    shadowColor: '#000',
-    shadowOffset: { width: 10, height: 10 },
-    shadowOpacity: 1,
-    shadowRadius: 2,
-    elevation: 3,
+    // marginBottom: D.Height(2),
+    // shadowColor: '#000',
+    // shadowOffset: { width: 10, height: 10 },
+    // shadowOpacity: 1,
+    // shadowRadius: 2,
+    // elevation: 3,
     zIndex: 5,
     borderWidth: 1,
-    borderRadius: 2,
-    borderColor: '#ddd',
-    padding: 10,
+    // borderRadius: 2,
+    borderColor: C.header,
+    // padding: 10,
   },
   Status : {
-    wrap: {flexDirection: 'row'},
+    wrap: {flexDirection: 'row', alignItems: 'center', paddingHorizontal: 10},
 
     id: {
       fontWeight: 'bold',
       color: '#000',
       padding: 10,
+      fontSize: D.FontSize(2),
     },
     date: {
       padding: 10,
@@ -41,8 +42,8 @@ const styles = {
 
     text: {
       color: '#000',
-      fontWeight: 'bold',
-      fontSize: D.FontSize(3),
+      // fontWeight: 'bold',
+      // fontSize: D.FontSize(3),
     }
   },
 
@@ -66,12 +67,13 @@ const styles = {
     wrap : { flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
-              marginVertical: 10,
+              marginTop: 10,
+              marginBottom: D.Width(5),
             },
 
     image : {
       width: D.Width(60),
-      height: D.Width(40),
+      height: D.Width(50),
     },
   },
 
@@ -85,7 +87,7 @@ const styles = {
   },
 
   Footer: {
-    wrap : { flexDirection:'row', paddingVertical: 10 },
+    wrap : { flexDirection:'row', paddingVertical: 10, borderTopWidth: 1, borderColor: C.header },
     content: {
       flex: 1,
     },

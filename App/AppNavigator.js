@@ -90,7 +90,7 @@ export default StackNavigator({
                       center= { null }
                       right={
                         <View style={{flexDirection:'row', marginRight:D.Width(5)}}>
-                          <TouchableOpacity onPress={navigation.state.params? navigation.state.params.save : null} >
+                          <TouchableOpacity style={{marginRight:D.Width(3)}} onPress={navigation.state.params? navigation.state.params.save : null} >
                             <Text> { screenProps.translate('CreateIssueSave')} </Text>
                           </TouchableOpacity>
                           <TouchableOpacity onPress={navigation.state.params? navigation.state.params.submit : null}>
@@ -106,21 +106,22 @@ export default StackNavigator({
             header: <Header
                       left={
                         <View style={{marginLeft:D.Width(5)}}>
-                          <TouchableOpacity onPress={()=>navigation.goBack()}>
+                          <TouchableOpacity onPress={
+                            navigation.state.params &&
+                            navigation.state.params.isEditing ? navigation.state.params.editCancel : ()=>navigation.goBack()
+                            }>
                           <Icon
                             name="chevron-left" size={30} color="#000"/>
                           </TouchableOpacity>
                         </View>}
                       center= { null }
                       right={
+                        navigation.state.params && navigation.state.params.isMine ?
                         <View style={{flexDirection:'row', marginRight:D.Width(5)}}>
                           {
                             navigation.state.params ?
                             navigation.state.params.isEditing ?
                               <View style={{flexDirection:'row'}}>
-                                <TouchableOpacity onPress={navigation.state.params.editCancel} >
-                                  <Text> { screenProps.translate('AlertEditCancelTitle')} </Text>
-                                </TouchableOpacity>
                                 <TouchableOpacity onPress={navigation.state.params.editSubmit} >
                                   <Text> { screenProps.translate('AlertEditTitle')} </Text>
                                 </TouchableOpacity>
@@ -132,7 +133,7 @@ export default StackNavigator({
                             : null
                           }
 
-                      </View>}
+                      </View> : null}
                     />,
         }),
     },

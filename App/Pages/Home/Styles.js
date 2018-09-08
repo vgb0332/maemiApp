@@ -7,8 +7,8 @@ import * as C from '../../Styles/Colors';
 export default StyleSheet.create({
     container: {
         flex: 1,
-        width: '100%',
-        height: '100%',
+        // width: '100%',
+        // height: '100%',
         // paddingLeft: D.Width(5),
         // paddingRight: D.Width(5),
         // paddingTop: D.Width(5),

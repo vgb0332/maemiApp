@@ -18,18 +18,25 @@ export default StyleSheet.create({
     alignItems: 'center',
     zIndex: 20,
   },
-  
+
   ReplyBlockDetailWrapper :  {
     flex: 1,
-    margin: 20,
+    margin: 30,
     backgroundColor: 'white',
     flexDirection: 'column',
+    paddingBottom: 10,
   },
 
   ReplyBlockDetailHeader : {
     flexDirection: 'row',
-    padding: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
     justifyContent: 'space-between',
+  },
+
+  HeaderText : {
+    color : 'black',
+
   },
 
   ReplyBlockDetailTag : {
@@ -39,10 +46,11 @@ export default StyleSheet.create({
   },
 
   Tag : {
-    backgroundColor:C.header,
-    padding:5,
-    marginRight:10,
-    marginBottom: 10
+    padding:2,
+    marginRight:5,
+    marginBottom: 5,
+    fontSize: D.FontSize(1.5),
+    color: '#C0C0C0',
   },
 
   ReplyBlockDetailImage : {
@@ -52,16 +60,18 @@ export default StyleSheet.create({
   },
 
   MainImage : {
-    width: D.Width(50),
-    height: D.Width(50),
+    width: D.Width(80),
+    height: D.Width(60),
   },
 
   ReplyBlockDetailContent : {
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 20,
   },
 
   MainContent : {
     textAlign: 'center',
+    color: 'black',
   },
 
   ReplyBlockDetailStaus : {
@@ -95,8 +105,9 @@ export default StyleSheet.create({
 
   ReplyWrapper : {
     flexDirection: 'row',
-    paddingBottom: 5,
+    paddingVertical: 10,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
 
   ReplyUser : {
@@ -121,9 +132,15 @@ export default StyleSheet.create({
   },
 
   ReplyInput : {
-    backgroundColor: 'white',
     zIndex: 15,
-  }
+    margin: 10,
+  },
+
+  ReplyInputText : {
+    backgroundColor: C.header,
+    color: 'black',
+    textAlign: 'center',
+  },
 
 
 });

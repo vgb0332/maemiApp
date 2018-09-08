@@ -303,10 +303,11 @@ class ReplyBlockDetail extends Component<Props> {
                 <View style={styles.ReplyBlockDetailWrapper}>
                   <ScrollView>
                     <View style={styles.ReplyBlockDetailHeader}>
-                      <Text> {BLOCK ? BLOCK.CREATE_DATE.split(' ')[0] : ''}</Text>
-                      <Text> {BLOCK ? BLOCK.BLOCK_ISSUE_LOCATION : ''} </Text>
-
-                      <Text style={{alignSelf: 'flex-end'}}> X </Text>
+                      <Text style={styles.HeaderText}> {BLOCK ? BLOCK.CREATE_DATE.split(' ')[0] : ''}</Text>
+                      <Text style={styles.HeaderText}> {BLOCK ? BLOCK.BLOCK_ISSUE_LOCATION : ''} </Text>
+                      <TouchableOpacity onPress={()=>props.toggleReplyBlock(null)}>
+                        <Icon name="x" size={20} style={{alignSelf:'flex-end'}} color="black"/>
+                      </TouchableOpacity>
                     </View>
 
                     <View style={styles.ReplyBlockDetailTag}>
@@ -366,20 +367,19 @@ class ReplyBlockDetail extends Component<Props> {
                         renderItem={this.renderReplies}
                       />
                     </ScrollView>
+                    <View style={styles.ReplyInput}>
+                      <TextInput
+                        style={styles.ReplyInputText}
+                        multiline={true}
+                        underlineColorAndroid= 'transparent'
+                        onChangeText={(reply) => this.onReplyInputChange(reply)}
+                        // onFocus={this.onReplyInputFocus}
+                        // onBlur={this.onReplyInputBlur}
+                        value={state.replyInput}
+                        placeholder={translate('AddReply')}
+                      />
+                    </View>
                   </ScrollView>
-                  <View style={styles.ReplyInput}>
-                    <TextInput
-                      style={{textAlign: 'center'}}
-                      multiline={true}
-                      underlineColorAndroid= 'transparent'
-                      onChangeText={(reply) => this.onReplyInputChange(reply)}
-                      // onFocus={this.onReplyInputFocus}
-                      // onBlur={this.onReplyInputBlur}
-                      value={state.replyInput}
-                      placeholder={translate('AddReply')}
-                    />
-                  </View>
-
                 </View>
 
               </View>

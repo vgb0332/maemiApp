@@ -44,19 +44,21 @@ export default StyleSheet.create({
   },
 
   ReplyBody : {
-    flex: 0.9,
+    flex: 1,
     marginTop: 10,
     marginHorizontal: 5,
   },
 
   ReplyBottom : {
-    flex: 0.1,
+    // flex: 0.1,
+    // marginHorizontal: 10,
     flexDirection: 'row',
   },
 
   issueTime : {
     alignItems: 'center',
     flexDirection : 'row',
+    marginLeft: 10,
   },
 
   issueLocation : {
@@ -85,5 +87,12 @@ export default StyleSheet.create({
     fontSize : D.FontSize(2),
     fontWeight: 'bold',
     textAlign : 'center',
-  }
+  },
+
+  ReplyButtonTextAdd: {
+    fontSize : D.FontSize(2),
+    fontWeight: 'bold',
+    textAlign : 'center',
+    color: 'black',
+  },
 });

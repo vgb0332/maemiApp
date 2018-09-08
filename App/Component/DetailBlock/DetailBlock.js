@@ -5,7 +5,7 @@ import {
     Text,
     Image,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
 } from 'react-native';
 
 import { InfiniteScroll } from 'react-native-infinite';
@@ -21,11 +21,12 @@ import { getDetailBlock } from '../../Lib/BlockManager/GetDetailBlock';
 class DetailBlock extends Component<Props> {
   constructor(props) {
     super(props);
-    this._infiniteScroll = null;
+    this.infiniteScrollRef = null;
     this.isMount = false;
     this.state = {
       items: [],
 			type: 'ready',
+      imagePressed: false,
     }
   }
 
@@ -37,15 +38,50 @@ class DetailBlock extends Component<Props> {
     const { scrollIndex } = this.props;
     getDetailBlock( { PID: PID })
     .then(res => {
-      console.log(res);
+      console.log('done',res);
       if(res.success){
         this.setState({
           block : res.data[0],
           items : res.data[0].ChildBlocks,
+
+          headerOffset : 0,
+          rowOffset: 0,
         })
       }
     })
   }
+
+  componentDidUpdate(prevProps, prevState){
+
+    // console.log(this.props,this.state);
+    // if(this.infiniteScrollRef && this.state.items.length){
+    //   console.log('lets scroll', this.infiniteScrollRef)
+    //   this.infiniteScrollRef.list.scrollToIndex({ index: 0 });
+    //   // this.infiniteScrollRef.list.scrollToOffset({ offset: 400 });
+    // }
+
+    // this.scrollToIndex();
+    // if(this.state.items.length){
+    //   // this.scrollToIndex();
+    //   setTimeout(()=>{
+    //     this.scrollToIndex();
+    //   }, 1000)
+    // }
+  }
+
+  // scrollToIndex = () => {
+  //   const { scrollIndex } = this.props;
+  //   console.log('did update', this.infiniteScrollRef);
+  //   console.log(scrollIndex);
+  //   if(scrollIndex !== null && scrollIndex !== undefined && this.infiniteScrollRef){
+  //     // this.infiniteScrollRef.list.scrollToOffset({ offset: 400, animated: true });
+  //    //  setTimeout(() => {
+  //    //
+  //    // }, 1000)
+  //    this.infiniteScrollRef.list.scrollToIndex({ index: scrollIndex, animated: true });
+  //   }
+  //
+  // }
 
   componentWillReceiveProps(nextProps){
     if(nextProps.needRefresh){
@@ -56,13 +92,6 @@ class DetailBlock extends Component<Props> {
   componentWillUnmount() {
     this.isMount = false;
   }
-  // componentDidMount() {
-  //   this.isMount = true;
-  // }
-  //
-  // componentWillUnmount() {
-  //   this.isMount = false;
-  // }
 
   async load(type) {
 		const { props, state } = this;
@@ -106,8 +135,9 @@ class DetailBlock extends Component<Props> {
 
 	}
 
-  renderRow({ item, index, size }) {
+  renderRow = ({ item, index, size }) => {
     if(!item) return null;
+    console.log(item, index, size);
 
 		return (
       <ReplyBlock
@@ -120,7 +150,7 @@ class DetailBlock extends Component<Props> {
 		);
 	}
 
-  renderHeader() {
+  renderHeader = () => {
     const { props, state } = this;
     const { block } = state;
 
@@ -145,16 +175,18 @@ class DetailBlock extends Component<Props> {
           </View>
 
           <View style={styles.Title.wrap}>
-            <Text numberOfLines ={2} style={styles.Title.text}>
+            <Text style={styles.Title.text}>
               {BLOCK.BLOCK_ISSUE_THEME}
             </Text>
           </View>
 
           <View style={styles.MainImage.wrap}>
-            <View>
-              <Lightbox activeProps={{flex:1}} springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={false}>
+            <View style={{borderWidth: 1,
+            borderColor: C.header,}}>
+              <Lightbox onClose={this.onImageClose} onOpen={this.onImageOpen} activeProps={{flex:1}} springConfig={{ tension: 30, friction: 7 }} swipeToDismiss={false}>
                   <Image source={{uri:BLOCK.BLOCK_ISSUE_IMAGE}}
-                        resizeMode={"contain"}
+                        resizeMode={this.state.imagePressed ? "contain" : "stretch"}
+                        resizeMethod={"scale"}
                         style={styles.MainImage.image}
                   />
               </Lightbox>
@@ -174,6 +206,15 @@ class DetailBlock extends Component<Props> {
 
   }
 
+  onImageOpen = () => {
+    this.setState({imagePressed: true})
+
+  }
+
+  onImageClose = () => {
+    this.setState({imagePressed: false})
+  }
+
   render() {
     const { props, state } = this;
     const { block } = state;
@@ -184,17 +225,18 @@ class DetailBlock extends Component<Props> {
       const CHILDREN = block.ChildBlocks;
       return (
         <InfiniteScroll
-          ref={(r) => { this._infiniteScroll = r; }}
+          ref={(r) => { this.infiniteScrollRef = r; }}
           items={state.items.length ? state.items : [ false ]}
           // itemHeight={700}
-          pageSize={3}
+          // pageSize={5}
           column={1}
+          removeClippedSubviews={false}
           innerMargin={[5,1]}
           outerMargin={[5,5]}
           type={state.type}
           load={(type) => this.load(type)}
-          renderRow={(res) => this.renderRow(res)}
-          renderHeader={ () => this.renderHeader() }
+          renderRow={this.renderRow}
+          renderHeader={ this.renderHeader }
         />
       );
     }
