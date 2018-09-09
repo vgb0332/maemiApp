@@ -94,10 +94,6 @@ class Reply extends Component<Props> {
   }
 
   onLocationFocus = () => {
-    if(this.richtext){
-      console.log(this.richtext);
-      this.richtext.blurContentEditor();
-    }
     this.state.locationInit ? null : this.setState({location:'',locationInit:true})
   }
 
@@ -393,8 +389,8 @@ class Reply extends Component<Props> {
   }
 
   componentWillUnmount () {
-    if(this.keyboardDidShowListener) this.keyboardDidShowListener.remove();
-    if(this.keyboardDidHideListener) this.keyboardDidHideListener.remove();
+    // if(this.keyboardDidShowListener) this.keyboardDidShowListener.remove();
+    // if(this.keyboardDidHideListener) this.keyboardDidHideListener.remove();
   }
 
   componentDidUpdate() {
@@ -409,9 +405,17 @@ class Reply extends Component<Props> {
   onEditorReady = () => {
     // console.log(something);
     this.setState({isEditorReady: true});
-    this.richtext.focusContent();
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+    // this.richtext.focusContent();
+    // this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+    // this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+  }
+
+  onEditorTouch = ()=>{
+    console.log('please');
+    if(this.richtext){
+      this.richtext.focusContent();
+    }
+
   }
 
   _keyboardDidHide() {
@@ -429,6 +433,16 @@ class Reply extends Component<Props> {
     }
   }
 
+  onRequestClose = () => {
+
+    this.setState({
+      text : '',
+      tags: [],
+      location : '',
+    })
+    this.props.toggleReply();
+  }
+
   render(){
     const { state, props } = this;
     const  { translate } = props;
@@ -438,7 +452,7 @@ class Reply extends Component<Props> {
           transparent={true}
           hardwareAccelerated={true}
           visible={props.replyToggle}
-          onRequestClose={()=>props.toggleReply()}>
+          onRequestClose={this.onRequestClose}>
 
               <View style={styles.ReplyContainer}>
                 {state.loading ?
@@ -476,16 +490,14 @@ class Reply extends Component<Props> {
                   </View>
 
                   <View style={styles.ReplyBody}>
-                      <TouchableOpacity style={{flex:0.9}} onPress={()=>{
-                          console.log('please');
-                          this.richtext.focusContent()}}>
+
                         <RichTextEditor
                           ref={(r) => this.richtext = r}
                           hiddenTitle={true}
                           editorInitializedCallback={this.onEditorReady}
                           contentPlaceholder={translate('AddNewsContentPlaceholder')}
                         />
-                    </TouchableOpacity>
+
                     <View style={{marginHorizontal: 10}}>
                       <RichTextToolbar
                         getEditor={() => this.richtext}

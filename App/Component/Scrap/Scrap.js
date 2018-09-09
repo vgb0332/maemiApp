@@ -45,7 +45,7 @@ class Scrap extends Component<Props> {
             })
             .then((res)=>{
               if(res.success){
-                Alert.alert('', this.props.translate('AlertDuplicateScrap'));
+                Alert.alert('', this.props.translate('AlertScrapSuccess'));
               }
               else{
                 Alert.alert('' , this.props.translate('AlertScrapFail'));
