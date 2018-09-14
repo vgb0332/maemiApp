@@ -4,6 +4,10 @@ export const languages = [
 ];
 
 export const languageConfigure = {
+  Skip : ['건너뛰기', 'SKIP'],
+  Done : ['메인으로', 'To Main'],
+  Never : ['다시 보지 않기', 'Do not show anymore'],
+
   AlertAppExitTitle : ['종료', 'Exit'],
   AlertAppExitContent: ['앱을 종료하시겠습니까?', 'Would you like to exit?'],
 

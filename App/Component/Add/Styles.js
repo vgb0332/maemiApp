@@ -13,7 +13,7 @@ const styles = {
   AddImage: {
     width: D.Width(20),
     height: D.Width(20),
-    tintColor: C.black,
+    // tintColor: C.black,
   }
 }
 

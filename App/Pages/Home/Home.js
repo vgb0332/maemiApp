@@ -24,7 +24,7 @@ import { AsyncStorage } from 'react-native';
 import *  as util from '../../Util/util';
 import Reply from '../../Component/Reply/Reply';
 import IssueBlock from '../../Component/IssueBlock/IssueBlock';
-import SplashScreen from 'react-native-splash-screen'
+
 
 const loadAmount = 5;
 
@@ -55,11 +55,10 @@ class Home extends Component<Props> {
           items: res.data,
         })
 
-        SplashScreen.hide();
+
       })
       .catch((err) => {
         console.log(err);
-        SplashScreen.hide();
       })
     // }
   }

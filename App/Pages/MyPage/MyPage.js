@@ -55,6 +55,7 @@ class MyPage extends Component<Props> {
       isMine: false,
 
       description : '',
+      profile_image: '',
       fromMyPage: false,
       replyToggle: false,
     }
@@ -197,6 +198,7 @@ class MyPage extends Component<Props> {
               ...this.state.info,
               USER_IMAGE: url.replace(/\s/g,''),
             },
+            profile_image : url.replace(/\s/g,''),
             loading: false,
           })
         })
@@ -425,7 +427,7 @@ class MyPage extends Component<Props> {
                   <View style={styles.UserInfo}>
                     <View style={styles.UserInfoImage}>
                       <TouchableOpacity style={styles.mainImage} onPress={ state.edit ? this.onImagePress : null }>
-                        <Image source={{uri:!info.USER_IMAGE || state.edit ? 'https://via.placeholder.com/350x150' :info.USER_IMAGE}}
+                        <Image source={{uri:!info.USER_IMAGE || (!state.profile_image && state.edit) ? 'https://via.placeholder.com/350x150' :info.USER_IMAGE}}
                           resizeMode="stretch"
                           resizeMethod='resize'
                           style={styles.mainImage}
