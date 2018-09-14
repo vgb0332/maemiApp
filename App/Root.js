@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: D.Width(100),
-    height: D.Height(100),
+    height: '100%',
   }
 });
 
@@ -180,7 +180,7 @@ class Root extends Component<Props, State> {
     const style = {
       backgroundColor: props.backgroundColor,
       paddingTop: props.topSpacer,
-      paddingBottom: props.bottomSpacer + 44 + (isIphoneX ? 34: 0) + 64,
+      paddingBottom: props.bottomSpacer,
       width: props.width,
       height: props.height,
     }
