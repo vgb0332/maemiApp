@@ -88,7 +88,7 @@ class ReplyBlockDetail extends Component<Props> {
   }
 
   UpClick = () => {
-    const { PID, PPID } = this.props.block.ParentBlocks;
+    const { PID, PPID } = this.props.block;
     const { isAuthenticated } = this.props.user;
     const { uid } = this.props.user.user;
     const { isUp ,isDown } = this.state;
@@ -135,7 +135,7 @@ class ReplyBlockDetail extends Component<Props> {
   }
 
   DownClick = () => {
-    const { PID, PPID } = this.props.block.ParentBlocks;
+    const { PID, PPID } = this.props.block;
     const { isAuthenticated } = this.props.user;
     const { uid } = this.props.user.user;
     const { isUp, isDown } = this.state;

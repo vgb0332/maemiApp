@@ -75,7 +75,7 @@ export default StyleSheet.create({
   },
 
   ReplyBlockDetailEdit : {
-    paddingVertical: 10, width: '100%', flexDirection: 'row',
+    paddingTop: 10, paddingBottom: 20, width: '100%', flexDirection: 'row',
   },
 
   EditContent : {
