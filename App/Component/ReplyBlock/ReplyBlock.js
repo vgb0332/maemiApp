@@ -36,17 +36,15 @@ class ReplyBlock extends Component<Props> {
   }
 
   link2UserPage = () => {
-    console.log('lets git it');
     const { BLOCK } = this.state;
-    console.log(BLOCK);
     this.props.navigation.navigate('MyPage', {
       uid: BLOCK.UID,
     })
   }
 
   toggleReplyBlock = () => {
-    const {data} = this.state;
-    this.props.toggleReplyBlock( data );
+    console.log('toggle reply block', this.state);
+    this.props.toggleReplyBlock( this.state.BLOCK );
   }
 
   UpClick = () => {
@@ -54,7 +52,9 @@ class ReplyBlock extends Component<Props> {
     const { isAuthenticated } = this.props.user;
 
     const { PID, PPID } = BLOCK;
-    const { isUp } = this.state;
+    const { isUp, isDown } = this.state;
+
+    if(isDown) return false;
 
     this.setState({ processing: true, });
     if(!isAuthenticated){
@@ -100,7 +100,9 @@ class ReplyBlock extends Component<Props> {
     const { isAuthenticated } = this.props.user;
 
     const { PID, PPID } = BLOCK;
-    const { isDown } = this.state;
+    const { isUp, isDown } = this.state;
+
+    if(isUp) return false;
 
     this.setState({ processing: true, });
     if(!isAuthenticated){
@@ -112,7 +114,6 @@ class ReplyBlock extends Component<Props> {
       if(isDown){
         voteDownCancel({FLAG: 'DOWN', PID: PID, UID: uid, TOKEN : token })
         .then( res => {
-          console.log('votedowncancel');
           res.success ?
           this.setState({
             BLOCK : {
@@ -127,7 +128,6 @@ class ReplyBlock extends Component<Props> {
       else{
         voteDown({FLAG: 'DOWN', PID: PID, UID: uid, TOKEN : token })
         .then( res => {
-          console.log('votedown');
           res.success ?
           this.setState({
             BLOCK : {
@@ -143,8 +143,8 @@ class ReplyBlock extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps){
-    if(nextProps.needRefresh){
-      const BLOCK = this.props.data;
+    if(nextProps.navigation.state.params.needRefresh){
+      const BLOCK = nextProps.data;
       const { isAuthenticated } = this.props.user;
 
       const { PID, PPID } = BLOCK;
@@ -179,7 +179,7 @@ class ReplyBlock extends Component<Props> {
   }
 
   componentDidMount() {
-    console.log('reply did mount');
+    console.log('why???? reply did mount');
     const BLOCK = this.props.data;
     const { isAuthenticated } = this.props.user;
 
@@ -213,14 +213,10 @@ class ReplyBlock extends Component<Props> {
 
   }
 
-  // componentDidUpdate(prevProps, prevState){
-  //   if(this.state.data) {
-  //     this.props.scrollToIndex();
-  //   }
-  // }
   render() {
     const {BLOCK, REPLIES, isUp, isDown } = this.state;
     const { translate } = this.props;
+    // console.log('reply', this.state, this.props);
     const regex = /(<([^>]+)>)|&nbsp;/ig;
     const nbsp = '&nbsp;';
     const gt = '&gt;';
@@ -269,6 +265,7 @@ class ReplyBlock extends Component<Props> {
             </View>
 
           </View>
+
           <View style={styles.Footer.wrap}>
             <View style={styles.Footer.content}>
               <TouchableOpacity onPress={this.toggleReplyBlock} disabled={this.state.processing}>
@@ -311,4 +308,5 @@ let mapStateToProps = (state) => {
         user: state.data.Auth,
       };
 }
+
 export default withNavigation(withLocalize(connect(mapStateToProps, null)(ReplyBlock)));

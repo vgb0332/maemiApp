@@ -50,9 +50,9 @@ const styles = {
     tag: {
       padding:2,
       marginRight:5,
-      marginBottom: 5,
+      // marginBottom: 3,
       fontSize: D.FontSize(1.5),
-      color: '#C0C0C0',
+      color: '#808080',
     }
   },
 
@@ -68,13 +68,23 @@ const styles = {
   },
 
   MainContent : {
-    wrap: { marginTop: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
+    wrap: { marginVertical: 20, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' },
 
     content : {
       textAlign: 'center',
       color: 'black',
       lineHeight: 20,
       // paddingLeft:10
+    },
+  },
+
+  Edit: {
+    wrap: { paddingVertical: 10, flex: 1, flexDirection: 'row', },
+    view: { flex: 1, justifyContent: 'center'},
+    text : {
+      color: 'black',
+      flex: 1,
+      textAlign: 'center',
     },
   },
 

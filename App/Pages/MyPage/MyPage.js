@@ -354,7 +354,7 @@ class MyPage extends Component<Props> {
         <View style={styles.ContentAddWrapper}>
           <View style={styles.ContentAddLeft}>
             <View style={styles.ContentAddTitle}>
-              <TouchableOpacity onPress={item.FLAG === 'reply' ? ()=>this.toggleReply(item) : ()=>this.link2CreateIssue(item)}>
+              <TouchableOpacity onPress={item.FLAG === 'reply' ? ()=>{this.toggleReply(item); this.props.navigation.setParams({wantEdit:true})} : ()=>this.link2CreateIssue(item)}>
                 <Text style={styles.titleAdd} numberOfLines={1}>
                   { item.BLOCK_ISSUE_THEME.replace(regex, '').replace( gt , '>').replace( lt , '<') }
                 </Text>
@@ -375,7 +375,7 @@ class MyPage extends Component<Props> {
             </View>
           </View>
           <View style={styles.ContentAddRight}>
-            <TouchableOpacity onPress={item.FLAG === 'reply' ? ()=>this.toggleReply(item) : ()=>this.link2CreateIssue(item)}>
+            <TouchableOpacity onPress={item.FLAG === 'reply' ? ()=>{this.toggleReply(item); this.props.navigation.setParams({wantEdit:true})} : ()=>this.link2CreateIssue(item)}>
               <Image source={{uri:item.BLOCK_ISSUE_IMAGE}}
                 resizeMode="stretch"
                 resizeMethod='resize'

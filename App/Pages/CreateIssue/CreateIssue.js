@@ -31,6 +31,7 @@ import PhotoUpload from '../../Component/PhotoUpload/PhotoUpload';
 import { getIssueBlock } from '../../Lib/BlockManager/GetIssueBlocks';
 import { uploadByUri } from '../../Lib/UploadManager/UploadManage';
 import { createIssueBlock } from '../../Lib/BlockManager/CreateIssueBlock';
+import { updateBlock } from '../../Lib/BlockManager/UpdateBlock';
 import { saveBlock } from '../../Lib/BlockManager/SaveBlock';
 import isNullOrWhiteSpace from '../../Util/isNullOrWhiteSpace';
 import { withLocalize } from 'react-localize-redux';
@@ -62,13 +63,12 @@ class CreateIssue extends Component<Props> {
   }
 
   onTagInputChange = ( tags ) => {
-    console.log('tag change', tags);
     this.setState({ tags })
   }
 
   onTagChange = ( text ) => {
     this.setState( { text } );
-    console.log(text);
+
     if(this.state.tags.length > 10) return false;
     const lastTyped = text.charAt(text.length - 1);
     const parseWhen = [',', ' ', ';', '\n'];
@@ -132,9 +132,10 @@ class CreateIssue extends Component<Props> {
   }
 
   onSubmit = () => {
+    const { navigation } = this.props;
     Alert.alert(
-      this.props.translate('AlertCreateIssueTitle'),
-      this.props.translate('AlertCreateIssueContent'),
+      this.props.translate(navigation.state.params.wantEdit ? 'AlertCreateIssueEditTitle' : 'AlertCreateIssueTitle'),
+      this.props.translate(navigation.state.params.wantEdit ? 'AlertCreateIssueEditContent' : 'AlertCreateIssueContent'),
       [
         {text: this.props.translate('yes'), onPress: () => this.verifyProcess('submit')},
         {text: this.props.translate('no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
@@ -193,22 +194,88 @@ class CreateIssue extends Component<Props> {
 
       this.setState({ loading: true });
       AsyncStorage.getItem('token').then( token => {
-        uploadByUri(image.uri, 'image/jpeg', new Date().getTime() + '.jpg')
-          .then((url) => {
-              let block = {
-                FLAG : 'issue',
-                TOKEN : token,
-                UID: user.uid,
-                PPID : 'root',
-                BLOCK_ISSUE_THEME : title,
-                BLOCK_ISSUE_HASHTAG : tags.join(),
-                BLOCK_ISSUE_CONTENT : content,
-                BLOCK_ISSUE_IMAGE : [url.replace(/\s/g, '')],
-                BLOCK_ISSUE_VIDEO : 'video_url',
-                BLOCK_ISSUE_LOCATION : location,
-                BLOCK_ISSUE_WRITE_TIME: time,
-              }
+        if(image.uri){
+          uploadByUri(image.uri, 'image/jpeg', new Date().getTime() + '.jpg')
+            .then((url) => {
+                let block = {
+                  FLAG : 'issue',
+                  TOKEN : token,
+                  UID: user.uid,
+                  PPID : 'root',
+                  BLOCK_ISSUE_THEME : title,
+                  BLOCK_ISSUE_HASHTAG : tags.join(),
+                  BLOCK_ISSUE_CONTENT : content,
+                  BLOCK_ISSUE_IMAGE : [url.replace(/\s/g, '')],
+                  BLOCK_ISSUE_VIDEO : 'video_url',
+                  BLOCK_ISSUE_LOCATION : location,
+                  BLOCK_ISSUE_WRITE_TIME: time,
+                }
 
+                if(this.props.navigation.state.params.wantEdit){
+                  updateBlock( Object.assign(block, { PID: this.props.navigation.state.params.block.PID }) ).then( (res) => {
+                    this.setState({loading:false})
+                    if(res.success){
+                      Alert.alert('', this.props.translate('AlertEditSuccess'),
+                      [
+                        {text: '확인', onPress: () => this.props.navigation.navigate('Home', { needRefresh: true })},
+                      ]);
+                    }
+                    else {
+                      Alert.alert(this.props.translate('AlertEditFail'), this.props.translate('AlertSubmitFail'));
+                    }
+                  })
+                }
+                else {
+                  createIssueBlock(block).then( (res) => {
+                    this.setState({loading:false})
+                    if(res.success){
+                      Alert.alert('', this.props.translate('AlertSubmitSuccess'),
+                      [
+                        {text: '확인', onPress: () => this.props.navigation.navigate('Home', { needRefresh: true })},
+                      ]);
+                    }
+                    else {
+                      Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
+                    }
+                  })
+                }
+
+            })
+            .catch((err) => {
+              console.log(err);
+              Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
+            })
+        }
+        else {
+            let block = {
+              FLAG : 'issue',
+              TOKEN : token,
+              UID: user.uid,
+              PPID : 'root',
+              BLOCK_ISSUE_THEME : title,
+              BLOCK_ISSUE_HASHTAG : tags.join(),
+              BLOCK_ISSUE_CONTENT : content,
+              BLOCK_ISSUE_IMAGE : [image],
+              BLOCK_ISSUE_VIDEO : 'video_url',
+              BLOCK_ISSUE_LOCATION : location,
+              BLOCK_ISSUE_WRITE_TIME: time,
+            }
+
+            if(this.props.navigation.state.params.wantEdit){
+              updateBlock( Object.assign(block, { PID: this.props.navigation.state.params.block.PID }) ).then( (res) => {
+                this.setState({loading:false})
+                if(res.success){
+                  Alert.alert('', this.props.translate('AlertEditSuccess'),
+                  [
+                    {text: '확인', onPress: () => this.props.navigation.navigate('Home', { needRefresh: true })},
+                  ]);
+                }
+                else {
+                  Alert.alert(this.props.translate('AlertEditFail'), this.props.translate('AlertSubmitFail'));
+                }
+              })
+            }
+            else {
               createIssueBlock(block).then( (res) => {
                 this.setState({loading:false})
                 if(res.success){
@@ -221,15 +288,9 @@ class CreateIssue extends Component<Props> {
                   Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
                 }
               })
-              .catch((err) => {
-                console.log(err);
-              })
+            }
+        }
 
-          })
-          .catch((err) => {
-            console.log(err);
-            Alert.alert(this.props.translate('AlertError'), this.props.translate('AlertSubmitFail'));
-          })
       })
 
     }
@@ -328,12 +389,11 @@ class CreateIssue extends Component<Props> {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.navigation.state && nextProps.navigation.state.params.fromMyPage){
-      console.log(nextProps);
+    if(nextProps.navigation.state && (nextProps.navigation.state.params.fromMyPage || nextProps.navigation.state.params.wantEdit)){
       const { block } = nextProps.navigation.state.params;
 
       this.setState({
-        tags : block.BLOCK_ISSUE_HASHTAG.split(','),
+        tags : block.BLOCK_ISSUE_HASHTAG ? block.BLOCK_ISSUE_HASHTAG.split(',') : [],
         title: block.BLOCK_ISSUE_THEME,
         titleInit: true,
         content: block.BLOCK_ISSUE_CONTENT,
@@ -342,6 +402,7 @@ class CreateIssue extends Component<Props> {
         locationInit: true,
         image: block.BLOCK_ISSUE_IMAGE,
       })
+
     }
   }
 
@@ -364,7 +425,6 @@ class CreateIssue extends Component<Props> {
 
   render() {
     const { props, state } = this;
-    console.log(state, props);
     const { translate } = props;
 
     return (
@@ -441,8 +501,8 @@ class CreateIssue extends Component<Props> {
                     width: D.Width(100),
                     height: D.Width(80),
                   } : {
-                    width: D.Width(12),
-                    height: D.Width(12),
+                    width: D.Width(100),
+                    height: D.Width(80),
                   }}
                   resizeMode='contain'
                   source={state.image ? {uri:state.image} : require('../../Public/Images/gallery.png')}
@@ -473,12 +533,13 @@ class CreateIssue extends Component<Props> {
             <View style={styles.issueLocation}>
               <Text> {translate('CreateIssueLocation')} </Text>
               <TextInput
-                // underlineColorAndroid= 'transparent'
+                underlineColorAndroid= 'transparent'
                 onChangeText={(location) => this.onLocationChange(location)}
                 onFocus={this.onLocationFocus}
                 onBlur={this.onLocationBlur}
                 value={state.location}
                 maxLength={20}
+                style={state.locationInit ? {color: 'black'} : {color: '#C0C0C0'}}
               />
             </View>
           </View>

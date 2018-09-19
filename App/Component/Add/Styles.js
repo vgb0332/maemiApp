@@ -11,8 +11,8 @@ const styles = {
   },
 
   AddImage: {
-    width: D.Width(20),
-    height: D.Width(20),
+    width: D.Width(17),
+    height: D.Width(17),
     // tintColor: C.black,
   }
 }

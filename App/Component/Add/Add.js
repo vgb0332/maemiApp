@@ -27,7 +27,7 @@ class Add extends Component<Props> {
 
     return (
       <TouchableOpacity style={styles.AddWrapper} onPress={
-          isAuthenticated ? props.toggleReply : ()=>Alert.alert('', this.props.translate('LoginAlert'))
+          isAuthenticated ? ()=>props.toggleReply(null) : ()=>Alert.alert('', this.props.translate('LoginAlert'))
         }>
         <Image
         style={styles.AddImage}

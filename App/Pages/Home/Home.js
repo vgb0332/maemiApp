@@ -128,7 +128,7 @@ class Home extends Component<Props> {
     if(block){
       this.setState({
         replyToggle: !this.state.replyToggle,
-        targetBlock : block
+        targetBlock : block.ParentBlocks
       })
     }
     else {
@@ -187,6 +187,7 @@ class Home extends Component<Props> {
             toggleReply={this.toggleReply}
             targetBlock={state.targetBlock}
             navigation={props.navigation}
+            fromHome
           />
         </View>
     );

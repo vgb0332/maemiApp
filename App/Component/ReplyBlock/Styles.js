@@ -86,6 +86,15 @@ const styles = {
     },
   },
 
+  Edit: {
+    rap : { flexDirection:'row', paddingVertical: 10, borderTopWidth: 1, borderColor: C.header },
+    view: { flex: 1, justifyContent: 'center'},
+    text : {
+      color: 'black',
+      textAlign: 'center',
+    },
+  },
+
   Footer: {
     wrap : { flexDirection:'row', paddingVertical: 10, borderTopWidth: 1, borderColor: C.header },
     content: {

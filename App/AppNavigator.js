@@ -94,7 +94,11 @@ export default StackNavigator({
                             <Text> { screenProps.translate('CreateIssueSave')} </Text>
                           </TouchableOpacity>
                           <TouchableOpacity onPress={navigation.state.params? navigation.state.params.submit : null}>
-                            <Text> { screenProps.translate('CreateIssueSubmit')} </Text>
+                            <Text> {
+                              navigation.state.params && navigation.state.params.wantEdit ?
+                              screenProps.translate('CreateIssueEdit')
+                              :screenProps.translate('CreateIssueSubmit')
+                            } </Text>
                           </TouchableOpacity>
                       </View>}
                     />,

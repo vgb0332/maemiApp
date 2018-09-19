@@ -53,9 +53,9 @@ export default StyleSheet.create({
     // backgroundColor:C.header,
     padding:2,
     marginRight:5,
-    marginBottom: 5,
+    // marginBottom: 5,
     fontSize: D.FontSize(1.5),
-    color: '#C0C0C0',
+    color: '#808080',
   },
   MainImage: {
     paddingTop: 5,

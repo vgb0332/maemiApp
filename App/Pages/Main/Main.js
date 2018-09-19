@@ -28,18 +28,20 @@ class Main extends Component<Props> {
       replyBlockToggle: false,
       replyBlockData : null,
       targetBlock: null,
-      needRefresh: true,
     }
   }
 
   toggleReply = (block) => {
+    console.log('block!', block);
     if(block){
+      this.props.navigation.setParams({needRefresh: false, wantEdit: true});
       this.setState({
         replyToggle: !this.state.replyToggle,
-        targetBlock : block
+        targetBlock : block,
       })
     }
     else {
+      this.props.navigation.setParams({needRefresh: true, wantEdit: false});
       this.setState({
         replyToggle: !this.state.replyToggle,
       })
@@ -48,19 +50,29 @@ class Main extends Component<Props> {
   }
 
   toggleReplyBlock = ( block ) => {
-    this.setState({
-      replyBlockToggle: !this.state.replyBlockToggle,
-      replyBlockData: block,
-    })
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.navigation.state.params.needRefresh){
+    if(block) {
+      this.props.navigation.setParams({needRefresh: false, wantEdit: false});
       this.setState({
-        needRefresh: true,
+        replyBlockToggle: !this.state.replyBlockToggle,
+        replyBlockData: block,
+      })
+    } else {
+      this.props.navigation.setParams({needRefresh: true, wantEdit: false});
+      this.setState({
+        replyBlockToggle: !this.state.replyBlockToggle,
+        replyBlockData: block,
       })
     }
+
   }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if(nextProps.navigation.state.params.needRefresh){
+  //     this.setState({
+  //       needRefresh: true,
+  //     })
+  //   }
+  // }
 
   componentDidMount() {
     // console.log('from main', this.props.navigation);
@@ -70,10 +82,13 @@ class Main extends Component<Props> {
   render() {
     const { props, state } = this;
     const { block } = props.navigation.state.params;
+    const targetBlock = state.targetBlock ?
+    state.targetBlock : props.navigation.state.params.block.ParentBlocks;
     const { navigation } = props;
     return (
       <View style={styles.container}>
         <DetailBlock
+          navigation={ navigation }
           block={ block }
           needRefresh = {state.needRefresh}
           replyBlockToggle={state.replyBlockToggle}
@@ -87,14 +102,16 @@ class Main extends Component<Props> {
         <Reply
           replyToggle={state.replyToggle}
           toggleReply={this.toggleReply}
-          targetBlock={ block }
+          targetBlock={ targetBlock }
           navigation={props.navigation}
         />
 
         {state.replyBlockData ?
           <ReplyBlockDetail
+            navigation={ navigation }
             replyBlockToggle={state.replyBlockToggle}
             toggleReplyBlock={this.toggleReplyBlock}
+            toggleReply={this.toggleReply}
             block={state.replyBlockData}
           /> : null
         }

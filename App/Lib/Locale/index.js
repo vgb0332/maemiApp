@@ -99,6 +99,7 @@ export const languageConfigure = {
   AlertError: ['오류', 'Error'],
 
   CreateIssueSubmit: ['요청하기', 'Request'],
+  CreateIssueEdit: ['수정하기', 'Edit'],
   CreateIssueSave: ['임시저장', 'Temporary Save'],
   CreateIssueTitle: ['제목을 입력해주세요', 'Insert the title'],
   CreateIssueTag: ['태그', 'Tag'],
@@ -106,13 +107,15 @@ export const languageConfigure = {
   CreateIssueContentPlaceholder: ['요청하고 싶은 뉴스 정보에 대해 설명해주세요', 'Describe the news you want to request for'],
   CreateIssueTime: ['시간', 'Time'],
   CreateIssueLocation: ['위치', 'Location'],
-  CreateIssueLocationInsert: ['', ''],
+  CreateIssueLocationInsert: ['를 입력해주세요', 'needs input'],
   CreateIssueNoImageAlert: ['이미지를 등록해주세요', 'Please Register an Image'],
   CreateIssueNoTagsAlert: ['태그(최소 1개)를 작성해주세요', 'Please fill at least one tag'],
   CreateIssueNoTitleAlert: ['제목을 작성해주세요', 'Please fill Title'],
   CreateIssueNoLocationAlert: ['위치를 작성해주세요', 'Please fill Location'],
   CreateIssueNoContentAlert: ['본문을 작성해주세요', 'Please Content'],
 
+  AlertCreateIssueEditTitle : ['수정하기', 'Edit'],
+  AlertCreateIssueEditContent: ['수정하시겠습니까?', 'Would you like to make changes?'],
   AlertCreateIssueTitle : ['요청하기', 'Request'],
   AlertCreateIssueContent: ['요청하시겠습니까?', 'Would you like to submit a request?'],
 
@@ -123,10 +126,15 @@ export const languageConfigure = {
   AlertSubmitFail: ['등록에 실패했습니다. 다시 시도해주세요', 'Submission failed. Please try again'],
   AlertSaveSuccess: ['저장되었습니다!', 'Succesfully saved!'],
   AlertSaveFail: ['저장에 실패했습니다. 다시 시도해주세요', 'Save failed. Please try again'],
-
+  AlertEditSuccess : ['수정되었습니다!', 'Succesfully edited!'],
+  AlertEditFail: ['수정에 실패했습니다. 다시 시도해주세요', 'Edition failed. Please try again'],
   AlertEditTitle : ['완료', 'Edit'],
   AlertEditContent: ['편집하시겠습니까?' ,'Would you like to make changes?'],
+  AlertDeleteSuccess: ['삭제되었습니다', 'Succesfully deleted'],
+  AlertDeleteFail: ['삭제에 실패했습니다. 다시 시도해주세요', 'Deletion failed. Please try again'],
 
+  AlertDeleteTitle: ['삭제', 'Delete'],
+  AlertDeleteContent: ['삭제하시겠습니까?', 'Would you like to delete?'],
   AlertEditCancelTitle : ['편집 취소', 'Cancel'],
   AlertEditCancelContent: ['취소하시겠습니까?' ,'Would you like to cancel changes?'],
 
@@ -144,7 +152,7 @@ export const languageConfigure = {
   AddNewsContentPlaceholder: ['더하고 싶은 이야기를 자유롭게 적어주세요', 'Feel Free to share more stories'],
   AddNewsTime: ['시간', 'Time'],
   AddNewsLocation: ['위치', 'Location'],
-  AddNewsLocationInsert: ['', ''],
+  AddNewsLocationInsert: ['를 입력해주세요', 'needs input'],
 
   pictureSelectTitle: ['사진을 선택하세요', 'select picture'],
   pictureCancelTitle: ['취소', 'Cancel'],

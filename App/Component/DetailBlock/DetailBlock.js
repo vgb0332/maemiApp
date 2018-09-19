@@ -6,8 +6,9 @@ import {
     Image,
     FlatList,
     TouchableOpacity,
+    Alert,
 } from 'react-native';
-
+import { AsyncStorage } from 'react-native';
 import { InfiniteScroll } from 'react-native-infinite';
 import Lightbox from 'react-native-lightbox';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -17,6 +18,10 @@ import *  as C from '../../Styles/Colors';
 import *  as util from '../../Util/util';
 import ReplyBlock from '../../Component/ReplyBlock/ReplyBlock';
 import { getDetailBlock } from '../../Lib/BlockManager/GetDetailBlock';
+import { deleteBlock } from '../../Lib/BlockManager/DeleteBlock';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { withLocalize } from 'react-localize-redux';
 
 class DetailBlock extends Component<Props> {
   constructor(props) {
@@ -38,7 +43,6 @@ class DetailBlock extends Component<Props> {
     const { scrollIndex } = this.props;
     getDetailBlock( { PID: PID })
     .then(res => {
-      console.log('done',res);
       if(res.success){
         this.setState({
           block : res.data[0],
@@ -51,40 +55,10 @@ class DetailBlock extends Component<Props> {
     })
   }
 
-  componentDidUpdate(prevProps, prevState){
-
-    // console.log(this.props,this.state);
-    // if(this.infiniteScrollRef && this.state.items.length){
-    //   console.log('lets scroll', this.infiniteScrollRef)
-    //   this.infiniteScrollRef.list.scrollToIndex({ index: 0 });
-    //   // this.infiniteScrollRef.list.scrollToOffset({ offset: 400 });
-    // }
-
-    // this.scrollToIndex();
-    // if(this.state.items.length){
-    //   // this.scrollToIndex();
-    //   setTimeout(()=>{
-    //     this.scrollToIndex();
-    //   }, 1000)
-    // }
-  }
-
-  // scrollToIndex = () => {
-  //   const { scrollIndex } = this.props;
-  //   console.log('did update', this.infiniteScrollRef);
-  //   console.log(scrollIndex);
-  //   if(scrollIndex !== null && scrollIndex !== undefined && this.infiniteScrollRef){
-  //     // this.infiniteScrollRef.list.scrollToOffset({ offset: 400, animated: true });
-  //    //  setTimeout(() => {
-  //    //
-  //    // }, 1000)
-  //    this.infiniteScrollRef.list.scrollToIndex({ index: scrollIndex, animated: true });
-  //   }
-  //
-  // }
-
   componentWillReceiveProps(nextProps){
-    if(nextProps.needRefresh){
+    console.log('nextProps', nextProps);
+    if(nextProps.navigation.state.params.needRefresh){
+      console.log('loading!');
       this.load('refresh');
     }
   }
@@ -93,31 +67,55 @@ class DetailBlock extends Component<Props> {
     this.isMount = false;
   }
 
+  requestDeleteBlock = () => {
+    console.log('deleteBlock', this.state);
+    Alert.alert(
+      this.props.translate('AlertDeleteTitle'),
+      this.props.translate('AlertDeleteContent'),
+      [
+        {text: this.props.translate('yes'), onPress: this.deleteBlock},
+        {text: this.props.translate('no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+    )
+  }
+
+  deleteBlock = () => {
+    AsyncStorage.getItem('token').then( token => {
+      deleteBlock( {TOKEN : token, PID: this.state.block.ParentBlockPID } )
+      .then( (res) => {
+        console.log(res);
+        if(res.success){
+          Alert.alert('', this.props.translate('AlertDeleteSuccess'),
+          [
+            {text: '확인', onPress: () => this.props.navigation.navigate('Home', { needRefresh: true })},
+          ]);
+        }
+        else{
+          Alert.alert(this.props.translate('AlertDeleteFail'), this.props.translate('AlertSubmitFail'));
+        }
+      })
+    })
+  }
+
+  editBlock = () => {
+    const block = this.state.block.ParentBlocks;
+    this.props.navigation.navigate('CreateIssue', { block : block, wantEdit: true });
+  }
+
   async load(type) {
 		const { props, state } = this;
     const { block } = state;
+    console.log('load func', type, block);
     if(block){
       const { PID, PPID } = block.ParentBlocks ? block.ParentBlocks : block;
   		switch(type) {
-  			case 'more':
-          return;
-  				await this.setState({ type: 'loading' });
-  				await util.sleep(500);
-  				if (!this.isMount) return;
-  				this.setState({
-  					type: 'ready',
-  					items: [
-  						...state.items,
-  					]
-  				});
-  				break;
-
   			case 'refresh':
   				await this.setState({ type: 'refresh' });
   				await util.sleep(1000);
   				if (!this.isMount) return;
           getDetailBlock( { PID: PID })
           .then(res => {
+            console.log(res);
             if(res.success){
               this.setState({
                 type: state.type === 'end' ? 'end' : 'ready',
@@ -137,8 +135,6 @@ class DetailBlock extends Component<Props> {
 
   renderRow = ({ item, index, size }) => {
     if(!item) return null;
-    console.log(item, index, size);
-
 		return (
       <ReplyBlock
         data = { item }
@@ -197,6 +193,19 @@ class DetailBlock extends Component<Props> {
               {BLOCK.BLOCK_ISSUE_CONTENT}
             </Text>
           </View>
+
+          {state.block && props.user && props.user.user.uid === state.block.ParentBlocks.UID ?
+            <View style={styles.Edit.wrap}>
+              <TouchableOpacity onPress={this.editBlock} style={styles.Edit.view}>
+                <Text style={[styles.Edit.text, {borderRightWidth:1, borderColor: 'grey'}]}> 수정 </Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={this.requestDeleteBlock} style={styles.Edit.view}>
+                <Text style={styles.Edit.text}> 삭제 </Text>
+              </TouchableOpacity>
+            </View>
+          :
+            null
+          }
         </View>
       );
     }
@@ -233,6 +242,7 @@ class DetailBlock extends Component<Props> {
           removeClippedSubviews={false}
           innerMargin={[5,1]}
           outerMargin={[5,5]}
+          useScrollEvent={false}
           type={state.type}
           load={(type) => this.load(type)}
           renderRow={this.renderRow}
@@ -247,4 +257,18 @@ class DetailBlock extends Component<Props> {
   }
 }
 
-export default DetailBlock;
+let mapStateToProps = (state) => {
+    return {
+        user: state.data.Auth,
+      };
+}
+
+
+let mapDispatchToProps = (dispatch) => {
+    return {
+
+    }
+}
+
+
+export default withLocalize(connect(mapStateToProps, null)(DetailBlock));

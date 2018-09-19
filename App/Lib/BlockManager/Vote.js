@@ -68,7 +68,7 @@ export const voteUpCancel = ( someobject ) => {
 };
 
 export const voteDownCancel = ( someobject ) => {
-  console.log(someobject);
+  // console.log(someobject);
     return HttpApi.post('VOTE_DOWN_CANCEL', someobject).then((response) => {
         return Promise.resolve(response.data);
     }).catch((err) => {

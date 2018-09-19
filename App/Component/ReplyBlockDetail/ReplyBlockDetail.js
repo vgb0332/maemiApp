@@ -22,6 +22,7 @@ import isNullOrWhiteSpace from '../../Util/isNullOrWhiteSpace';
 import * as authActions from '../../Modules/Auth';
 import { createReplyBlock } from '../../Lib/BlockManager/CreateReplyBlock';
 import { getDetailBlock } from '../../Lib/BlockManager/GetDetailBlock';
+import { deleteBlock } from '../../Lib/BlockManager/DeleteBlock';
 import { voteUp, voteDown, voteCheck, voteUpCancel, voteDownCancel } from '../../Lib/BlockManager/Vote';
 import * as D from '../../Styles/Dimensions';
 import * as C from '../../Styles/Colors';
@@ -43,12 +44,15 @@ class ReplyBlockDetail extends Component<Props> {
 
       loading: false,
       processing :false,
+
+      replyEdit: false,
+      replyEditInput : '',
     }
 
   }
 
   load = () => {
-    const { PID, PPID } = this.props.block.ParentBlocks;
+    const { PID, PPID } = this.props.block;
     const { isAuthenticated } = this.props.user;
     const { uid } = this.props.user.user;
 
@@ -87,7 +91,9 @@ class ReplyBlockDetail extends Component<Props> {
     const { PID, PPID } = this.props.block.ParentBlocks;
     const { isAuthenticated } = this.props.user;
     const { uid } = this.props.user.user;
-    const { isUp } = this.state;
+    const { isUp ,isDown } = this.state;
+
+    if(isDown) return false;
 
     this.setState({ processing: true, });
     if(!isAuthenticated){
@@ -132,7 +138,9 @@ class ReplyBlockDetail extends Component<Props> {
     const { PID, PPID } = this.props.block.ParentBlocks;
     const { isAuthenticated } = this.props.user;
     const { uid } = this.props.user.user;
-    const { isDown } = this.state;
+    const { isUp, isDown } = this.state;
+
+    if(isUp) return false;
 
     this.setState({ processing: true, });
     if(!isAuthenticated){
@@ -172,6 +180,48 @@ class ReplyBlockDetail extends Component<Props> {
     })
   }
 
+  onEdit = () => {
+    console.log('edit', this.state);
+    this.props.toggleReply(this.state.BLOCK);
+    // this.props.navigation.setParams({wantEdit: true});
+  }
+
+  requestDeleteBlock = () => {
+    console.log('deleteBlock', this.state);
+    Alert.alert(
+      this.props.translate('AlertDeleteTitle'),
+      this.props.translate('AlertDeleteContent'),
+      [
+        {text: this.props.translate('yes'), onPress: this.deleteBlock},
+        {text: this.props.translate('no'), onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+    )
+  }
+
+  deleteBlock = () => {
+    console.log('delete');
+    const { BLOCK } = this.state;
+    AsyncStorage.getItem('token').then( token => {
+      deleteBlock( {TOKEN : token, PID: BLOCK.PID } )
+      .then( (res) => {
+        console.log(res);
+        if(res.success){
+          Alert.alert('', this.props.translate('AlertDeleteSuccess'),
+          [
+            {text: '확인', onPress: this.props.toggleReplyBlock},
+          ]);
+        }
+        else{
+          Alert.alert(this.props.translate('AlertDeleteFail'), this.props.translate('AlertSubmitFail'));
+        }
+      })
+    })
+  }
+
+  onReplyEditInputChange = (text) => {
+    this.setState({replyEditInput: text});
+  }
+
   renderReplies = ( {item, index} ) => {
     return (
       <View style={styles.ReplyWrapper}>
@@ -191,6 +241,7 @@ class ReplyBlockDetail extends Component<Props> {
           <View style={styles.ReplyContentInfo}>
             <Text style={styles.ReplyContentName}>{ item.USER_NICK }</Text>
             <Text>{ item.CREATE_DATE }</Text>
+
           </View>
           <View>
             <Text>
@@ -228,7 +279,7 @@ class ReplyBlockDetail extends Component<Props> {
   }
 
   submit(reply) {
-    const { PID, PPID } = this.props.block.ParentBlocks;
+    const { PID, PPID } = this.props.block;
     const { isAuthenticated } = this.props.user;
     const { uid } = this.props.user.user;
     this.setState({loading: true})
@@ -285,7 +336,7 @@ class ReplyBlockDetail extends Component<Props> {
     const nbsp = '&nbsp;';
     const gt = '&gt;';
     const lt = '&lt;';
-
+    console.log('here', BLOCK);
     return (
           <Modal
           animationType="slide"
@@ -301,7 +352,6 @@ class ReplyBlockDetail extends Component<Props> {
                   </View> : null
                 }
                 <View style={styles.ReplyBlockDetailWrapper}>
-                  <ScrollView>
                     <View style={styles.ReplyBlockDetailHeader}>
                       <Text style={styles.HeaderText}> {BLOCK ? BLOCK.CREATE_DATE.split(' ')[0] : ''}</Text>
                       <Text style={styles.HeaderText}> {BLOCK ? BLOCK.BLOCK_ISSUE_LOCATION : ''} </Text>
@@ -332,6 +382,21 @@ class ReplyBlockDetail extends Component<Props> {
                         {BLOCK ? BLOCK.BLOCK_ISSUE_CONTENT.replace(regex, '').replace( gt , '>').replace( lt , '<') : ''}
                       </Text>
                     </View>
+
+                    {
+                      BLOCK && props.user.user.uid === BLOCK.UID ?
+                      <View style={styles.ReplyBlockDetailEdit}>
+                        <TouchableOpacity onPress={this.onEdit} style={styles.EditContent}>
+                          <Text style={[styles.EditContentText, {borderRightWidth:1, borderColor: 'grey'}]}> 수정 </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity onPress={this.requestDeleteBlock} style={styles.EditContent}>
+                          <Text style={styles.EditContentText}> 삭제 </Text>
+                        </TouchableOpacity>
+                      </View>
+                      : null
+                    }
+
 
                     <View style={styles.ReplyBlockDetailStaus}>
                       <View style={styles.StatusElement}>
@@ -379,7 +444,6 @@ class ReplyBlockDetail extends Component<Props> {
                         placeholder={translate('AddReply')}
                       />
                     </View>
-                  </ScrollView>
                 </View>
 
               </View>

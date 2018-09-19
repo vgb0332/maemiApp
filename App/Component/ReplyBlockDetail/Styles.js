@@ -74,6 +74,19 @@ export default StyleSheet.create({
     color: 'black',
   },
 
+  ReplyBlockDetailEdit : {
+    paddingVertical: 10, width: '100%', flexDirection: 'row',
+  },
+
+  EditContent : {
+    flex: 1, justifyContent : 'center',
+  },
+
+  EditContentText : {
+    color: 'black',
+    textAlign : 'center',
+  },
+
   ReplyBlockDetailStaus : {
     borderColor: C.header,
     borderTopWidth: 1,
@@ -129,6 +142,10 @@ export default StyleSheet.create({
 
   ReplyContentInfo : {
     flexDirection : 'row',
+  },
+
+  ReplyEdit : {
+    flexDirection: 'row'
   },
 
   ReplyInput : {
