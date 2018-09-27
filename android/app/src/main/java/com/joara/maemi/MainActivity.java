@@ -1,4 +1,4 @@
-package com.maemi;
+package com.joara.maemi;
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;
 import org.devio.rn.splashscreen.SplashScreen; // here
@@ -18,6 +18,6 @@ public class MainActivity extends ReactActivity {
 
     @Override
     protected String getMainComponentName() {
-        return "maemi";
+        return "MAEMI";
     }
 }

@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "maemi.app"
-               BlueprintName = "maemi"
-               ReferencedContainer = "container:maemi.xcodeproj">
+               BuildableName = "MAEMI.app"
+               BlueprintName = "MAEMI"
+               ReferencedContainer = "container:MAEMI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "maemiTests.xctest"
-               BlueprintName = "maemiTests"
-               ReferencedContainer = "container:maemi.xcodeproj">
+               BuildableName = "MAEMITests.xctest"
+               BlueprintName = "MAEMITests"
+               ReferencedContainer = "container:MAEMI.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "maemiTests.xctest"
-               BlueprintName = "maemiTests"
-               ReferencedContainer = "container:maemi.xcodeproj">
+               BuildableName = "MAEMITests.xctest"
+               BlueprintName = "MAEMITests"
+               ReferencedContainer = "container:MAEMI.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "maemi.app"
-            BlueprintName = "maemi"
-            ReferencedContainer = "container:maemi.xcodeproj">
+            BuildableName = "MAEMI.app"
+            BlueprintName = "MAEMI"
+            ReferencedContainer = "container:MAEMI.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "maemi.app"
-            BlueprintName = "maemi"
-            ReferencedContainer = "container:maemi.xcodeproj">
+            BuildableName = "MAEMI.app"
+            BlueprintName = "MAEMI"
+            ReferencedContainer = "container:MAEMI.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "maemi.app"
-            BlueprintName = "maemi"
-            ReferencedContainer = "container:maemi.xcodeproj">
+            BuildableName = "MAEMI.app"
+            BlueprintName = "MAEMI"
+            ReferencedContainer = "container:MAEMI.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,4 +1,4 @@
-package com.maemi;
+package com.joara.maemi;
 
 import android.app.Application;
 import com.facebook.react.ReactApplication;
