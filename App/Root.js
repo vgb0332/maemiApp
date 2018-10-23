@@ -38,12 +38,12 @@ const drawerStyles = {
   // main: { opacity: 1},
 };
 
-const isIphoneX = (
-  Platform.OS === 'ios' &&
-  !Platform.isPad &&
-  !Platform.isTVOS &&
-  (height === 812 || width === 812)
-);
+// const isIphoneX = (
+//   Platform.OS === 'ios' &&
+//   !Platform.isPad &&
+//   !Platform.isTVOS &&
+//   (height === 812 || width === 812)
+// );
 
 const styles = StyleSheet.create({
   mainContent: {
