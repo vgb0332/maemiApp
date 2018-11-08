@@ -16,7 +16,9 @@ export function signup(data){
 		if(res.data.success){
       //로그인 성공
 			let result = res;
+      if(!res.data.token) return result;
       const user_info = jwt.decode(res.data.token,apiConfig.cert);
+
       console.log(user_info); //=> { foo: 'bar' }
       AsyncStorage.setItem("token",res.data.token);
       setAuthorizationToken(res.data.token);
@@ -29,7 +31,7 @@ export function signup(data){
 		}
 
 	}).catch((err)=>{
-		console.log("[로그인 POST 요청 부분에서 에러]")
+		console.log("[회원가입 POST 요청 부분에서 에러]")
 		console.log(err)
 		return 'axiosError';
 	})

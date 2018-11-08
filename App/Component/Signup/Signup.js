@@ -103,7 +103,7 @@ class Signup extends Component<Props> {
     const {
       name, id, password, passcheck, nickname
     } = this.state;
-
+    const { props } = this;
     let isValid = true;
 
     //check for emptiness
@@ -133,15 +133,18 @@ class Signup extends Component<Props> {
       USER_NICK: nickname,
     };
 
-    this.props.signup(data).then( result => {
+    props.signup(data).then( result => {
+      console.log('result', result);
       if(result.success){
-        Alert.alert(''. this.props.translate('SignUpSuccessAlert'));
-        this.props.AuthActions.setCurrentUser(result);
-        this.props.toggleSignup();
-        this.props.toggleLogin();
+        Alert.alert('', props.translate('SignUpSuccessAlert'));
+        props.AuthActions.setCurrentUser(result);
+        props.toggleSignup();
+        props.toggleLogin();
       }
       else{
-        Alert.alert(this.props.translate('AlertError'), this.props.translate('error'));
+        console.log('failed', result);
+        // Alert.alert(this.props.translate('AlertError'), this.props.translate('error'));
+        Alert.alert(props.translate('AlertError'), result.data.message);
       }
     })
 
@@ -151,7 +154,6 @@ class Signup extends Component<Props> {
   render(){
     const { state, props } = this;
     const { translate } = props;
-
     return (
           <Modal
           animationType="slide"
@@ -159,8 +161,8 @@ class Signup extends Component<Props> {
           hardwareAccelerated={true}
           visible={props.signupToggle}
           onRequestClose={props.toggleSignup}>
-          <KeyboardAwareScrollView>
-            <View style={styles.SignupContainer}>
+          <KeyboardAwareScrollView style={styles.SignupContainer}>
+            <View style={{}}>
               <View style={styles.SignupWrapper}>
                 <View style={styles.SignupHeader}>
                   <Text style={styles.SignupHeaderText}> { translate('SignUpHeader') } </Text>

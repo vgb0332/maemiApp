@@ -12,6 +12,7 @@ import {
 import * as D from '../../Styles/Dimensions';
 import *  as C from '../../Styles/Colors';
 import styles from './Styles';
+import { Icon } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { withLocalize } from 'react-localize-redux';
 
@@ -83,7 +84,7 @@ class IssueBlock extends Component<Props> {
         <View style={styles.ContainerWrapper}>
           <View style={styles.Status}>
             <TouchableOpacity onPress={this.link2UserPage}>
-              <View style={{backgroundColor:C.gray, width:30, height:30}}></View>
+              <Icon name="user-circle" type='font-awesome' size={20} color="black"/>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={this.link2UserPage}>

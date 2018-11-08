@@ -9,14 +9,17 @@ export default StyleSheet.create({
     width: D.Width(100),
     height: D.Height(100),
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    padding: D.Width(5),
   },
 
   SignupWrapper: {
-    marginHorizontal: D.Width(5),
-    marginVertical: D.Height(5),
-    width: D.Width(90),
-    height: D.Height(80),
+    // marginHorizontal: D.Width(5),
+    // marginVertical: D.Height(5),
+    // width: D.Width(90),
+    // height: D.Height(90),
     backgroundColor: C.white,
+    paddingBottom: D.Width(10),
+    flex: 1,
   },
 
   SignupHeader : {
