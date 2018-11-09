@@ -56,12 +56,14 @@ class ReplyBlock extends Component<Props> {
 
     if(isDown) return false;
 
-    this.setState({ processing: true, });
+
     if(!isAuthenticated){
       Alert.alert('', this.props.translate('AlertLogin'));
       return false;
     }
-    const { uid } = this.props.user.user;
+
+    this.setState({ processing: true, });
+    const { uid } = this.props.user && this.props.user.user ? this.props.user.user.uid : '';
     AsyncStorage.getItem('token').then( token => {
       if(isUp){
         voteUpCancel({FLAG: 'UP', PID: PID, UID: uid, TOKEN : token })
@@ -104,12 +106,13 @@ class ReplyBlock extends Component<Props> {
 
     if(isUp) return false;
 
-    this.setState({ processing: true, });
     if(!isAuthenticated){
       Alert.alert('', this.props.translate('AlertLogin'));
       return false;
     }
-    const { uid } = this.props.user.user;
+
+    this.setState({ processing: true, });
+    const { uid } = this.props.user && this.props.user.user ? this.props.user.user.uid : '';
     AsyncStorage.getItem('token').then( token => {
       if(isDown){
         voteDownCancel({FLAG: 'DOWN', PID: PID, UID: uid, TOKEN : token })

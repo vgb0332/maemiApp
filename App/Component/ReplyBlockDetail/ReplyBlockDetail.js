@@ -54,8 +54,7 @@ class ReplyBlockDetail extends Component<Props> {
   load = () => {
     const { PID, PPID } = this.props.block;
     const { isAuthenticated } = this.props.user;
-    const { uid } = this.props.user.user;
-
+    const { uid } = this.props.user;
     getDetailBlock({PID: PID})
     .then( res => {
       this.setState({
@@ -80,7 +79,6 @@ class ReplyBlockDetail extends Component<Props> {
         })
       })
     }
-
   }
 
   componentDidMount() {
@@ -90,17 +88,18 @@ class ReplyBlockDetail extends Component<Props> {
   UpClick = () => {
     const { PID, PPID } = this.props.block;
     const { isAuthenticated } = this.props.user;
-    const { uid } = this.props.user.user;
+    const { uid } = this.props.user && this.props.user.user ? this.props.user.user.uid : '';
     const { isUp ,isDown } = this.state;
 
     if(isDown) return false;
 
-    this.setState({ processing: true, });
+
     if(!isAuthenticated){
       Alert.alert('' ,this.props.translate('AlertLogin'));
-      return false;
+      return;
     }
 
+    this.setState({ processing: true, });
     AsyncStorage.getItem('token').then( token => {
       if(isUp){
         voteUpCancel({FLAG: 'UP', PID: PID, UID: uid, TOKEN : token })
@@ -137,17 +136,17 @@ class ReplyBlockDetail extends Component<Props> {
   DownClick = () => {
     const { PID, PPID } = this.props.block;
     const { isAuthenticated } = this.props.user;
-    const { uid } = this.props.user.user;
+    const { uid } = this.props.user && this.props.user.user ? this.props.user.user.uid : '';
     const { isUp, isDown } = this.state;
 
     if(isUp) return false;
 
-    this.setState({ processing: true, });
+
     if(!isAuthenticated){
       Alert.alert('' ,this.props.translate('AlertLogin'));
-      return false;
+      return;
     }
-
+    this.setState({ processing: true, });
     AsyncStorage.getItem('token').then( token => {
       if(isDown){
         voteDownCancel({FLAG: 'DOWN', PID: PID, UID: uid, TOKEN : token })
@@ -336,7 +335,7 @@ class ReplyBlockDetail extends Component<Props> {
     const nbsp = '&nbsp;';
     const gt = '&gt;';
     const lt = '&lt;';
-    console.log('here', BLOCK);
+    console.log('here', props, state);
     return (
           <Modal
           animationType="slide"
@@ -384,7 +383,7 @@ class ReplyBlockDetail extends Component<Props> {
                     </View>
 
                     {
-                      BLOCK && props.user.user.uid === BLOCK.UID ?
+                      BLOCK && props.user && props.user.user && props.user.user.uid === BLOCK.UID ?
                       <View style={styles.ReplyBlockDetailEdit}>
                         <TouchableOpacity onPress={this.onEdit} style={styles.EditContent}>
                           <Text style={[styles.EditContentText, {borderRightWidth:1, borderColor: 'grey'}]}> 수정 </Text>

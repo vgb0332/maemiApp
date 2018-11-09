@@ -194,7 +194,7 @@ class DetailBlock extends Component<Props> {
             </Text>
           </View>
 
-          {state.block && props.user && props.user.user.uid === state.block.ParentBlocks.UID ?
+          {state.block && props.user.user && props.user.user.uid === state.block.ParentBlocks.UID ?
             <View style={styles.Edit.wrap}>
               <TouchableOpacity onPress={this.editBlock} style={styles.Edit.view}>
                 <Text style={[styles.Edit.text, {borderRightWidth:1, borderColor: 'grey'}]}> 수정 </Text>

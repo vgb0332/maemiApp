@@ -64,12 +64,14 @@ class MyPage extends Component<Props> {
   componentDidMount() {
     const { isAuthenticated, user } = this.props.user;
     const { uid } = this.props.navigation.state.params;
+    console.log('uid!!!!', uid);
+    console.log(this.props);
+
     getUserProfile({
       UID: uid ? uid: '',
       // TOKEN : token,
     })
     .then((res)=>{
-      console.log(res);
       this.setState( {
         data : res.data,
         blocks : res.data.blocks,
@@ -79,18 +81,21 @@ class MyPage extends Component<Props> {
         scraps : res.data.scraps,
 
         loading: false,
-        isMine: user.uid === uid,
+        isMine: user ? (user.uid === uid) : false,
         description: res.data.info[0].USER_DESCRIPTION,
-      })
+      });
+
+      this.props.navigation.setParams({
+          edit: user.uid === uid ? this.onEdit : null,
+          editCancel: user.uid === uid ? this.onEditCancel : null,
+          editSubmit: user.uid === uid ? this.onEditSubmit : null,
+          isEditing: false,
+          isMine: user.uid === uid,
+      });
+
     })
     .catch(err=>console.log(err));
-    this.props.navigation.setParams({
-        edit: user.uid === uid ? this.onEdit : null,
-        editCancel: user.uid === uid ? this.onEditCancel : null,
-        editSubmit: user.uid === uid ? this.onEditSubmit : null,
-        isEditing: false,
-        isMine: user.uid === uid,
-    });
+
 
   }
 
@@ -393,7 +398,6 @@ class MyPage extends Component<Props> {
   }
   render() {
     const { props, state } = this;
-
     if(state.data){
       const { blocks, follows, info, saves, scraps } = state;
       const { translate } = props;
