@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 // redux related book keeping
 import configureStore from './Store';
 import { LocalizeProvider } from "react-localize-redux";
-
+import codePush from "react-native-code-push";
 // Views
 import Root from './Root';
 import querystring from 'querystring';
@@ -45,4 +45,10 @@ class Setup extends Component {
   }
 }
 
+let codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESUME
+}
+
+Setup = codePush(codePushOptions)(Setup);
 export default Setup;

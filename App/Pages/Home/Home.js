@@ -9,7 +9,8 @@ import {
     Text,
     Image,
     FlatList,
-    TouchableOpacity
+    TouchableOpacity,
+    Alert,
 } from 'react-native';
 
 import { InfiniteScroll } from 'react-native-infinite';
@@ -46,10 +47,10 @@ class Home extends Component<Props> {
 
   componentDidMount() {
     this.isMount = true;
-    // if(!this.props.blocks.data.length){
+    if(!this.props.blocks.data.length){
       getIssueBlock({})
       .then( (res) => {
-  			// console.log('Initialized with initial data blocks', res);
+  			console.log('Initialized with initial data blocks', res);
         this.props.DataActions.setCurrentData(res.data);
         this.setState({
           items: res.data,
@@ -60,7 +61,7 @@ class Home extends Component<Props> {
       .catch((err) => {
         console.log(err);
       })
-    // }
+    }
   }
 
   componentWillReceiveProps(nextProps){

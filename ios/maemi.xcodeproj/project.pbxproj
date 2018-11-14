@@ -11,7 +11,7 @@
 		00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
-		00E356F31AD99517003FC87E /* maemiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* maemiTests.m */; };
+		00E356F31AD99517003FC87E /* MAEMITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MAEMITests.m */; };
 		04B88FF6AD0C473C8A4EED43 /* libRNRandomBytes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C69AB298E1C247EB93D451B0 /* libRNRandomBytes.a */; };
 		0DDF080F7E6F49B59257F745 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 107D2D9637FF4A76AD64DB3C /* EvilIcons.ttf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
@@ -38,11 +38,11 @@
 		2D02E4C71E0B4AEC006451C7 /* libRCTText-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E941DF850E9000B6D8A /* libRCTText-tvOS.a */; };
 		2D02E4C81E0B4AEC006451C7 /* libRCTWebSocket-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3E991DF850E9000B6D8A /* libRCTWebSocket-tvOS.a */; };
 		2D16E6881FA4F8E400B85C8A /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D16E6891FA4F8E400B85C8A /* libReact.a */; };
-		2DCD954D1E0B4F2C00145EB5 /* maemiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* maemiTests.m */; };
+		2DCD954D1E0B4F2C00145EB5 /* MAEMITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MAEMITests.m */; };
 		2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DAD3EA31DF850E9000B6D8A /* libReact.a */; };
 		2DF62E8A8B7549758C792B8B /* libReact-Native-Webview-Bridge.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 657C8CEF703740C68EF8903D /* libReact-Native-Webview-Bridge.a */; };
-		314851D8EB81634FF03D00E2 /* libPods-maemi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9697BBC234A0837D8BF062E4 /* libPods-maemi.a */; };
-		33512C6BC45118200F32F48C /* libPods-maemiTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A2191B651837005A6BB9227 /* libPods-maemiTests.a */; };
+		314851D8EB81634FF03D00E2 /* libPods-MAEMI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9697BBC234A0837D8BF062E4 /* libPods-MAEMI.a */; };
+		33512C6BC45118200F32F48C /* libPods-MAEMITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A2191B651837005A6BB9227 /* libPods-MAEMITests.a */; };
 		36C1787F2FE0486380328B60 /* FontAwesome5_Brands.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0AFB4FB2888548058C299CEF /* FontAwesome5_Brands.ttf */; };
 		403243F230B54FF8A909354D /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = AA6FEB6EEB9A47A4BCB4AB65 /* Ionicons.ttf */; };
 		4896D4FF3D5A4DBC9D5A6D85 /* libRNRandomBytes-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DF5E4F3C0544D84B26C48C5 /* libRNRandomBytes-tvOS.a */; };
@@ -65,7 +65,11 @@
 		B7CABBC689594FBEB14CE6ED /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 314C3AAACD384581AB59BF9E /* libRNVectorIcons.a */; };
 		DA8E5B0D77F44BACA96C852C /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 49463763E2684A9F90C6DF15 /* libRNFS.a */; };
 		E50290A691AA45058E552E06 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A28954DFFC94F009F730E88 /* SimpleLineIcons.ttf */; };
-		E86C846D9AFC6CC102941A46 /* libPods-maemi-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8F4A45B34BA717976A701E1 /* libPods-maemi-tvOSTests.a */; };
+		E86C846D9AFC6CC102941A46 /* libPods-MAEMI-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8F4A45B34BA717976A701E1 /* libPods-MAEMI-tvOSTests.a */; };
+		51BF25B796364E23A3494F45 /* AppCenter-Config.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5EEB468F468A4DB591BFD221 /* AppCenter-Config.plist */; };
+		B768479E48B549499BFAD011 /* libAppCenterReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CFE9564CEA45549B86445C /* libAppCenterReactNative.a */; };
+		5B7072DDF08D44D7B5BC5DCC /* libAppCenterReactNativeAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3229421B74D04C2E9128A0ED /* libAppCenterReactNativeAnalytics.a */; };
+		F73C0CD3DFA54922852CD6C8 /* libAppCenterReactNativeCrashes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4A240320DEC4741A9DB1754 /* libAppCenterReactNativeCrashes.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,7 +113,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = maemi;
+			remoteInfo = MAEMI;
 		};
 		139105C01AF99BAD00B5F7CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -221,7 +225,7 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "maemi-tvOS";
+			remoteInfo = "MAEMI-tvOS";
 		};
 		2D16E6711FA4F8DC00B85C8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -435,9 +439,9 @@
 		00C302BB1ABCB91800DB3ED1 /* RCTImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTImage.xcodeproj; path = "../node_modules/react-native/Libraries/Image/RCTImage.xcodeproj"; sourceTree = "<group>"; };
 		00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTNetwork.xcodeproj; path = "../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj"; sourceTree = "<group>"; };
 		00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTVibration.xcodeproj; path = "../node_modules/react-native/Libraries/Vibration/RCTVibration.xcodeproj"; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* maemiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = maemiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* MAEMITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MAEMITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* maemiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = maemiTests.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* MAEMITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MAEMITests.m; sourceTree = "<group>"; };
 		0A28954DFFC94F009F730E88 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		0AFB4FB2888548058C299CEF /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		0DF5E4F3C0544D84B26C48C5 /* libRNRandomBytes-tvOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libRNRandomBytes-tvOS.a"; sourceTree = "<group>"; };
@@ -445,19 +449,19 @@
 		10CE2E1AC8EC4D76855B72C8 /* React-Native-Webview-Bridge.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = "React-Native-Webview-Bridge.xcodeproj"; path = "../node_modules/react-native-webview-bridge/ios/React-Native-Webview-Bridge.xcodeproj"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* maemi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = maemi.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = maemi/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = maemi/AppDelegate.m; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* MAEMI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MAEMI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MAEMI/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MAEMI/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = maemi/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = maemi/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = maemi/main.m; sourceTree = "<group>"; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = MAEMI/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MAEMI/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MAEMI/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		160720F517C0409B9B338C14 /* libUdpSockets.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libUdpSockets.a; sourceTree = "<group>"; };
 		1914D97944974E2D993C9812 /* libReactNativeLocalization.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libReactNativeLocalization.a; sourceTree = "<group>"; };
 		245E7ECDC31F4AD58FCC0277 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* maemi-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "maemi-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* maemi-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "maemi-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E47B1E0B4A5D006451C7 /* MAEMI-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MAEMI-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* MAEMI-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MAEMI-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D16E6891FA4F8E400B85C8A /* libReact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = libReact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2FFC62049EEF443E9BC329D7 /* libRNImagePicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNImagePicker.a; sourceTree = "<group>"; };
 		314C3AAACD384581AB59BF9E /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
@@ -466,12 +470,12 @@
 		3D2E6975900D490DBFB2D66E /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		3F7BC3FFAA154D21919D2787 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		49463763E2684A9F90C6DF15 /* libRNFS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFS.a; sourceTree = "<group>"; };
-		4F2E71762CCF8510F454E28D /* Pods-maemi-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maemi-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-maemi-tvOSTests/Pods-maemi-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		4F2E71762CCF8510F454E28D /* Pods-MAEMI-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAEMI-tvOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAEMI-tvOSTests/Pods-MAEMI-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		5C6D16D08E224860AADD8281 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		657C8CEF703740C68EF8903D /* libReact-Native-Webview-Bridge.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = "libReact-Native-Webview-Bridge.a"; sourceTree = "<group>"; };
 		69C567A679544AF98F8D79F8 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		6A2191B651837005A6BB9227 /* libPods-maemiTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maemiTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A2191B651837005A6BB9227 /* libPods-MAEMITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MAEMITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		7C2A631DDB2643C8B8FC890B /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		82FF3BF5602D48A58A8B0C37 /* RCTImageResizer.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTImageResizer.xcodeproj; path = "../node_modules/react-native-image-resizer/ios/RCTImageResizer.xcodeproj"; sourceTree = "<group>"; };
@@ -482,25 +486,32 @@
 		887F2F010E994A45A593E7F1 /* libSplashScreen.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSplashScreen.a; sourceTree = "<group>"; };
 		8B7DE717E977483D86682D0D /* libRCTImageResizer.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTImageResizer.a; sourceTree = "<group>"; };
 		907F09EBAD23475CB68C3771 /* ReactNativeLocalization.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeLocalization.xcodeproj; path = "../node_modules/react-native-localization/ReactNativeLocalization.xcodeproj"; sourceTree = "<group>"; };
-		9697BBC234A0837D8BF062E4 /* libPods-maemi.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maemi.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9697BBC234A0837D8BF062E4 /* libPods-MAEMI.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MAEMI.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6B122079ED44450AF378FBA /* libTcpSockets.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libTcpSockets.a; sourceTree = "<group>"; };
 		AA6FEB6EEB9A47A4BCB4AB65 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
-		AC6A2967184721E59DD29C48 /* Pods-maemi.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maemi.debug.xcconfig"; path = "Pods/Target Support Files/Pods-maemi/Pods-maemi.debug.xcconfig"; sourceTree = "<group>"; };
+		AC6A2967184721E59DD29C48 /* Pods-MAEMI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAEMI.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MAEMI/Pods-MAEMI.debug.xcconfig"; sourceTree = "<group>"; };
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		B317890502E04137B2AD59A0 /* RNImagePicker.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNImagePicker.xcodeproj; path = "../node_modules/react-native-image-picker/ios/RNImagePicker.xcodeproj"; sourceTree = "<group>"; };
-		B9659CB2896DEDCB24142D39 /* Pods-maemi-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maemi-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-maemi-tvOSTests/Pods-maemi-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B9659CB2896DEDCB24142D39 /* Pods-MAEMI-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAEMI-tvOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MAEMI-tvOSTests/Pods-MAEMI-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C69AB298E1C247EB93D451B0 /* libRNRandomBytes.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNRandomBytes.a; sourceTree = "<group>"; };
-		CC6E27C8C3DBDC898F635257 /* Pods-maemiTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maemiTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-maemiTests/Pods-maemiTests.release.xcconfig"; sourceTree = "<group>"; };
+		CC6E27C8C3DBDC898F635257 /* Pods-MAEMITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAEMITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAEMITests/Pods-MAEMITests.release.xcconfig"; sourceTree = "<group>"; };
 		D539B3B83CA444D4BC3D18DD /* TcpSockets.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = TcpSockets.xcodeproj; path = "../node_modules/react-native-tcp/ios/TcpSockets.xcodeproj"; sourceTree = "<group>"; };
-		D6E771C19F64ADA9285C0100 /* Pods-maemiTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maemiTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-maemiTests/Pods-maemiTests.debug.xcconfig"; sourceTree = "<group>"; };
+		D6E771C19F64ADA9285C0100 /* Pods-MAEMITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAEMITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MAEMITests/Pods-MAEMITests.debug.xcconfig"; sourceTree = "<group>"; };
 		D76B0A1846314ADBBCB4430A /* UdpSockets.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = UdpSockets.xcodeproj; path = "../node_modules/react-native-udp/ios/UdpSockets.xcodeproj"; sourceTree = "<group>"; };
 		D78FEF4609DA4A7CA78BDB8F /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		D91C260FCBAE4A64A6475C13 /* FontAwesome5_Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Regular.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Regular.ttf"; sourceTree = "<group>"; };
-		DB548E1B49FCDF7B14CFB9CF /* Pods-maemi.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-maemi.release.xcconfig"; path = "Pods/Target Support Files/Pods-maemi/Pods-maemi.release.xcconfig"; sourceTree = "<group>"; };
+		DB548E1B49FCDF7B14CFB9CF /* Pods-MAEMI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAEMI.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAEMI/Pods-MAEMI.release.xcconfig"; sourceTree = "<group>"; };
 		E5136084416A4947BA5E83BF /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
 		E7F165D6604C47ECB66D8AAB /* RNRandomBytes.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNRandomBytes.xcodeproj; path = "../node_modules/react-native-randombytes/RNRandomBytes.xcodeproj"; sourceTree = "<group>"; };
-		F8F4A45B34BA717976A701E1 /* libPods-maemi-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-maemi-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F8F4A45B34BA717976A701E1 /* libPods-MAEMI-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MAEMI-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F90616B1FCCB4707AEAFA851 /* libRNOS.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNOS.a; sourceTree = "<group>"; };
+		5EEB468F468A4DB591BFD221 /* AppCenter-Config.plist */ = {isa = PBXFileReference; name = "AppCenter-Config.plist"; path = "MAEMI/AppCenter-Config.plist"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = text.plist.xml; explicitFileType = undefined; includeInIndex = 0; };
+		0D424991D1CE4110BB1E7E1B /* AppCenterReactNative.xcodeproj */ = {isa = PBXFileReference; name = "AppCenterReactNative.xcodeproj"; path = "../node_modules/appcenter/ios/AppCenterReactNative.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		50CFE9564CEA45549B86445C /* libAppCenterReactNative.a */ = {isa = PBXFileReference; name = "libAppCenterReactNative.a"; path = "libAppCenterReactNative.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		E5AA1A941B18488BABB3146E /* AppCenterReactNativeAnalytics.xcodeproj */ = {isa = PBXFileReference; name = "AppCenterReactNativeAnalytics.xcodeproj"; path = "../node_modules/appcenter-analytics/ios/AppCenterReactNativeAnalytics.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		3229421B74D04C2E9128A0ED /* libAppCenterReactNativeAnalytics.a */ = {isa = PBXFileReference; name = "libAppCenterReactNativeAnalytics.a"; path = "libAppCenterReactNativeAnalytics.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		00FEA170FFC04AB99E83772E /* AppCenterReactNativeCrashes.xcodeproj */ = {isa = PBXFileReference; name = "AppCenterReactNativeCrashes.xcodeproj"; path = "../node_modules/appcenter-crashes/ios/AppCenterReactNativeCrashes.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C4A240320DEC4741A9DB1754 /* libAppCenterReactNativeCrashes.a */ = {isa = PBXFileReference; name = "libAppCenterReactNativeCrashes.a"; path = "libAppCenterReactNativeCrashes.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -509,7 +520,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
-				33512C6BC45118200F32F48C /* libPods-maemiTests.a in Frameworks */,
+				33512C6BC45118200F32F48C /* libPods-MAEMITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,7 +551,10 @@
 				2471BCA255DE4229A7101235 /* libUdpSockets.a in Frameworks */,
 				5844970A547A4D79A5E060F0 /* libTcpSockets.a in Frameworks */,
 				74F46C04A1CB46F089F8501F /* libSplashScreen.a in Frameworks */,
-				314851D8EB81634FF03D00E2 /* libPods-maemi.a in Frameworks */,
+				314851D8EB81634FF03D00E2 /* libPods-MAEMI.a in Frameworks */,
+				B768479E48B549499BFAD011 /* libAppCenterReactNative.a in Frameworks */,
+				5B7072DDF08D44D7B5BC5DCC /* libAppCenterReactNativeAnalytics.a in Frameworks */,
+				F73C0CD3DFA54922852CD6C8 /* libAppCenterReactNativeCrashes.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,7 +579,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DF0FFEE2056DD460020B375 /* libReact.a in Frameworks */,
-				E86C846D9AFC6CC102941A46 /* libPods-maemi-tvOSTests.a in Frameworks */,
+				E86C846D9AFC6CC102941A46 /* libPods-MAEMI-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,13 +628,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		00E356EF1AD99517003FC87E /* maemiTests */ = {
+		00E356EF1AD99517003FC87E /* MAEMITests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* maemiTests.m */,
+				00E356F21AD99517003FC87E /* MAEMITests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = maemiTests;
+			path = MAEMITests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -651,7 +665,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* maemi */ = {
+		13B07FAE1A68108700A75B9A /* MAEMI */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -662,7 +676,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = maemi;
+			name = MAEMI;
 			sourceTree = "<group>";
 		};
 		146834001AC3E56700842450 /* Products */ = {
@@ -793,9 +807,9 @@
 			isa = PBXGroup;
 			children = (
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
-				9697BBC234A0837D8BF062E4 /* libPods-maemi.a */,
-				F8F4A45B34BA717976A701E1 /* libPods-maemi-tvOSTests.a */,
-				6A2191B651837005A6BB9227 /* libPods-maemiTests.a */,
+				9697BBC234A0837D8BF062E4 /* libPods-MAEMI.a */,
+				F8F4A45B34BA717976A701E1 /* libPods-MAEMI-tvOSTests.a */,
+				6A2191B651837005A6BB9227 /* libPods-MAEMITests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -865,6 +879,9 @@
 				D76B0A1846314ADBBCB4430A /* UdpSockets.xcodeproj */,
 				D539B3B83CA444D4BC3D18DD /* TcpSockets.xcodeproj */,
 				3F7BC3FFAA154D21919D2787 /* SplashScreen.xcodeproj */,
+				0D424991D1CE4110BB1E7E1B /* AppCenterReactNative.xcodeproj */,
+				E5AA1A941B18488BABB3146E /* AppCenterReactNativeAnalytics.xcodeproj */,
+				00FEA170FFC04AB99E83772E /* AppCenterReactNativeCrashes.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -881,14 +898,15 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* maemi */,
+				13B07FAE1A68108700A75B9A /* MAEMI */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* maemiTests */,
+				00E356EF1AD99517003FC87E /* MAEMITests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				48307E42B8BF4C24BB8A7D1E /* Resources */,
 				1E0464BF21686B19008E6D7C /* Recovered References */,
 				A7538F0B86978A5DDE8DDECC /* Pods */,
+				5EEB468F468A4DB591BFD221 /* AppCenter-Config.plist */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -898,10 +916,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* maemi.app */,
-				00E356EE1AD99517003FC87E /* maemiTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* maemi-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* maemi-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* MAEMI.app */,
+				00E356EE1AD99517003FC87E /* MAEMITests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* MAEMI-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* MAEMI-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -909,12 +927,12 @@
 		A7538F0B86978A5DDE8DDECC /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				AC6A2967184721E59DD29C48 /* Pods-maemi.debug.xcconfig */,
-				DB548E1B49FCDF7B14CFB9CF /* Pods-maemi.release.xcconfig */,
-				B9659CB2896DEDCB24142D39 /* Pods-maemi-tvOSTests.debug.xcconfig */,
-				4F2E71762CCF8510F454E28D /* Pods-maemi-tvOSTests.release.xcconfig */,
-				D6E771C19F64ADA9285C0100 /* Pods-maemiTests.debug.xcconfig */,
-				CC6E27C8C3DBDC898F635257 /* Pods-maemiTests.release.xcconfig */,
+				AC6A2967184721E59DD29C48 /* Pods-MAEMI.debug.xcconfig */,
+				DB548E1B49FCDF7B14CFB9CF /* Pods-MAEMI.release.xcconfig */,
+				B9659CB2896DEDCB24142D39 /* Pods-MAEMI-tvOSTests.debug.xcconfig */,
+				4F2E71762CCF8510F454E28D /* Pods-MAEMI-tvOSTests.release.xcconfig */,
+				D6E771C19F64ADA9285C0100 /* Pods-MAEMITests.debug.xcconfig */,
+				CC6E27C8C3DBDC898F635257 /* Pods-MAEMITests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -931,9 +949,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* maemiTests */ = {
+		00E356ED1AD99517003FC87E /* MAEMITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "maemiTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MAEMITests" */;
 			buildPhases = (
 				B748F9C15C80E9F7B3BDF7F0 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -945,14 +963,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = maemiTests;
-			productName = maemiTests;
-			productReference = 00E356EE1AD99517003FC87E /* maemiTests.xctest */;
+			name = MAEMITests;
+			productName = MAEMITests;
+			productReference = 00E356EE1AD99517003FC87E /* MAEMITests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* maemi */ = {
+		13B07F861A680F5B00A75B9A /* MAEMI */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "maemi" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MAEMI" */;
 			buildPhases = (
 				33C0E1DA07E4BC3913B714AE /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
@@ -964,14 +982,14 @@
 			);
 			dependencies = (
 			);
-			name = maemi;
+			name = MAEMI;
 			productName = "Hello World";
-			productReference = 13B07F961A680F5B00A75B9A /* maemi.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* MAEMI.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* maemi-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* MAEMI-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "maemi-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MAEMI-tvOS" */;
 			buildPhases = (
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -982,14 +1000,14 @@
 			);
 			dependencies = (
 			);
-			name = "maemi-tvOS";
-			productName = "maemi-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* maemi-tvOS.app */;
+			name = "MAEMI-tvOS";
+			productName = "MAEMI-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* MAEMI-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* maemi-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* MAEMI-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "maemi-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MAEMI-tvOSTests" */;
 			buildPhases = (
 				9D9509AF4761987958815BE4 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -1001,9 +1019,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "maemi-tvOSTests";
-			productName = "maemi-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* maemi-tvOSTests.xctest */;
+			name = "MAEMI-tvOSTests";
+			productName = "MAEMI-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* MAEMI-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -1033,7 +1051,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "maemi" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MAEMI" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -1136,10 +1154,10 @@
 			);
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* maemi */,
-				00E356ED1AD99517003FC87E /* maemiTests */,
-				2D02E47A1E0B4A5D006451C7 /* maemi-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* maemi-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* MAEMI */,
+				00E356ED1AD99517003FC87E /* MAEMITests */,
+				2D02E47A1E0B4A5D006451C7 /* MAEMI-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* MAEMI-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1518,6 +1536,7 @@
 				90E508C7BA22489DB4AD55FA /* Octicons.ttf in Resources */,
 				E50290A691AA45058E552E06 /* SimpleLineIcons.ttf in Resources */,
 				5CFA6FE4B15E47C5973B9A8F /* Zocial.ttf in Resources */,
+				51BF25B796364E23A3494F45 /* AppCenter-Config.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1578,7 +1597,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-maemi-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MAEMI-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1596,7 +1615,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-maemi-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MAEMI-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1614,7 +1633,7 @@
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-maemiTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MAEMITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1628,7 +1647,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* maemiTests.m in Sources */,
+				00E356F31AD99517003FC87E /* MAEMITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1655,7 +1674,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* maemiTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* MAEMITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1664,12 +1683,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* maemi */;
+			target = 13B07F861A680F5B00A75B9A /* MAEMI */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* maemi-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* MAEMI-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -1681,7 +1700,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = maemi;
+			path = MAEMI;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1689,7 +1708,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6E771C19F64ADA9285C0100 /* Pods-maemiTests.debug.xcconfig */;
+			baseConfigurationReference = D6E771C19F64ADA9285C0100 /* Pods-MAEMITests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1709,12 +1728,17 @@
 					"$(SRCROOT)..\node_modules\neact-native-udpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-tcpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-splash-screenios",
+					"$(SRCROOT)\..\node_modules\appcenter\ios\AppCenterReactNative",
+					"$(SRCROOT)\..\node_modules\appcenter-analytics\ios\AppCenterReactNativeAnalytics",
+					"$(SRCROOT)\..\node_modules\appcenter-crashes\ios\AppCenterReactNativeCrashes",
 				);
-				INFOPLIST_FILE = maemiTests/Info.plist;
+				INFOPLIST_FILE = MAEMITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1722,13 +1746,13 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maemi.app/maemi";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MAEMI.app/MAEMI";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CC6E27C8C3DBDC898F635257 /* Pods-maemiTests.release.xcconfig */;
+			baseConfigurationReference = CC6E27C8C3DBDC898F635257 /* Pods-MAEMITests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -1745,12 +1769,17 @@
 					"$(SRCROOT)..\node_modules\neact-native-udpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-tcpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-splash-screenios",
+					"$(SRCROOT)\..\node_modules\appcenter\ios\AppCenterReactNative",
+					"$(SRCROOT)\..\node_modules\appcenter-analytics\ios\AppCenterReactNativeAnalytics",
+					"$(SRCROOT)\..\node_modules\appcenter-crashes\ios\AppCenterReactNativeCrashes",
 				);
-				INFOPLIST_FILE = maemiTests/Info.plist;
+				INFOPLIST_FILE = MAEMITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
@@ -1758,13 +1787,13 @@
 					"-lc++",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maemi.app/maemi";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MAEMI.app/MAEMI";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AC6A2967184721E59DD29C48 /* Pods-maemi.debug.xcconfig */;
+			baseConfigurationReference = AC6A2967184721E59DD29C48 /* Pods-MAEMI.debug.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1784,22 +1813,25 @@
 					"$(SRCROOT)..\node_modules\neact-native-udpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-tcpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-splash-screenios",
+					"$(SRCROOT)\..\node_modules\appcenter\ios\AppCenterReactNative",
+					"$(SRCROOT)\..\node_modules\appcenter-analytics\ios\AppCenterReactNativeAnalytics",
+					"$(SRCROOT)\..\node_modules\appcenter-crashes\ios\AppCenterReactNativeCrashes",
 				);
-				INFOPLIST_FILE = maemi/Info.plist;
+				INFOPLIST_FILE = MAEMI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_NAME = maemi;
+				PRODUCT_NAME = MAEMI;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB548E1B49FCDF7B14CFB9CF /* Pods-maemi.release.xcconfig */;
+			baseConfigurationReference = DB548E1B49FCDF7B14CFB9CF /* Pods-MAEMI.release.xcconfig */;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1818,15 +1850,18 @@
 					"$(SRCROOT)..\node_modules\neact-native-udpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-tcpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-splash-screenios",
+					"$(SRCROOT)\..\node_modules\appcenter\ios\AppCenterReactNative",
+					"$(SRCROOT)\..\node_modules\appcenter-analytics\ios\AppCenterReactNativeAnalytics",
+					"$(SRCROOT)\..\node_modules\appcenter-crashes\ios\AppCenterReactNativeCrashes",
 				);
-				INFOPLIST_FILE = maemi/Info.plist;
+				INFOPLIST_FILE = MAEMI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_NAME = maemi;
+				PRODUCT_NAME = MAEMI;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -1856,18 +1891,23 @@
 					"$(SRCROOT)..\node_modules\neact-native-udpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-tcpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-splash-screenios",
+					"$(SRCROOT)\..\node_modules\appcenter\ios\AppCenterReactNative",
+					"$(SRCROOT)\..\node_modules\appcenter-analytics\ios\AppCenterReactNativeAnalytics",
+					"$(SRCROOT)\..\node_modules\appcenter-crashes\ios\AppCenterReactNativeCrashes",
 				);
-				INFOPLIST_FILE = "maemi-tvOS/Info.plist";
+				INFOPLIST_FILE = "MAEMI-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.maemi-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.MAEMI-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1900,18 +1940,23 @@
 					"$(SRCROOT)..\node_modules\neact-native-udpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-tcpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-splash-screenios",
+					"$(SRCROOT)\..\node_modules\appcenter\ios\AppCenterReactNative",
+					"$(SRCROOT)\..\node_modules\appcenter-analytics\ios\AppCenterReactNativeAnalytics",
+					"$(SRCROOT)\..\node_modules\appcenter-crashes\ios\AppCenterReactNativeCrashes",
 				);
-				INFOPLIST_FILE = "maemi-tvOS/Info.plist";
+				INFOPLIST_FILE = "MAEMI-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.maemi-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.MAEMI-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -1921,7 +1966,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B9659CB2896DEDCB24142D39 /* Pods-maemi-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = B9659CB2896DEDCB24142D39 /* Pods-MAEMI-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1944,28 +1989,33 @@
 					"$(SRCROOT)..\node_modules\neact-native-udpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-tcpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-splash-screenios",
+					"$(SRCROOT)\..\node_modules\appcenter\ios\AppCenterReactNative",
+					"$(SRCROOT)\..\node_modules\appcenter-analytics\ios\AppCenterReactNativeAnalytics",
+					"$(SRCROOT)\..\node_modules\appcenter-crashes\ios\AppCenterReactNativeCrashes",
 				);
-				INFOPLIST_FILE = "maemi-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "MAEMI-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.maemi-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.MAEMI-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maemi-tvOS.app/maemi-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MAEMI-tvOS.app/MAEMI-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F2E71762CCF8510F454E28D /* Pods-maemi-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 4F2E71762CCF8510F454E28D /* Pods-MAEMI-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -1988,21 +2038,26 @@
 					"$(SRCROOT)..\node_modules\neact-native-udpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-tcpios/**",
 					"$(SRCROOT)..\node_modules\neact-native-splash-screenios",
+					"$(SRCROOT)\..\node_modules\appcenter\ios\AppCenterReactNative",
+					"$(SRCROOT)\..\node_modules\appcenter-analytics\ios\AppCenterReactNativeAnalytics",
+					"$(SRCROOT)\..\node_modules\appcenter-crashes\ios\AppCenterReactNativeCrashes",
 				);
-				INFOPLIST_FILE = "maemi-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "MAEMI-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.maemi-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.MAEMI-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/maemi-tvOS.app/maemi-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MAEMI-tvOS.app/MAEMI-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -2086,7 +2141,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "maemiTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MAEMITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -2095,7 +2150,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "maemi" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "MAEMI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -2104,7 +2159,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "maemi-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MAEMI-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -2113,7 +2168,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "maemi-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "MAEMI-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -2122,7 +2177,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "maemi" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "MAEMI" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

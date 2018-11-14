@@ -67,6 +67,11 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: C.header,
   },
+
+  UserImageImage : {
+    width: D.Width(10),
+    height: D.Width(10),
+  },
   MainContent : {
     flex:1, paddingVertical: 10, justifyContent: 'center', alignItems: 'center',
 

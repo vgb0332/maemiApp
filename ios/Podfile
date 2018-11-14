@@ -1,18 +1,21 @@
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
-target 'maemi' do
+target 'MAEMI' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
 
-  # Pods for maemi
+  # Pods for MAEMI
 
-  target 'maemi-tvOSTests' do
+  target 'MAEMI-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
+
+    pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
   end
 
-  target 'maemiTests' do
+  target 'MAEMITests' do
     inherit! :search_paths
     # Pods for testing
   end

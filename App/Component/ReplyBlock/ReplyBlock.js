@@ -13,7 +13,7 @@ import { InfiniteScroll } from 'react-native-infinite';
 import Lightbox from 'react-native-lightbox';
 import { getDetailBlock } from '../../Lib/BlockManager/GetDetailBlock';
 import { voteUp, voteDown, voteCheck, voteUpCancel, voteDownCancel } from '../../Lib/BlockManager/Vote';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import { Icon, Avatar } from 'react-native-elements';
 import styles from './Styles';
 import * as D from '../../Styles/Dimensions';
 import * as C from '../../Styles/Colors';
@@ -228,9 +228,26 @@ class ReplyBlock extends Component<Props> {
       return (
         <View style={styles.Container}>
           <View style={styles.Status.wrap}>
-            <TouchableOpacity onPress={this.link2UserPage}>
-              <View style={{backgroundColor:C.gray, width:30, height:30}}></View>
-            </TouchableOpacity>
+          <TouchableOpacity onPress={this.link2UserPage}>
+            {
+              BLOCK.USER_IMAGE ?
+              <Avatar
+                size="small"
+                rounded
+                source={{uri: BLOCK.USER_IMAGE}}
+                // onPress={() => console.log("Works!")}
+                // activeOpacity={0.7}
+              />
+              :
+              <Avatar
+                rounded
+                icon={{name: 'user', type: 'font-awesome', color:"#333"}}
+                containerStyle={{}}
+              />
+
+            }
+
+          </TouchableOpacity>
 
             <TouchableOpacity onPress={this.link2UserPage}>
               <Text style={styles.Status.id}>

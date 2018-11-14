@@ -1,6 +1,6 @@
 export default {
 
-    url: 'http://52.79.128.87:3005',
+    url: 'https://api.maemi.com',
 
     cert : "asldjkhf12409uaslkjllkn23ADFSDFKJHVKJHKL<MNLKNKLJLKXCIOL98790218374LKZXmvlkasjdasdklj0-134lrn9fasldjkhf12409uaslkjllkn23ADFSDFKJHVKJHKL<MNLKNKLJLKXCIOL98790218374LKZXmvlkasjdasdklj0-134!@#!@#lrn9fasldjkhf12409uaslkjllkn23ADFSDFKJHVKJHKL<MNLKNKLJLKXCIOL98790218374LKZXaslaskldhjfklashjdolfjaosiur092834092384ulkhsdjlvmnzxc,mvnkszjdhfoqiw3yu09r8127304598uqwelkfnal,xmcnv,znxckvn2o398470w9d8g-89bpkwnm4,5merfgdf0-134!@#!@#lrn9fasldjkhf12409uaslkjllkn23ADFSDFKJHVKJHKL<NLKNKLJLKXCIOL98790218374LKZXmvlkasjdasdklj0-134!@#!@#lrn9fasldjkhf12409uaslkjllkn23ADFSDFKJHVKJHKL<MNLKNKLJLKXCIOL98790218374LKZXmvlkasjdasdklj0-134!@#!@#lrn9fasldjkhf12409uaslkjllkn23ADFSDFKJHVKJHKL<MNLKNKLJLKXCIOL98790218374LKZXmvlkasjdasdklj0-134!@#!@#lrn9fasldjkhf12409uaslkjllkn23ADFSDFKJHVKJHKL<MNLKNKLJLKXCIOL98790218374LKZXmvlkasjdasdklj0-134!@#!@#lrn9f",
 
