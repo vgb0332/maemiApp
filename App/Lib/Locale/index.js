@@ -4,6 +4,10 @@ export const languages = [
 ];
 
 export const languageConfigure = {
+
+  Terms: ['이용약관', 'TERMS'],
+  Privacy: ['개인정보', 'PRIVACY'],
+  
   Skip : ['건너뛰기', 'SKIP'],
   Done : ['메인으로', 'To Main'],
   Never : ['다시 보지 않기', 'Do not show anymore'],

@@ -227,6 +227,14 @@ class Root extends Component<Props, State> {
     this.closeControlPanel();
   }
 
+  link2TermsNPolicy = () => {
+    console.log('les go!');
+    this.navigator && this.navigator.dispatch(
+      NavigationActions.navigate({ routeName: 'TermsNPolicy' })
+    );
+    this.closeControlPanel();
+  }
+
   link2MyPage = () => {
     const { isAuthenticated, user } = this.props.user;
     if(!isAuthenticated){
@@ -276,6 +284,7 @@ class Root extends Component<Props, State> {
           // open={true}
           ref={(ref) => this._drawer = ref}
           content={<DrawerContent
+                      link2TermsNPolicy = {this.link2TermsNPolicy}
                       link2CreateIssue = {this.link2CreateIssue}
                       searchText = {this.searchText}
                       setActiveLanguage={this.props.setActiveLanguage}

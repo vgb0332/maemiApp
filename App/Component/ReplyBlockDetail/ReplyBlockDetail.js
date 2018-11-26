@@ -354,6 +354,18 @@ class ReplyBlockDetail extends Component<Props> {
                     <View style={styles.ReplyBlockDetailHeader}>
                       <Text style={styles.HeaderText}> {BLOCK ? BLOCK.CREATE_DATE.split(' ')[0] : ''}</Text>
                       <Text style={styles.HeaderText}> {BLOCK ? BLOCK.BLOCK_ISSUE_LOCATION : ''} </Text>
+                      <TouchableOpacity style={{}} onPress={()=>{
+                        Alert.alert(
+                          '신고',
+                          '신고 시 내부 검토 후 처리됩니다.\n신고하시겠습니까?',
+                          [
+                            { text: '예', onPress: ()=> Alert.alert('신고되었습니다!')},
+                            { text: '아니오', onPress: () => {}}
+                          ]
+                        );
+                      }}>
+                        <Text>신고하기</Text>
+                      </TouchableOpacity>
                       <TouchableOpacity onPress={()=>props.toggleReplyBlock(null)}>
                         <Icon name="x" size={20} style={{alignSelf:'flex-end'}} color="black"/>
                       </TouchableOpacity>

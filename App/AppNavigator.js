@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   View,
+  Alert
 } from 'react-native';
 
 import {
@@ -14,7 +15,7 @@ import {
   TabBarTop,
 } from 'react-navigation';
 
-import { Home, Main, CreateIssue, MyPage } from './Pages';
+import { Home, Main, CreateIssue, MyPage, TermsNPolicy } from './Pages';
 import Header from './Common/Header';
 import Icon from 'react-native-vector-icons/Feather';
 import { connect } from 'react-redux';
@@ -51,6 +52,28 @@ export default StackNavigator({
 
         }),
     },
+    TermsNPolicy: {
+        screen: TermsNPolicy,
+        navigationOptions: ({ screenProps, navigation }) => ({
+          header: <Header
+                    left={
+                      <View style={{marginLeft:D.Width(5)}}>
+                        <TouchableOpacity onPress={()=>navigation.goBack()}>
+                        <Icon
+                          name="chevron-left" size={30} color="#000"/>
+                        </TouchableOpacity>
+                      </View>}
+                    center= {
+                      <View style={{width:D.Width(60)}}>
+                        <Text style={{color:'black',fontSize:D.FontSize(2), fontWeight:'bold'}}>개인정보 및 이용약관</Text>
+                      </View>}
+                    right={
+                      null
+                      }
+                  />,
+
+        }),
+    },
     Main: {
         screen: Main,
         navigationOptions: ({ screenProps, navigation }) => ({
@@ -65,6 +88,18 @@ export default StackNavigator({
                       center= { null }
                       right={
                         <View style={{flexDirection:'row', marginRight:D.Width(5)}}>
+                          <TouchableOpacity style={{marginRight:D.Width(3)}} onPress={()=>{
+                            Alert.alert(
+                              '신고',
+                              '신고 시 내부 검토 후 처리됩니다.\n신고하시겠습니까?',
+                              [
+                                { text: '예', onPress: ()=> Alert.alert('신고되었습니다!')},
+                                { text: '아니오', onPress: () => {}}
+                              ]
+                            );
+                          }}>
+                            <Text>신고하기</Text>
+                          </TouchableOpacity>
                           <Scrap
                             navigation={navigation}
                           />

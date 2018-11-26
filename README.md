@@ -10,4 +10,8 @@ How to integrate code-push in react Native
     compile project(':appcenter-analytics')
     compile project(':appcenter-crashes')
 
-5. run
+5. some code push commands to remember
+- code-push app list
+- code-push deployment list Maemi-android
+- code-push release-react Maemi-android android
+- code-push promote Maemi-android Staging Production 

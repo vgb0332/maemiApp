@@ -31,7 +31,7 @@ class DrawerContent extends Component<Props> {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      searchText: nextProps.translate('search'),
+      // searchText: nextProps.translate('search'),
       languageText: nextProps.translate('languageSelect'),
       activeLanguage: nextProps.language.language,
     })
@@ -102,9 +102,11 @@ class DrawerContent extends Component<Props> {
           <TextInput
             underlineColorAndroid='transparent'
             onChangeText={(text) => this.onSearchTextChange(text)}
-            onFocus = {this.onSearchTextFocus}
-            onBlur={this.onSearchTextBlur}
+            // onFocus = {this.onSearchTextFocus}
+            // onBlur={this.onSearchTextBlur}
             style={{textAlign: 'center'}}
+            placeholderTextColor="black"
+            placeholder="주제, 장소 등 검색"
             value={this.state.searchText}
             onSubmitEditing={this.onSearchTextSubmit}
           />
@@ -126,6 +128,12 @@ class DrawerContent extends Component<Props> {
              <Picker.Item label = {translate('korean')} value = "kr" />
              <Picker.Item label = {translate('english')} value = "en" />
           </Picker>
+        </View>
+
+        <View style={{position:'relative', marginVertical: 10, marginHorizontal: 20,  backgroundColor:C.header, }}>
+          <TouchableOpacity style={{paddingVertical: 10}} onPress={this.props.link2TermsNPolicy}>
+            <Text style={{textAlign:'center', color:'black'}}>{ translate('Privacy') } 및 { translate('Terms') }</Text>
+          </TouchableOpacity>
         </View>
 
       </View>
